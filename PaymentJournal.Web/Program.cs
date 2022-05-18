@@ -1,7 +1,13 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
+using PaymentJournal.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+string connectionString = builder.Configuration.GetConnectionString("LiteDb");
+
+builder.Services.AddTransient<LiteDbRepo>(s => new LiteDbRepo(connectionString));
 
 // Add services to the container.
 builder.Services.AddRazorPages();
