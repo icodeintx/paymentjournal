@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PaymentJournal.Web\PaymentJournal.Web.csproj" />
+    <ProjectReference Include="..\PaymentJournal.Web\PaymentJournal_Web.csproj" />
   </ItemGroup>
 
 </Project>

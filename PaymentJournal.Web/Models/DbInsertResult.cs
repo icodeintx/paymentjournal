@@ -1,4 +1,4 @@
-﻿namespace PaymentJournal.Web.Models;
+﻿namespace PaymentJournal_Web.Models;
 
 public class DbInsertResult
 {

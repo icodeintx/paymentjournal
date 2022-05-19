@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentJournal.Web", "PaymentJournal.Web\PaymentJournal.Web.csproj", "{F2AD7820-11A4-4769-9369-A73272AD64AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentJournal_Web", "PaymentJournal.Web\PaymentJournal_Web.csproj", "{F2AD7820-11A4-4769-9369-A73272AD64AF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentJournal_Test", "Test\PaymentJournal_Test.csproj", "{9B551D87-5397-4F5D-931B-55EDC2FD6753}"
 EndProject

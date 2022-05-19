@@ -1,7 +1,7 @@
 ﻿using LiteDB;
-using PaymentJournal.Web.Models;
+using PaymentJournal_Web.Models;
 
-namespace PaymentJournal.Web.Repositories;
+namespace PaymentJournal_Web.Repositories;
 
 public class LiteDbRepo
 {
