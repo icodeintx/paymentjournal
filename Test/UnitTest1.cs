@@ -1,84 +1,86 @@
 using PaymentJournal_Web.Models;
 
-namespace Test;
-
-public class UnitTest_LiteDbRepo
+namespace Test
 {
-    /// <summary>
-    ///
-    /// </summary>
-    [Fact]
-    public void CanInsertDocument()
+    [TestClass]
+    public class UnitTest1
     {
-        //arrange
-        PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\temp\\litedb.db");
-        PaymentItem item = new PaymentItem()
+        /// <summary>
+        ///
+        /// </summary>
+        [TestMethod]
+        public void CanInsertDocument()
         {
-            Note = "this is my note",
-            Payees = new List<Payee> { new Payee()
+            //arrange
+            PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\temp\\litedb.db");
+            PaymentItem item = new PaymentItem()
+            {
+                Note = "this is my note",
+                Payees = new List<Payee> { new Payee()
             {
                 Amount = 29.00m,
                 Date = DateTime.Now.AddDays(-1),
                 Name = "WalMart"
             }
             },
-        };
+            };
 
-        //act
-        var result = repo.InsertDocument(item);
+            //act
+            var result = repo.InsertDocument(item);
 
-        //assert
-        Assert.True(result.Success);
-    }
+            //assert
+            Assert.IsTrue(result.Success);
+        }
 
-    /// <summary>
-    ///
-    /// </summary>
-    [Fact]
-    public void CanReadAllItems()
-    {
-        //arrange
-        PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\temp\\litedb.db");
+        /// <summary>
+        ///
+        /// </summary>
+        [TestMethod]
+        public void CanReadAllItems()
+        {
+            //arrange
+            PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\temp\\litedb.db");
 
-        //act
-        var result = repo.GetAllItems();
+            //act
+            var result = repo.GetAllItems();
 
-        //assert
-        Assert.True(result.Count > 0);
-    }
+            //assert
+            Assert.IsTrue(result.Count > 0);
+        }
 
-    /// <summary>
-    ///
-    /// </summary>
-    [Fact]
-    public void CanReadItemsByDate()
-    {
-        //arrange
-        PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\temp\\litedb.db");
+        /// <summary>
+        ///
+        /// </summary>
+        [TestMethod]
+        public void CanReadItemsByDate()
+        {
+            //arrange
+            PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\temp\\litedb.db");
 
-        //act
-        var result = repo.GetItemsByDate(new DateTime(2022, 5, 17));
+            //act
+            var result = repo.GetItemsByDate(new DateTime(2022, 5, 17));
 
-        Console.WriteLine(result[0].ToString());
-        Console.WriteLine("test log");
+            Console.WriteLine(result[0].ToString());
+            Console.WriteLine("test log");
 
-        //assert
-        Assert.True(result.Count > 0);
-    }
+            //assert
+            Assert.IsTrue(result.Count > 0);
+        }
 
-    [Fact]
-    public void CanReadItemsByID()
-    {
-        //arrange
-        PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\temp\\litedb.db");
+        [TestMethod]
+        public void CanReadItemsByID()
+        {
+            //arrange
+            PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\temp\\litedb.db");
 
-        //act
-        var result = repo.GetItemsById(Guid.Parse("06257dc0-70cc-455c-9e06-886264905d2a"));
+            //act
+            var result = repo.GetItemsById(Guid.Parse("06257dc0-70cc-455c-9e06-886264905d2a"));
 
-        Console.WriteLine(result[0].ToString());
-        Console.WriteLine("test log");
+            Console.WriteLine(result[0].ToString());
+            Console.WriteLine("test log");
 
-        //assert
-        Assert.True(result.Count > 0);
+            //assert
+            Assert.IsTrue(result.Count > 0);
+        }
     }
 }
