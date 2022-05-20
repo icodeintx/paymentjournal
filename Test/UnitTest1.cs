@@ -16,13 +16,20 @@ namespace Test
             PaymentItem item = new PaymentItem()
             {
                 Note = "this is my note",
-                Payees = new List<Payee> { new Payee()
-            {
-                Amount = 29.00m,
-                Date = DateTime.Now.AddDays(-1),
-                Name = "WalMart"
-            }
-            },
+                Payees = new List<Payee> {
+                    new Payee()
+                    {
+                        Amount = 64.15m,
+                        Date = DateTime.Now.AddDays(-2),
+                        Name = "Target"
+                    },
+                    new Payee()
+                    {
+                        Amount = 12.94m,
+                        Date = DateTime.Now.AddDays(-1),
+                        Name = "CircleK"
+                    }
+                }
             };
 
             //act

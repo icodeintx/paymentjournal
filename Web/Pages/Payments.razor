@@ -1,0 +1,66 @@
+﻿@page "/payments"
+
+
+Displaying Payments for current month/year
+<PaymentsMonthYearSelector />
+
+
+<div class="alert alert-secondary mt-4">
+    <span class="oi oi-pencil me-2" aria-hidden="true"></span>
+    <span class="text-nowrap">
+        Insert Create component here
+    </span>
+</div>
+
+
+
+
+<div class="rounded" >
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <td hidden>Id</td>
+                <td>Date</td>
+                <td>Note</td>
+                <td>Payees</td>
+            </tr>
+
+        </thead>
+
+        <tbody>
+                @foreach(var item in PaymentItems)
+                {
+                    <tr>
+                        <td hidden>@item.PaymentItemId</td>
+                        <td>@item.CreateDate</td>
+                        <td>@item.Note</td>
+
+                        <td>
+                            <table class="table table-striped table-light table-sm ">
+                                <thead>
+                                    <tr>
+                                        <td>Payee</td>
+                                        <td>Date</td>
+                                        <td>Amount</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var payee in item.Payees)
+                                    {
+                                        <tr>
+                                            <td>@payee.Name</td>
+                                            <td>@payee.Date</td>
+                                            <td>@payee.Amount</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+        </tbody>
+
+    </table>
+</div>
+
+

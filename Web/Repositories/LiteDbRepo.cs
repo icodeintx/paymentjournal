@@ -61,6 +61,7 @@ public class LiteDbRepo
 
                 var results = col.Query()
                     .Where(x => x.CreateDate.Date == date.Date)
+                    .OrderBy(x => x.CreateDate)
                     .ToList();
 
                 return results;
@@ -89,6 +90,36 @@ public class LiteDbRepo
 
                 var results = col.Query()
                     .Where(x => x.PaymentItemId == paymentItemId)
+                    .ToList();
+
+                return results;
+            }
+        }
+        catch
+        {
+            //for now just throw the error
+            throw;
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="month"></param>
+    /// <param name="year"></param>
+    /// <returns></returns>
+    public List<PaymentItem> GetItemsByMonthYear(int month, int year)
+    {
+        try
+        {
+            using (Database = new LiteDatabase(DatabaseName))
+            {
+                // Get a collection (or create, if doesn't exist)
+                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
+
+                var results = col.Query()
+                    .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year)
+                    .OrderBy(x => x.CreateDate)
                     .ToList();
 
                 return results;

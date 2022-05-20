@@ -5,6 +5,7 @@ using PaymentJournal_Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//pull connection string from config file
 string connectionString = builder.Configuration.GetConnectionString("LiteDb");
 
 builder.Services.AddTransient<LiteDbRepo>(s => new LiteDbRepo(connectionString));
