@@ -46,6 +46,35 @@ public class LiteDbRepo
     }
 
     /// <summary>
+    /// Return all the Years in the DB
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetDistintYears()
+    {
+        try
+        {
+            using (Database = new LiteDatabase(DatabaseName))
+            {
+                // Get a collection (or create, if doesn't exist)
+                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
+
+                //monkey balls
+                var paymentItems = col.Query().ToList();
+
+                var years = paymentItems.SelectMany(y => y.Payees)
+                    .Select(x => x.Date.Year).Distinct().ToList();
+
+                return years;
+            }
+        }
+        catch
+        {
+            //for now just throw the error
+            throw;
+        }
+    }
+
+    /// <summary>
     ///
     /// </summary>
     /// <param name="date"></param>

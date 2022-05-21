@@ -12,7 +12,7 @@ namespace Test
         public void CanInsertDocument()
         {
             //arrange
-            PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\temp\\litedb.db");
+            PaymentJournal_Web.Repositories.LiteDbRepo repo = new("C:\\src\\PaymentJournal\\Web\\Data\\litedb.db");
             PaymentItem item = new PaymentItem()
             {
                 Note = "this is my note",
@@ -20,13 +20,15 @@ namespace Test
                     new Payee()
                     {
                         Amount = 64.15m,
-                        Date = DateTime.Now.AddDays(-2),
+                        //Date = DateTime.Now.AddDays(-2),
+                        Date = DateTime.Now.AddYears(1),
                         Name = "Target"
                     },
                     new Payee()
                     {
                         Amount = 12.94m,
-                        Date = DateTime.Now.AddDays(-1),
+                        //Date = DateTime.Now.AddDays(-1),
+                        Date = DateTime.Now.AddYears(-2),
                         Name = "CircleK"
                     }
                 }

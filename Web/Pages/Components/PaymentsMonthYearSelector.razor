@@ -30,10 +30,17 @@
           <div class="input-group-text">Year</div>
 
         <select class="form-select" id="inlineFormSelectPref">
-            <option selected>2022</option>
-            <option value="1">2023</option>
-            <option value="2">2024</option>
-            <option value="3">2025</option>
+            @foreach(var year in Years)
+            {
+                if (year == DateTime.Now.Year)
+                {
+                    <option selected>@year</option>
+                }
+                else
+                {
+                    <option>@year</option>
+                }
+            }
         </select>
 
         </div>
