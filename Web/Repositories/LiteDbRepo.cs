@@ -204,7 +204,7 @@ public class LiteDbRepo
             using (Database = new LiteDatabase(DatabaseName))
             {
                 //set document defaults
-                document.CreateDate = DateTime.Now;
+                //document.CreateDate = DateTime.Now;
                 document.PaymentItemId = Guid.NewGuid();
 
                 //format the decimals correctly

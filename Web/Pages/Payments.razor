@@ -3,7 +3,18 @@
 @page "/payments/{Month}/{Year}"
 
 
-Displaying Payments for current month/year
+
+
+
+@if(IsAll)
+{
+    <div class="alert-warning p-3 m-3">Displaying ALL entries</div>
+}
+else
+{
+    <div class="alert-success p-3 m-3">Displaying Filtered entries</div>
+}
+
 <MonthYearSelector ReturnURL="/payments" />
 
 <div class="rounded" >

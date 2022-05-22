@@ -24,6 +24,11 @@ public partial class Payments : ComponentBase
     {
     }
 
+    /// <summary>
+    /// Property to indicate if we are searching by ALL entries or not
+    /// </summary>
+    public bool IsAll => string.IsNullOrEmpty(Month) && string.IsNullOrEmpty(Year);
+
     [Parameter]
     public string Month { get; set; }
 
@@ -51,9 +56,10 @@ public partial class Payments : ComponentBase
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        if (string.IsNullOrEmpty(Month) && string.IsNullOrEmpty(Year))
+        if (IsAll)
         {
-            PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+            //PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+            PaymentItems = repo.GetAllItems();
         }
         else
         {
@@ -63,7 +69,8 @@ public partial class Payments : ComponentBase
             }
             catch
             {
-                PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+                //PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+                PaymentItems = repo.GetAllItems();
             }
         }
     }
