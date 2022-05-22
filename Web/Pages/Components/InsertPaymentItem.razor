@@ -1,0 +1,54 @@
+﻿@page "/insert"
+<h3>InsertPaymentItem</h3>
+
+
+<button class="btn btn-primary btn-sm m-2" @onclick="() => AddNewPayee()">Add New Payee</button>
+
+<div class="row g-3">
+    <div class="col-12 alert-secondary rounded p-3">
+        <EditForm Model="PaymentItem" OnValidSubmit="HandleSubmit">
+        
+            <div class="row">
+                <div class="col-12 b-3 p-3">
+                    Note:
+                    <InputText class="max-width" @bind-Value="PaymentItem.Note" placeholder="" />
+                </div>
+            </div>
+        
+            <div class="row b-3 p-3">
+                <div class="col-sm-6">
+                    <table class="table table-success table-sm ">
+                        <thead>
+                            @if (PaymentItem.Payees.Count > 0)
+                            {
+                                <tr>
+                                    <td>Payee</td>
+                                    <td>Amount</td>
+                                    <td>Date</td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </thead>
+                        <tbody>
+                            @foreach(var payee in @PaymentItem.Payees)
+                            {
+                                <tr>
+                                    <td><InputText @bind-Value="payee.Name" /></td>
+                                    <td><InputNumber @bind-Value="payee.Amount" /></td>
+                                    <td><InputDate @bind-Value="payee.Date" /></td>
+                                    <td><div class="mouse-pointer" @onclick="() => RemovePayee(payee)"><i class="fa-solid fa-trash-can"></i></div></td>
+                                </tr>
+                                Counter++;
+                            }
+                    
+                        </tbody>
+                    </table>    
+                    <button type="submit" class="btn btn-primary">Publish</button>
+                </div>
+            </div>
+            
+            
+        </EditForm>
+    </div>
+</div>
+

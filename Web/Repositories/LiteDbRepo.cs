@@ -49,7 +49,7 @@ public class LiteDbRepo
     /// Return all the Years in the DB
     /// </summary>
     /// <returns></returns>
-    public List<int> GetDistintYears()
+    public IEnumerable<int> GetDistintYears()
     {
         try
         {
@@ -59,10 +59,7 @@ public class LiteDbRepo
                 var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
 
                 //monkey balls
-                var paymentItems = col.Query().ToList();
-
-                var years = paymentItems.SelectMany(y => y.Payees)
-                    .Select(x => x.Date.Year).Distinct().ToList();
+                var years = col.Query().Select(x => x.CreateDate.Year).ToList().Distinct();
 
                 return years;
             }
@@ -148,7 +145,7 @@ public class LiteDbRepo
 
                 var results = col.Query()
                     .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year)
-                    .OrderBy(x => x.CreateDate)
+                    .OrderByDescending(x => x.CreateDate)
                     .ToList();
 
                 return results;

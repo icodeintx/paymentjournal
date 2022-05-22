@@ -14,7 +14,7 @@ namespace PaymentJournal_Web.Pages.Components;
 
 public partial class PaymentsMonthYearSelector : ComponentBase
 {
-    public List<int> Years { get; set; }
+    public IEnumerable<int> Years { get; set; }
 
     [Inject]
     private LiteDbRepo repo { get; set; }
