@@ -66,7 +66,7 @@ public class LiteDbRepo
                 var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
 
                 var results = col.Query()
-                    .OrderBy(x => x.CreateDate)
+                    .OrderByDescending(x => x.CreateDate)
                     .ToList();
 
                 return results;
