@@ -24,15 +24,47 @@ public partial class Payments : ComponentBase
     {
     }
 
+    [Parameter]
+    public string Month { get; set; }
+
     public List<PaymentItem> PaymentItems { get; set; }
+
+    [Parameter]
+    public string Year { get; set; }
 
     [Inject]
     private LiteDbRepo repo { get; set; }
 
+    protected void DeleteDocument(PaymentItem model)
+    {
+        //remove from gui
+        PaymentItems.Remove(model);
+
+        repo.DeleteDocument(model.PaymentItemId);
+    }
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
+    }
 
-        PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (string.IsNullOrEmpty(Month) && string.IsNullOrEmpty(Year))
+        {
+            PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+        }
+        else
+        {
+            try
+            {
+                PaymentItems = repo.GetItemsByMonthYear(int.Parse(Month), int.Parse(Year));
+            }
+            catch
+            {
+                PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+            }
+        }
     }
 }

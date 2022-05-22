@@ -15,11 +15,18 @@
                 </div>
             </div>
         
+            @if (HasPayees == false)
+            {
+                <div class="alert-success b-3 p-3">select "Add New Payee" button to add Payees </div>
+            }
+            
+            
+
             <div class="row b-3 p-3">
                 <div class="col-sm-6">
                     <table class="table table-success table-sm ">
                         <thead>
-                            @if (PaymentItem.Payees.Count > 0)
+                            @if (HasPayees)
                             {
                                 <tr>
                                     <td>Payee</td>

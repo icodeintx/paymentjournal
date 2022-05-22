@@ -21,6 +21,40 @@ public class LiteDbRepo
     /// <summary>
     ///
     /// </summary>
+    /// <param name="document"></param>
+    /// <returns></returns>
+    public DbInsertResult DeleteDocument(Guid paymentId)
+    {
+        try
+        {
+            using (Database = new LiteDatabase(DatabaseName))
+            {
+                // Get a collection (or create, if doesn't exist)
+                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
+
+                // Insert new PaymentItem document (Id will be auto-incremented)
+                col.Delete(paymentId);
+
+                return new DbInsertResult()
+                {
+                    Success = true,
+                    Error = ""
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            return new DbInsertResult()
+            {
+                Success = false,
+                Error = ex.Message
+            };
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
     /// <returns></returns>
     public List<PaymentItem> GetAllItems()
     {
@@ -173,6 +207,9 @@ public class LiteDbRepo
                 document.CreateDate = DateTime.Now;
                 document.PaymentItemId = Guid.NewGuid();
 
+                //format the decimals correctly
+                FixDollarValues(document);
+
                 // Get a collection (or create, if doesn't exist)
                 var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
 
@@ -196,6 +233,18 @@ public class LiteDbRepo
                 Success = false,
                 Error = ex.Message
             };
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="model"></param>
+    private void FixDollarValues(PaymentItem model)
+    {
+        foreach (var payee in model.Payees)
+        {
+            payee.Amount = decimal.Parse(payee.Amount.ToString("0.00"));
         }
     }
 }

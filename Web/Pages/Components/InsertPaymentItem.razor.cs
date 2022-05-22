@@ -27,6 +27,8 @@ public partial class InsertPaymentItem : ComponentBase
     [Inject]
     public LiteDbRepo DB { get; set; }
 
+    public bool HasPayees => PaymentItem.Payees.Count > 0;
+
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
@@ -44,6 +46,9 @@ public partial class InsertPaymentItem : ComponentBase
             });
     }
 
+    /// <summary>
+    ///
+    /// </summary>
     public void HandleSubmit()
     {
         if (!string.IsNullOrEmpty(PaymentItem.Note))

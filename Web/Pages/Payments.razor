@@ -1,13 +1,16 @@
-﻿@page "/payments"
+﻿@page "/"
+@page "/payments"
+@page "/payments/{Month}/{Year}"
 
 
 Displaying Payments for current month/year
-<PaymentsMonthYearSelector />
+<MonthYearSelector ReturnURL="/payments" />
 
 <div class="rounded" >
     <table class="table table-sm">
         <thead>
             <tr>
+                <td></td>
                 <td hidden>Id</td>
                 <td>Date</td>
                 <td>Note</td>
@@ -19,8 +22,9 @@ Displaying Payments for current month/year
                 @foreach(var item in PaymentItems)
                 {
                     <tr>
+                        <td><div class="mouse-pointer" @onclick="() => DeleteDocument(item)"><i class="fa-solid fa-trash-can"></i></div></td>
                         <td hidden>@item.PaymentItemId</td>
-                        <td >@item.CreateDate.ToString("MMM-dd-yyyy")</td>
+                        <td >@item.CreateDate.ToString("M-dd-yy")</td>
                         <td>@item.Note</td>
 
                         <td>
@@ -40,8 +44,8 @@ Displaying Payments for current month/year
                                     {
                                         <tr>
                                             <td>@payee.Name</td>
-                                            <td>@payee.Date.ToString("MMM-dd-yyyy")</td>
-                                            <td>@payee.Amount</td>
+                                            <td>@payee.Date.ToString("M-dd-yy")</td>
+                                            <td>$@payee.AmountFormatted</td>
                                         </tr>
                                     }
                                 </tbody>
