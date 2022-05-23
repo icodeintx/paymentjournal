@@ -59,7 +59,14 @@ else
                                             <td>$@payee.AmountFormatted</td>
                                         </tr>
                                     }
-                                </tbody>
+                                @if (item.Payees.Count > 0)
+                                {
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td><b>$@item.Payees.Sum(x => x.Amount).ToString("0.00")</b></td>
+                                    </tr>
+                                }
+                            </tbody>
                             </table>
                         </td>
                     </tr>
