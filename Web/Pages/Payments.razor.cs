@@ -38,21 +38,52 @@ public partial class Payments : ComponentBase
     public string Year { get; set; }
 
     [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    [Inject]
+    private NavigationManager navigationManager { get; set; }
+
+    [Inject]
     private LiteDbRepo repo { get; set; }
 
-    protected void DeleteDocument(PaymentItem model)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="model"></param>
+    protected async Task DeleteDocument(PaymentItem model)
     {
-        //remove from gui
-        PaymentItems.Remove(model);
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
 
-        repo.DeleteDocument(model.PaymentItemId);
+        if (confirmed)
+        {
+            //remove from gui
+            PaymentItems.Remove(model);
+
+            repo.DeleteDocument(model.PaymentItemId);
+        }
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    protected async Task EditDocument(PaymentItem model)
+    {
+        navigationManager.NavigateTo("/editPayment");
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
     protected override void OnInitialized()
     {
         base.OnInitialized();
     }
 
+    /// <summary>
+    ///
+    /// </summary>
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
