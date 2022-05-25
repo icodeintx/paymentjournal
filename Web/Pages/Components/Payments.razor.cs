@@ -10,7 +10,7 @@ using Microsoft.JSInterop;
 using PaymentJournal_Web.Models;
 using PaymentJournal_Web.Repositories;
 
-namespace PaymentJournal_Web.Pages;
+namespace PaymentJournal_Web.Pages.Components;
 
 /// <summary>
 ///
@@ -70,7 +70,7 @@ public partial class Payments : ComponentBase
     /// <returns></returns>
     protected async Task EditDocument(PaymentItem model)
     {
-        navigationManager.NavigateTo("/editPayment");
+        navigationManager.NavigateTo($"/edit/{model.PaymentItemId.ToString()}");
     }
 
     /// <summary>

@@ -8,7 +8,7 @@ public class PaymentItem
     public DateTime CreateDate { get; set; } = DateTime.Now;
     public string Note { get; set; } = string.Empty;
     public List<Payee> Payees { get; set; } = new List<Payee>();
-    public Guid PaymentItemId { get; set; }
+    public Guid PaymentItemId { get; set; } = Guid.Empty;
 
     public override string ToString()
     {

@@ -139,7 +139,7 @@ public class LiteDbRepo
     /// </summary>
     /// <param name="paymentItemId"></param>
     /// <returns></returns>
-    public List<PaymentItem> GetItemsById(Guid paymentItemId)
+    public PaymentItem GetItemsById(Guid paymentItemId)
     {
         try
         {
@@ -150,7 +150,7 @@ public class LiteDbRepo
 
                 var results = col.Query()
                     .Where(x => x.PaymentItemId == paymentItemId)
-                    .ToList();
+                    .ToList().FirstOrDefault();
 
                 return results;
             }
@@ -203,9 +203,11 @@ public class LiteDbRepo
         {
             using (Database = new LiteDatabase(DatabaseName))
             {
-                //set document defaults
-                //document.CreateDate = DateTime.Now;
-                document.PaymentItemId = Guid.NewGuid();
+                //Create new ID if this is a new PaymentItem
+                if (document.PaymentItemId == Guid.Empty)
+                {
+                    document.PaymentItemId = Guid.NewGuid();
+                }
 
                 //format the decimals correctly
                 FixDollarValues(document);
@@ -215,6 +217,46 @@ public class LiteDbRepo
 
                 // Insert new PaymentItem document (Id will be auto-incremented)
                 col.Insert(document);
+
+                // Index document using document CreateDate property
+                col.EnsureIndex(x => x.CreateDate);
+
+                return new DbInsertResult()
+                {
+                    Success = true,
+                    Error = ""
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            return new DbInsertResult()
+            {
+                Success = false,
+                Error = ex.Message
+            };
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="document"></param>
+    /// <returns></returns>
+    public DbInsertResult UpdateDocument(PaymentItem document)
+    {
+        try
+        {
+            using (Database = new LiteDatabase(DatabaseName))
+            {
+                //format the decimals correctly
+                FixDollarValues(document);
+
+                // Get a collection (or create, if doesn't exist)
+                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
+
+                // Insert new PaymentItem document (Id will be auto-incremented)
+                col.Update(document);
 
                 // Index document using document CreateDate property
                 col.EnsureIndex(x => x.CreateDate);

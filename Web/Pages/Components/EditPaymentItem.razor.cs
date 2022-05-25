@@ -12,12 +12,12 @@ using PaymentJournal_Web.Repositories;
 
 namespace PaymentJournal_Web.Pages.Components;
 
-public partial class InsertPaymentItem : ComponentBase
+public partial class EditPaymentItem : ComponentBase
 {
     /// <summary>
     ///
     /// </summary>
-    public InsertPaymentItem()
+    public EditPaymentItem()
     {
         PaymentItem = new PaymentItem();
     }
@@ -34,6 +34,9 @@ public partial class InsertPaymentItem : ComponentBase
 
     public PaymentItem PaymentItem { get; set; }
 
+    [Parameter]
+    public string PaymentItemId { get; set; }
+
     /// <summary>
     ///
     /// </summary>
@@ -42,7 +45,7 @@ public partial class InsertPaymentItem : ComponentBase
         PaymentItem.Payees.Add(
             new Payee()
             {
-                PayeeId = Guid.NewGuid(),   
+                PayeeId = Guid.NewGuid(),
                 Date = DateTime.Now
             });
     }
@@ -55,12 +58,14 @@ public partial class InsertPaymentItem : ComponentBase
         if (!string.IsNullOrEmpty(PaymentItem.Note))
         {
             //there is a note so go from there.
-            var result = DB.InsertDocument(PaymentItem);
+            var result = DB.UpdateDocument(PaymentItem);
 
             if (result.Success)
             {
                 //NavigationManager.NavigateTo("/insert", true);
                 PaymentItem = new PaymentItem();
+
+                NavigationManager.NavigateTo("/payments");
             }
         }
     }
@@ -72,5 +77,17 @@ public partial class InsertPaymentItem : ComponentBase
     public void RemovePayee(Payee item)
     {
         PaymentItem.Payees.Remove(item);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (PaymentItemId != String.Empty)
+        {
+            PaymentItem = DB.GetItemsById(Guid.Parse(PaymentItemId));
+        }
     }
 }

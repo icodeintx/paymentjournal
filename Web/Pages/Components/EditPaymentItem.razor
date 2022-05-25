@@ -1,0 +1,87 @@
+﻿@page "/edit/{PaymentItemId}"
+<h3>EditPaymentItem</h3>
+
+
+
+
+@if(PaymentItem is not null)
+{
+    
+     <div class="row g-3">
+        <div class="col-12 alert-secondary rounded p-3">
+            <EditForm Model="PaymentItem" OnValidSubmit="HandleSubmit">
+        
+                <div class="row">
+                    <div class="col-12 b-3 p-3">
+                        Note:
+                        <InputText class="full-width-100" @bind-Value="PaymentItem.Note" placeholder="" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 b-3 p-3">
+                        Date:
+                        <InputDate @bind-Value="PaymentItem.CreateDate" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 b-3 p-3">
+                        Id:
+                        <div>@PaymentItem.PaymentItemId</div>
+                    </div>
+                </div>
+        
+                @if (HasPayees == false)
+                {
+                    <div class="alert-success b-3 p-3">select "Add New Payee" button to add Payees </div>
+                }
+            
+
+                <div class="row b-3 p-3">
+                    <div class="col-sm-6">
+                        <table class="table table-success table-sm ">
+                            <thead>
+                                @if (HasPayees)
+                                {
+                                    <tr>
+                                        <td>Payee</td>
+                                        <td>Amount</td>
+                                        <td>Date</td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            </thead>
+                            <tbody>
+                                @foreach(var payee in @PaymentItem.Payees)
+                                {
+                                    <tr>
+                                        <td><InputText @bind-Value="payee.Name" /></td>
+                                        <td><InputNumber @bind-Value="payee.Amount" /></td>
+                                        <td><InputDate @bind-Value="payee.Date" /></td>
+                                        <td><div class="mouse-pointer" @onclick="() => RemovePayee(payee)"><i class="fa-solid fa-trash-can"></i></div></td>
+                                    </tr>
+                                    Counter++;
+                                }
+                    
+                            </tbody>
+                        </table>    
+                    </div>
+                </div>
+            
+                <div class="row b-3 p-3">
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-primary btn-sm m-2" @onclick="() => AddNewPayee()">Add New Payee</button>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-primary" style="float:right">Save</button>
+                    </div>
+                </div>            
+            </EditForm>
+            
+        </div>
+    </div>   
+}
+
+
+
+
