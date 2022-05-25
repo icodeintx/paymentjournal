@@ -85,11 +85,11 @@ namespace Test
             //act
             var result = repo.GetItemsById(Guid.Parse("06257dc0-70cc-455c-9e06-886264905d2a"));
 
-            Console.WriteLine(result[0].ToString());
+            Console.WriteLine(result);
             Console.WriteLine("test log");
 
             //assert
-            Assert.IsTrue(result.Count > 0);
+            Assert.IsTrue(result != null);
         }
     }
 }
