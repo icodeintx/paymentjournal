@@ -3,7 +3,7 @@ using PaymentJournal_Web.Models;
 
 namespace PaymentJournal_Web.Repositories;
 
-public class LiteDbRepo
+public class PaymentRepo
 {
     private string DatabaseName = "";
     private string PaymentItemsCollection = "PaymentItems";
@@ -11,7 +11,7 @@ public class LiteDbRepo
     /// <summary>
     ///
     /// </summary>
-    public LiteDbRepo(string connectionString)
+    public PaymentRepo(string connectionString)
     {
         DatabaseName = connectionString;
     }

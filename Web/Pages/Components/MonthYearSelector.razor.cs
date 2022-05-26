@@ -25,7 +25,7 @@ public partial class MonthYearSelector : ComponentBase
     private NavigationManager Nav { get; set; }
 
     [Inject]
-    private LiteDbRepo repo { get; set; }
+    private PaymentRepo repo { get; set; }
 
     public void HandleValidSubmit()
     {

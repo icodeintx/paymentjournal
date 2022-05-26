@@ -25,7 +25,7 @@ public partial class InsertPaymentItem : ComponentBase
     public int Counter { get; set; } = 0;
 
     [Inject]
-    public LiteDbRepo DB { get; set; }
+    public PaymentRepo DB { get; set; }
 
     public bool HasPayees => PaymentItem.Payees.Count > 0;
 

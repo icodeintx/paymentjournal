@@ -44,7 +44,7 @@ public partial class Payments : ComponentBase
     private NavigationManager navigationManager { get; set; }
 
     [Inject]
-    private LiteDbRepo repo { get; set; }
+    private PaymentRepo repo { get; set; }
 
     /// <summary>
     ///
