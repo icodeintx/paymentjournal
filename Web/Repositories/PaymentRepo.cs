@@ -23,7 +23,7 @@ public class PaymentRepo
     /// </summary>
     /// <param name="document"></param>
     /// <returns></returns>
-    public DbInsertResult DeleteDocument(Guid paymentId)
+    public DbResult DeleteDocument(Guid paymentId)
     {
         try
         {
@@ -35,7 +35,7 @@ public class PaymentRepo
                 // Insert new PaymentItem document (Id will be auto-incremented)
                 col.Delete(paymentId);
 
-                return new DbInsertResult()
+                return new DbResult()
                 {
                     Success = true,
                     Error = ""
@@ -44,7 +44,7 @@ public class PaymentRepo
         }
         catch (Exception ex)
         {
-            return new DbInsertResult()
+            return new DbResult()
             {
                 Success = false,
                 Error = ex.Message
@@ -197,7 +197,7 @@ public class PaymentRepo
     /// </summary>
     /// <param name="document"></param>
     /// <returns></returns>
-    public DbInsertResult InsertDocument(PaymentItem document)
+    public DbResult InsertDocument(PaymentItem document)
     {
         try
         {
@@ -221,7 +221,7 @@ public class PaymentRepo
                 // Index document using document CreateDate property
                 col.EnsureIndex(x => x.CreateDate);
 
-                return new DbInsertResult()
+                return new DbResult()
                 {
                     Success = true,
                     Error = ""
@@ -230,7 +230,7 @@ public class PaymentRepo
         }
         catch (Exception ex)
         {
-            return new DbInsertResult()
+            return new DbResult()
             {
                 Success = false,
                 Error = ex.Message
@@ -243,7 +243,7 @@ public class PaymentRepo
     /// </summary>
     /// <param name="document"></param>
     /// <returns></returns>
-    public DbInsertResult UpdateDocument(PaymentItem document)
+    public DbResult UpdateDocument(PaymentItem document)
     {
         try
         {
@@ -261,7 +261,7 @@ public class PaymentRepo
                 // Index document using document CreateDate property
                 col.EnsureIndex(x => x.CreateDate);
 
-                return new DbInsertResult()
+                return new DbResult()
                 {
                     Success = true,
                     Error = ""
@@ -270,7 +270,7 @@ public class PaymentRepo
         }
         catch (Exception ex)
         {
-            return new DbInsertResult()
+            return new DbResult()
             {
                 Success = false,
                 Error = ex.Message

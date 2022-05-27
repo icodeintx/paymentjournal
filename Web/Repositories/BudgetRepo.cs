@@ -23,7 +23,7 @@ public class BudgetRepo
     /// </summary>
     /// <param name="document"></param>
     /// <returns></returns>
-    public DbInsertResult DeleteBudget(Guid budgetId)
+    public DbResult DeleteBudget(Guid budgetId)
     {
         try
         {
@@ -35,7 +35,7 @@ public class BudgetRepo
                 // Insert new PaymentItem document (Id will be auto-incremented)
                 col.Delete(budgetId);
 
-                return new DbInsertResult()
+                return new DbResult()
                 {
                     Success = true,
                     Error = ""
@@ -44,7 +44,7 @@ public class BudgetRepo
         }
         catch (Exception ex)
         {
-            return new DbInsertResult()
+            return new DbResult()
             {
                 Success = false,
                 Error = ex.Message
@@ -135,7 +135,7 @@ public class BudgetRepo
     /// </summary>
     /// <param name="document"></param>
     /// <returns></returns>
-    public DbInsertResult SaveBudget(Budget document)
+    public DbResult SaveBudget(Budget document)
     {
         try
         {
@@ -153,7 +153,7 @@ public class BudgetRepo
                 // Insert new PaymentItem document (Id will be auto-incremented)
                 col.Upsert(document);
 
-                return new DbInsertResult()
+                return new DbResult()
                 {
                     Success = true,
                     Error = ""
@@ -162,7 +162,7 @@ public class BudgetRepo
         }
         catch (Exception ex)
         {
-            return new DbInsertResult()
+            return new DbResult()
             {
                 Success = false,
                 Error = ex.Message

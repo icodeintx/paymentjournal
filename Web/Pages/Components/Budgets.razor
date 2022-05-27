@@ -1,0 +1,210 @@
+﻿@page "/budget"
+@page "/budget/{BudgetId}"
+
+
+
+
+<div class="row">
+    <div class="col-6 b-3 p-3">
+        @Budget.BudgetId
+    </div>
+    <div class="col-6 b-3 p-3">
+        <button title="Delete Budget" class="btn btn-danger btn-sm" @onclick="() => DeleteBudget(Budget.BudgetId)"><i class="fa-solid fa-trash-can"></i></button>
+    </div>
+</div>
+
+
+<div class="alert-secondary p-3 m-3 rounded" >
+    <h2>Budget</h2>
+    put stuff here
+</div>
+
+<EditForm Model="Budget" OnValidSubmit="HandleSubmit">
+
+    <div class="alert-secondary p-3 m-3 rounded" >
+        <h2><button type="button" title="Add Expense" class="btn btn-primary btn-sm" @onclick="() => AddExpense()"><i class="fa-solid fa-plus"></i></button> Expenses</h2>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Bill Name</td>
+                    <td>Paid To</td>
+                    <td>Paid By Acct</td>
+                    <td>Amount</td>
+                    <td>Est. Due Day</td>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                    @foreach(var item in Budget.Expenses)
+                    {
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td><button type="button" title="Delete Expense" class="btn btn-danger btn-sm" @onclick="() => DeleteExpense(item)"><i class="fa-solid fa-trash-can"></i></button></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td ><InputText @bind-Value="item.BillName" /></td>
+                            <td ><InputText @bind-Value="item.PaidTo" /></td>
+                            <td ><InputNumber @bind-Value="item.PaidByAccountNumber" /></td>
+                            <td ><InputNumber @bind-Value="item.Amount" /></td>
+                            <td ><InputNumber @bind-Value="item.EstimatedDueDay" /></td>
+                        </tr>
+                    }
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="alert-secondary p-3 m-3 rounded" >
+        <h2><button type="button" title="Add Income" class="btn btn-primary btn-sm" @onclick="() => AddIncome()"><i class="fa-solid fa-plus"></i></button> Income</h2>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Employer</td>
+                    <td>Type</td> @*like payroll*@
+                    <td>Amount</td>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                    @foreach(var item in Budget.Incomes)
+                    {
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td><button type="button" title="Delete Income" class="btn btn-danger btn-sm" @onclick="() => DeleteIncome(item)"><i class="fa-solid fa-trash-can"></i></button></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td ><InputText @bind-Value="item.Employer" /></td>
+                            <td ><InputText @bind-Value="item.Type" /></td>
+                            <td ><InputNumber @bind-Value="item.Amount" /></td>
+                        </tr>
+                    }
+            </tbody>
+
+        </table>
+    </div>
+
+
+    <div class="alert-secondary p-3 m-3 rounded" >
+        <h2><button type="button" title="Add Bank Account" class="btn btn-primary btn-sm" @onclick="() => AddBankAccount()"><i class="fa-solid fa-plus"></i></button> Bank Accounts</h2>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Bank</td>
+                    <td>Type</td> @*like checking savings*@
+                    <td>Acct</td>
+                    <td>Description</td> @*bills, direct deposit, land*@
+
+                </tr>
+            </thead>
+
+            <tbody>
+                    @foreach(var item in Budget.BankAccounts)
+                    {
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td><button type="button" title="Delete Bank Account" class="btn btn-danger btn-sm" @onclick="() => DeleteBankAccount(item)"><i class="fa-solid fa-trash-can"></i></button></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td ><InputText @bind-Value="item.Bank" /></td>
+                            <td ><InputText @bind-Value="item.Type" /></td>
+                            <td ><InputNumber @bind-Value="item.AccountNumber" /></td>
+                            <td ><InputText @bind-Value="item.Description" /></td>
+                        </tr>
+                    }
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="alert-secondary p-3 m-3 rounded" >
+        <h2><button type="button" title="Add Credit Card" class="btn btn-primary btn-sm" @onclick="() => AddCreditCard()"><i class="fa-solid fa-plus"></i></button> Credit Cards</h2>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Holder</td>  @*visa, mc*@
+                    <td>Acct</td>
+                    <td>Bank</td>
+                    <td>AcctAttached</td>
+                    <td>Description</td> @*bills, direct deposit, land*@
+                    <td>Debt?</td>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                    @foreach(var item in Budget.CreditCards)
+                    {
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td><button type="button" title="Delete Credit Card" class="btn btn-danger btn-sm" @onclick="() => DeleteCreditCard(item)"><i class="fa-solid fa-trash-can"></i></button></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td ><InputText @bind-Value="item.Holder" /></td>
+                            <td ><InputNumber @bind-Value="item.AccountNumber" /></td>
+                            <td ><InputText @bind-Value="item.Bank" /></td>
+                            <td ><InputNumber @bind-Value="item.AccountNumberAttachedTo" /></td>
+                            <td ><InputText @bind-Value="item.Description" /></td>
+                            <td ><InputCheckbox @bind-Value="item.IsDebt" /></td>
+                        </tr>
+                    }
+            </tbody>
+
+        </table>
+    </div>
+
+
+    <div class="alert-secondary p-3 m-3 rounded" >
+        <h2><button type="button" title="Add Online Service" class="btn btn-primary btn-sm" @onclick="() => AddOnlineService()"><i class="fa-solid fa-plus"></i></button> Online Services</h2>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Service</td>  @*paypal, venmo*@
+                    <td>PaidTo</td>  @*acct number charge with this service*@
+                </tr>
+            </thead>
+
+            <tbody>
+                    @foreach(var item in Budget.OnlineServices)
+                    {
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td><button type="button" title="Delete Online Service" class="btn btn-danger btn-sm" @onclick="() => DeleteOnlineService(item)"><i class="fa-solid fa-trash-can"></i></button></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td ><InputText @bind-Value="item.Service" /></td>
+                            <td ><InputNumber @bind-Value="item.PaidTo" /></td>
+                        </tr>
+                    }
+            </tbody>
+
+        </table>
+    </div>
+    <div class="row b-3 p-3">
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary" style="float:right">Save</button>
+        </div>
+    </div>      
+
+</EditForm>
