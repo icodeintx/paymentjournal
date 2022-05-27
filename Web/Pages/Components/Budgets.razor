@@ -49,7 +49,7 @@
                             </td>
                             <td ><InputText @bind-Value="item.BillName" /></td>
                             <td ><InputText @bind-Value="item.PaidTo" /></td>
-                            <td ><InputNumber @bind-Value="item.PaidByAccountNumber" /></td>
+                            <td ><InputText @bind-Value="item.PaidBy" /></td>
                             <td ><InputNumber @bind-Value="item.Amount" /></td>
                             <td ><InputNumber @bind-Value="item.EstimatedDueDay" /></td>
                         </tr>
@@ -121,7 +121,7 @@
                             </td>
                             <td ><InputText @bind-Value="item.Bank" /></td>
                             <td ><InputText @bind-Value="item.Type" /></td>
-                            <td ><InputNumber @bind-Value="item.AccountNumber" /></td>
+                            <td ><InputText @bind-Value="item.AccountNumber" /></td>
                             <td ><InputText @bind-Value="item.Description" /></td>
                         </tr>
                     }
@@ -158,9 +158,9 @@
                                 </table>
                             </td>
                             <td ><InputText @bind-Value="item.Holder" /></td>
-                            <td ><InputNumber @bind-Value="item.AccountNumber" /></td>
+                            <td ><InputText @bind-Value="item.AccountNumber" /></td>
                             <td ><InputText @bind-Value="item.Bank" /></td>
-                            <td ><InputNumber @bind-Value="item.AccountNumberAttachedTo" /></td>
+                            <td ><InputText @bind-Value="item.AttachedTo" /></td>
                             <td ><InputText @bind-Value="item.Description" /></td>
                             <td ><InputCheckbox @bind-Value="item.IsDebt" /></td>
                         </tr>
@@ -194,7 +194,7 @@
                                 </table>
                             </td>
                             <td ><InputText @bind-Value="item.Service" /></td>
-                            <td ><InputNumber @bind-Value="item.PaidTo" /></td>
+                            <td ><InputText @bind-Value="item.PaidTo" /></td>
                         </tr>
                     }
             </tbody>

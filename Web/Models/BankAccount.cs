@@ -5,7 +5,7 @@ public class BankAccount
     /// <summary>
     /// Usually last 4
     /// </summary>
-    public int AccountNumber { get; set; }
+    public string AccountNumber { get; set; }
 
     /// <summary>
     /// Bank Name - USAA

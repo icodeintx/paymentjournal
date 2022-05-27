@@ -123,10 +123,11 @@ public class BudgetRepo
                 return results;
             }
         }
-        catch
+        catch (Exception ex)
         {
+            return new Budget();
             //for now just throw the error
-            throw;
+            //throw;
         }
     }
 

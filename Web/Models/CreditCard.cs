@@ -5,12 +5,12 @@ public class CreditCard
     /// <summary>
     /// usually last 4
     /// </summary>
-    public int AccountNumber { get; set; }
+    public string AccountNumber { get; set; }
 
     /// <summary>
     /// usually last 4
     /// </summary>
-    public int AccountNumberAttachedTo { get; set; }
+    public string AttachedTo { get; set; }
 
     /// <summary>
     /// Name of Bank - USAA / Chase

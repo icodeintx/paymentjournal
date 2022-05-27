@@ -7,7 +7,7 @@ public class OnlineService
     /// <summary>
     /// Last 4 of CC or Bank account number
     /// </summary>
-    public int PaidTo { get; set; }
+    public string PaidTo { get; set; }
 
     /// <summary>
     /// payPal, Youtube, etc.
