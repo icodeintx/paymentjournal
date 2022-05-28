@@ -118,7 +118,7 @@ public class BudgetRepo
                 // Get a collection (or create, if doesn't exist)
                 var col = Database.GetCollection<Budget>(DBCollection);
 
-                var results = col.Query().OrderByDescending(y => y.CreateDate).ToList().FirstOrDefault();
+                var results = col.Query().OrderByDescending(y => y.LastSavedDate).ToList().FirstOrDefault();
 
                 return results;
             }
@@ -142,6 +142,9 @@ public class BudgetRepo
         {
             using (Database = new LiteDatabase(DatabaseName))
             {
+                //always update the last saved date
+                document.LastSavedDate = DateTime.Now;
+
                 //Create new ID if this is a new PaymentItem
                 if (document.BudgetId == Guid.Empty)
                 {

@@ -10,6 +10,7 @@ public class Budget
     public decimal Debt_Income_Ratio => CalculateDTI();
     public List<Expense> Expenses { get; set; } = new();
     public List<Income> Incomes { get; set; } = new();
+    public DateTime LastSavedDate { get; set; } = DateTime.Now;
     public string Name { get; set; } = string.Empty;
     public List<OnlineService> OnlineServices { get; set; } = new();
     public decimal TotalExpenses => Expenses.Select(y => y.Amount).Sum();
