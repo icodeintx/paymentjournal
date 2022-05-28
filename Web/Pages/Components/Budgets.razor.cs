@@ -22,6 +22,7 @@ public partial class Budgets : ComponentBase
     [Parameter]
     public string BudgetId { get; set; } = string.Empty;
 
+    public bool Disabled { get; set; } = true;
     public string Message { get; set; } = string.Empty;
 
     [Inject]
@@ -39,7 +40,7 @@ public partial class Budgets : ComponentBase
     /// <param name="budgetId"></param>
     public async void DeleteBudget(Guid budgetId)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this BUDGET?");
         if (confirmed)
         {
             DbResult result = Repo.DeleteBudget(budgetId);
@@ -64,6 +65,11 @@ public partial class Budgets : ComponentBase
     public string IsTrueToYesNo(bool item)
     {
         return item == true ? "Yes" : "No";
+    }
+
+    public void ToggleDisabled()
+    {
+        Disabled = Disabled == true ? false : true;
     }
 
     /// <summary>
@@ -232,5 +238,25 @@ public partial class Budgets : ComponentBase
                 Budget = new Budget();
             }
         }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    private string FormatMoney(decimal value)
+    {
+        return value.ToString("0.00");
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    private string FormatPercent(decimal value)
+    {
+        return value.ToString("0.0");
     }
 }
