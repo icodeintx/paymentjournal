@@ -44,7 +44,7 @@ public partial class Budget_View : ComponentBase
         if (confirmed)
         {
             DbResult result = Repo.DeleteBudget(budgetId);
-            NavigationManager.NavigateTo("/budget", true);
+            NavigationManager.NavigateTo("/budgets", true);
         }
     }
 
@@ -208,32 +208,44 @@ public partial class Budget_View : ComponentBase
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
+
         if (string.IsNullOrEmpty(BudgetId))
         {
+            //if no budgetID is passed as parameter Get the latest budget
+
             //PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
             Budget = Repo.GetLatestBudget();
 
             if (Budget is null)
             {
+                //if no latest budget found then create a new budget
                 Message = "No Budget Found.  Creating New Budget.";
                 Budget = new();
             }
         }
         else
         {
+            //BudgetId was passed as parameter, lookup the budget and display
             try
             {
-                Budget = Repo.GetBudget(Guid.Parse(BudgetId));
+                //if BudgetId pass as parameter is Guid Default then create new budget
+                if (Guid.Parse(BudgetId) == Guid.Empty)
+                {
+                    Budget = new();
+                    Disabled = false;
+                }
 
+                Budget = Repo.GetBudget(Guid.Parse(BudgetId));
                 if (Budget is null)
                 {
+                    //if budgetId was not found create a new budget
                     Message = "No Budget Found.  Creating New Budget.";
                     Budget = new();
                 }
             }
             catch (Exception ex)
             {
-                //PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+                //if any errors were encountered, create a new budget
                 Message = $"Error retrieving Budget. {ex.Message} ";
                 Budget = new Budget();
             }

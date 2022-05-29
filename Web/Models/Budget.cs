@@ -20,15 +20,15 @@ public class Budget
     /// Returns expenses summed by PayTo acct
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ExpensePayGroup> GetExpensePayGroups()
+    public IList<ExpensePayGroup> GetExpensePayGroups()
     {
-        var result = from expense in Expenses
-                     group expense by expense.PaidBy into expGroup
-                     select new ExpensePayGroup
-                     {
-                         Account = expGroup.Key,
-                         Sum = expGroup.Sum(x => x.Amount)
-                     };
+        var result = (from expense in Expenses
+                      group expense by expense.PaidBy into expGroup
+                      select new ExpensePayGroup
+                      {
+                          Account = expGroup.Key,
+                          Sum = expGroup.Sum(x => x.Amount)
+                      }).ToList();
 
         return result;
     }

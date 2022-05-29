@@ -40,7 +40,7 @@ public partial class Budgets : ComponentBase
         if (confirmed)
         {
             DbResult result = Repo.DeleteBudget(budgetId);
-            NavigationManager.NavigateTo("/budget", true);
+            NavigationManager.NavigateTo("/budgets", true);
         }
     }
 
@@ -72,6 +72,14 @@ public partial class Budgets : ComponentBase
     protected void ViewBudget(Guid budgetId)
     {
         NavigationManager.NavigateTo($"/budget/view/{budgetId}");
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    private void CreateNewBudget()
+    {
+        NavigationManager.NavigateTo($"/budget/view/{Guid.Empty}");
     }
 
     /// <summary>
