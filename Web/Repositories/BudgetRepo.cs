@@ -3,17 +3,15 @@ using PaymentJournal_Web.Models;
 
 namespace PaymentJournal_Web.Repositories;
 
-public class BudgetRepo
+public class BudgetRepo : BaseRepo
 {
-    private string DatabaseName = "";
     private string DBCollection = "Budget";
 
     /// <summary>
     ///
     /// </summary>
-    public BudgetRepo(string connectionString)
+    public BudgetRepo(string connectionString) : base(connectionString)
     {
-        DatabaseName = connectionString;
     }
 
     public LiteDatabase Database { get; set; }
@@ -27,20 +25,13 @@ public class BudgetRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
+            base.DeleteDocument<PaymentItem>(budgetId, DBCollection);
+
+            return new DbResult()
             {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<PaymentItem>(DBCollection);
-
-                // Insert new PaymentItem document (Id will be auto-incremented)
-                col.Delete(budgetId);
-
-                return new DbResult()
-                {
-                    Success = true,
-                    Error = ""
-                };
-            }
+                Success = true,
+                Error = ""
+            };
         }
         catch (Exception ex)
         {
@@ -60,15 +51,10 @@ public class BudgetRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
-            {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<Budget>(DBCollection);
+            var result = base.GetCollectionList<Budget>(DBCollection)
+                .OrderByDescending(y => y.CreateDate).ToList();
 
-                var results = col.Query().OrderByDescending(y => y.CreateDate).ToList();
-
-                return results;
-            }
+            return result;
         }
         catch
         {
@@ -86,17 +72,9 @@ public class BudgetRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
-            {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<Budget>(DBCollection);
+            var result = base.GetDocumentById<Budget>(budgetId, DBCollection);
 
-                var results = col.Query()
-                    .Where(x => x.BudgetId == budgetId)
-                    .ToList().FirstOrDefault();
-
-                return results;
-            }
+            return result;
         }
         catch
         {
@@ -113,15 +91,10 @@ public class BudgetRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
-            {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<Budget>(DBCollection);
+            var result = base.GetCollectionList<Budget>(DBCollection)
+                .OrderByDescending(y => y.LastSavedDate).FirstOrDefault();
 
-                var results = col.Query().OrderByDescending(y => y.LastSavedDate).ToList().FirstOrDefault();
-
-                return results;
-            }
+            return result;
         }
         catch (Exception ex)
         {
@@ -140,29 +113,22 @@ public class BudgetRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
+            //always update the last saved date
+            document.LastSavedDate = DateTime.Now;
+
+            //Create new ID if this is a new PaymentItem
+            if (document.BudgetId == Guid.Empty)
             {
-                //always update the last saved date
-                document.LastSavedDate = DateTime.Now;
-
-                //Create new ID if this is a new PaymentItem
-                if (document.BudgetId == Guid.Empty)
-                {
-                    document.BudgetId = Guid.NewGuid();
-                }
-
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<Budget>(DBCollection);
-
-                // Insert new PaymentItem document (Id will be auto-incremented)
-                col.Upsert(document);
-
-                return new DbResult()
-                {
-                    Success = true,
-                    Error = ""
-                };
+                document.BudgetId = Guid.NewGuid();
             }
+
+            base.UpsertDocument<Budget>(document, DBCollection);
+
+            return new DbResult()
+            {
+                Success = true,
+                Error = ""
+            };
         }
         catch (Exception ex)
         {

@@ -1,22 +1,22 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@*<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">PaymentJournal_Web</a>
+        <a class="navbar-brand" href=""></a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-</div>
+</div>*@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="budgets">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Budgets
+            <NavLink class="nav-link" href="budget/view">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Latest Budget
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="budget/view">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Latest Budget
+            <NavLink class="nav-link" href="budgets">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Budgets
             </NavLink>
         </div>
         <div class="px-3 bg-dark">

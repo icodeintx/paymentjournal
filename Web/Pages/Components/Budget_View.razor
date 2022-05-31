@@ -122,7 +122,7 @@
                 Annual Salary: <InputNumber disabled=@Disabled @bind-Value="Budget.AnnualSalary" />
             </div>
             <div class="col">
-                Gross: $@(FormatMoney(Budget.AnnualSalary / 12))
+                Monthly Gross: $@(FormatMoney(Budget.AnnualSalary / 12))
             </div>
             <div class="col">
                 <button type="button" disabled=@Disabled title="Delete Budget" class="btn btn-danger btn-sm float-end" @onclick="() => DeleteBudget(Budget.BudgetId)"><i class="fa-solid fa-trash-can"></i>Delete Budget</button>

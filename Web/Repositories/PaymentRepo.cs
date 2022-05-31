@@ -3,20 +3,16 @@ using PaymentJournal_Web.Models;
 
 namespace PaymentJournal_Web.Repositories;
 
-public class PaymentRepo
+public class PaymentRepo : BaseRepo
 {
-    private string DatabaseName = "";
-    private string PaymentItemsCollection = "PaymentItems";
+    private string DBCollection = "PaymentItems";
 
     /// <summary>
     ///
     /// </summary>
-    public PaymentRepo(string connectionString)
+    public PaymentRepo(string connectionString) : base(connectionString)
     {
-        DatabaseName = connectionString;
     }
-
-    public LiteDatabase Database { get; set; }
 
     /// <summary>
     ///
@@ -27,20 +23,13 @@ public class PaymentRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
+            var result = base.DeleteDocument<PaymentItem>(paymentId, DBCollection);
+
+            return new DbResult()
             {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
-
-                // Insert new PaymentItem document (Id will be auto-incremented)
-                col.Delete(paymentId);
-
-                return new DbResult()
-                {
-                    Success = true,
-                    Error = ""
-                };
-            }
+                Success = true,
+                Error = ""
+            };
         }
         catch (Exception ex)
         {
@@ -60,17 +49,10 @@ public class PaymentRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
-            {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
+            var results = base.GetCollectionList<PaymentItem>(DBCollection)
+                .OrderByDescending(x => x.CreateDate).ToList();
 
-                var results = col.Query()
-                    .OrderByDescending(x => x.CreateDate)
-                    .ToList();
-
-                return results;
-            }
+            return results;
         }
         catch
         {
@@ -87,16 +69,10 @@ public class PaymentRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
-            {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
+            //monkey balls
+            var years = base.GetCollectionList<PaymentItem>(DBCollection).Select(x => x.CreateDate.Year).ToList().Distinct();
 
-                //monkey balls
-                var years = col.Query().Select(x => x.CreateDate.Year).ToList().Distinct();
-
-                return years;
-            }
+            return years;
         }
         catch
         {
@@ -114,18 +90,12 @@ public class PaymentRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
-            {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
+            var results = base.GetCollectionList<PaymentItem>(DBCollection)
+                .Where(x => x.CreateDate.Date == date.Date)
+                .OrderBy(x => x.CreateDate)
+                .ToList();
 
-                var results = col.Query()
-                    .Where(x => x.CreateDate.Date == date.Date)
-                    .OrderBy(x => x.CreateDate)
-                    .ToList();
-
-                return results;
-            }
+            return results;
         }
         catch
         {
@@ -143,17 +113,11 @@ public class PaymentRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
-            {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
+            var results = base.GetCollectionList<PaymentItem>(DBCollection)
+                .Where(x => x.PaymentItemId == paymentItemId)
+                .ToList().FirstOrDefault();
 
-                var results = col.Query()
-                    .Where(x => x.PaymentItemId == paymentItemId)
-                    .ToList().FirstOrDefault();
-
-                return results;
-            }
+            return results;
         }
         catch
         {
@@ -172,18 +136,12 @@ public class PaymentRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
-            {
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
+            var results = base.GetCollectionList<PaymentItem>(DBCollection)
+                .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year)
+                .OrderByDescending(x => x.CreateDate)
+                .ToList();
 
-                var results = col.Query()
-                    .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year)
-                    .OrderByDescending(x => x.CreateDate)
-                    .ToList();
-
-                return results;
-            }
+            return results;
         }
         catch
         {
@@ -201,32 +159,25 @@ public class PaymentRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
+            //Create new ID if this is a new PaymentItem
+            if (document.PaymentItemId == Guid.Empty)
             {
-                //Create new ID if this is a new PaymentItem
-                if (document.PaymentItemId == Guid.Empty)
-                {
-                    document.PaymentItemId = Guid.NewGuid();
-                }
-
-                //format the decimals correctly
-                FixDollarValues(document);
-
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
-
-                // Insert new PaymentItem document (Id will be auto-incremented)
-                col.Insert(document);
-
-                // Index document using document CreateDate property
-                col.EnsureIndex(x => x.CreateDate);
-
-                return new DbResult()
-                {
-                    Success = true,
-                    Error = ""
-                };
+                document.PaymentItemId = Guid.NewGuid();
             }
+
+            //format the decimals correctly
+            FixDollarValues(document);
+
+            // Insert new PaymentItem document (Id will be auto-incremented)
+            base.InsertDocument<PaymentItem>(document, DBCollection);
+
+            base.GetCollection<PaymentItem>(DBCollection).EnsureIndex(x => x.CreateDate);
+
+            return new DbResult()
+            {
+                Success = true,
+                Error = ""
+            };
         }
         catch (Exception ex)
         {
@@ -247,26 +198,20 @@ public class PaymentRepo
     {
         try
         {
-            using (Database = new LiteDatabase(DatabaseName))
+            //format the decimals correctly
+            FixDollarValues(document);
+
+            // Insert new PaymentItem document (Id will be auto-incremented)
+            base.UpdateDocument<PaymentItem>(document, DBCollection);
+
+            // Index document using document CreateDate property
+            base.GetCollection<PaymentItem>(DBCollection).EnsureIndex(x => x.CreateDate);
+
+            return new DbResult()
             {
-                //format the decimals correctly
-                FixDollarValues(document);
-
-                // Get a collection (or create, if doesn't exist)
-                var col = Database.GetCollection<PaymentItem>(PaymentItemsCollection);
-
-                // Insert new PaymentItem document (Id will be auto-incremented)
-                col.Update(document);
-
-                // Index document using document CreateDate property
-                col.EnsureIndex(x => x.CreateDate);
-
-                return new DbResult()
-                {
-                    Success = true,
-                    Error = ""
-                };
-            }
+                Success = true,
+                Error = ""
+            };
         }
         catch (Exception ex)
         {
