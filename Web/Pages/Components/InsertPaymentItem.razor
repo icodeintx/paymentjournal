@@ -30,7 +30,7 @@
 
             <div class="row b-3 p-3">
                 <div class="col-sm-6">
-                    <table class="table table-success table-sm ">
+                    <table  style="width:400px"  class="table table-success table-sm ">
                         <thead>
                             @if (HasPayees)
                             {
@@ -46,8 +46,8 @@
                             @foreach(var payee in @PaymentItem.Payees)
                             {
                                 <tr>
-                                    <td><InputText @bind-Value="payee.Name" /></td>
-                                    <td><InputNumber @bind-Value="payee.Amount" /></td>
+                                    <td><InputText style="width: 200px" @bind-Value="payee.Name" /></td>
+                                    <td><InputNumber style="width: 100px" @bind-Value="payee.Amount" /></td>
                                     <td><InputDate @bind-Value="payee.Date" /></td>
                                     <td><div class="mouse-pointer" @onclick="() => RemovePayee(payee)"><i class="fa-solid fa-trash-can"></i></div></td>
                                 </tr>

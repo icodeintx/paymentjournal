@@ -3,6 +3,9 @@ using PaymentJournal_Web.Models;
 
 namespace PaymentJournal_Web.Repositories;
 
+/// <summary>
+///
+/// </summary>
 public class BudgetRepo : BaseRepo
 {
     private string DBCollection = "Budget";
