@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
-namespace PaymentJournal_Web.Models
+namespace PaymentJournal.Web.Models
 {
     public class MonthYear
     {

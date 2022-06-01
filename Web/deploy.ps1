@@ -4,7 +4,7 @@ Copy-Item C:\OneDrive\Personal\AmaraCode\production\apps\PaymentJournal\appsetti
 Write-Output "Application Settings files backed up"
 
 #copies all files from the publish folder to the destination folder overwriting files as needed.
-Copy-Item -Path ".\publish\*" -Destination "C:\OneDrive\Personal\AmaraCode\production\apps\PaymentJournal\" -Force
+Copy-Item -Path ".\publish\*" -Destination "C:\OneDrive\Personal\AmaraCode\production\apps\PaymentJournal\" -Force -Recurse
 Write-Output "All files copied"
 
 #replace the application settings files with the originals

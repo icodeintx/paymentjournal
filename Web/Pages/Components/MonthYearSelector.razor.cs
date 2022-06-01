@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.JSInterop;
-using PaymentJournal_Web.Models;
-using PaymentJournal_Web.Repositories;
+using PaymentJournal.Web.Models;
+using PaymentJournal.Web.Repositories;
 
-namespace PaymentJournal_Web.Pages.Components;
+namespace PaymentJournal.Web.Pages.Components;
 
 public partial class MonthYearSelector : ComponentBase
 {

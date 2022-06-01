@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
-using PaymentJournal_Web.Repositories;
+using PaymentJournal.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

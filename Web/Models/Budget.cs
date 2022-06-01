@@ -1,4 +1,4 @@
-﻿namespace PaymentJournal_Web.Models;
+﻿namespace PaymentJournal.Web.Models;
 
 public class Budget
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 
-namespace PaymentJournal_Web.Models;
+namespace PaymentJournal.Web.Models;
 
 public class PaymentItem
 {
