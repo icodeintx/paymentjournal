@@ -1,4 +1,6 @@
 ﻿@page "/edit/{PaymentItemId}"
+
+@using Blazorise;
 <h3>EditPaymentItem</h3>
 
 
@@ -14,7 +16,8 @@
                 <div class="row">
                     <div class="col-12 b-3 p-3">
                         Note:
-                        <InputText class="full-width-100" @bind-Value="PaymentItem.Note" placeholder="" />
+                        @*<InputText class="full-width-100" @bind-Value="PaymentItem.Note" placeholder="" />*@
+                        <TextEdit @bind-Text="PaymentItem.Note" Placeholder="Some text value..." />
                     </div>
                 </div>
                 <div class="row">

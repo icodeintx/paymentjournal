@@ -23,6 +23,16 @@ public partial class Budget_View : ComponentBase
     public string BudgetId { get; set; } = string.Empty;
 
     public bool Disabled { get; set; } = true;
+
+    public bool EditMode
+    {
+        get { return !Disabled; }
+        set
+        {
+            Disabled = !value;
+        }
+    }
+
     public string Message { get; set; } = string.Empty;
 
     [Inject]
@@ -67,7 +77,7 @@ public partial class Budget_View : ComponentBase
         return item == true ? "Yes" : "No";
     }
 
-    public void ToggleDisabled()
+    public void ToggleEnabled()
     {
         Disabled = Disabled == true ? false : true;
     }

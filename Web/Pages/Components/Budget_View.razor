@@ -3,17 +3,23 @@
 @page "/budget/view/{BudgetId}"
 
 
+@using Blazorise
+
+<Switch TValue="bool" @bind-Checked="@EditMode">Edit Mode</Switch>
+
 
 <EditForm Model="Budget" OnValidSubmit="HandleSubmit">
+
     
-    <div class="alert-success p-3 m-3 rounded">
+    <div class="alert-secondary p-3 m-3 rounded">
         <div class="row">
             <div class="col-2">
                 <h2>Budget</h2>
             </div>
             <div class="col-10">
-                <button type="button" title="Toggle Edit" class="btn btn-success btn-sm float-end" @onclick="() => ToggleDisabled()"><i class="fa-solid fa-pen-to-square"></i> Enable Edit</button>
+                @*<button type="button" title="Toggle Edit" class="btn btn-success btn-sm float-end" @onclick="() => ToggleEnabled()"><i class="fa-solid fa-pen-to-square"></i> Enable Edit</button>*@
             </div>
+            
         </div>
     </div>
 
