@@ -82,6 +82,14 @@ public partial class EditPaymentItem : ComponentBase
     /// <summary>
     ///
     /// </summary>
+    protected void NavToPayments()
+    {
+        NavigationManager.NavigateTo("/payments", true);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
