@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Web\PaymentJournal_Web.csproj" />
+    <ProjectReference Include="..\Web\PaymentJournal.Web.csproj" />
   </ItemGroup>
 
 </Project>

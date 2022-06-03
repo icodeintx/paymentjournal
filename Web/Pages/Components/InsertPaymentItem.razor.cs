@@ -48,6 +48,14 @@ public partial class InsertPaymentItem : ComponentBase
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    protected void NavToPayments()
+    {
+        NavigationManager.NavigateTo("/payments", true);
+    }
+
+    /// <summary>
     ///
     /// </summary>
     public void HandleSubmit()
@@ -59,8 +67,8 @@ public partial class InsertPaymentItem : ComponentBase
 
             if (result.Success)
             {
-                //NavigationManager.NavigateTo("/insert", true);
-                PaymentItem = new PaymentItem();
+                NavigationManager.NavigateTo("/payments", true);
+                //PaymentItem = new PaymentItem();
             }
         }
     }

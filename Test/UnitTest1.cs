@@ -1,4 +1,4 @@
-using PaymentJournal_Web.Models;
+using PaymentJournal.Web.Models;
 
 namespace Test
 {
@@ -12,7 +12,7 @@ namespace Test
         public void CanInsertDocument()
         {
             //arrange
-            PaymentJournal_Web.Repositories.PaymentRepo repo = new("C:\\src\\PaymentJournal\\Web\\Data\\litedb.db");
+            PaymentJournal.Web.Repositories.PaymentRepo repo = new("C:\\src\\PaymentJournal\\Web\\Data\\litedb.db");
             PaymentItem item = new PaymentItem()
             {
                 Note = "this is my note",
@@ -48,7 +48,7 @@ namespace Test
         public void CanReadAllItems()
         {
             //arrange
-            PaymentJournal_Web.Repositories.PaymentRepo repo = new("C:\\temp\\litedb.db");
+            PaymentJournal.Web.Repositories.PaymentRepo repo = new("C:\\temp\\litedb.db");
 
             //act
             var result = repo.GetAllItems();
@@ -64,7 +64,7 @@ namespace Test
         public void CanReadItemsByDate()
         {
             //arrange
-            PaymentJournal_Web.Repositories.PaymentRepo repo = new("C:\\temp\\litedb.db");
+            PaymentJournal.Web.Repositories.PaymentRepo repo = new("C:\\temp\\litedb.db");
 
             //act
             var result = repo.GetItemsByDate(new DateTime(2022, 5, 17));
@@ -80,7 +80,7 @@ namespace Test
         public void CanReadItemsByID()
         {
             //arrange
-            PaymentJournal_Web.Repositories.PaymentRepo repo = new("C:\\temp\\litedb.db");
+            PaymentJournal.Web.Repositories.PaymentRepo repo = new("C:\\temp\\litedb.db");
 
             //act
             var result = repo.GetItemsById(Guid.Parse("06257dc0-70cc-455c-9e06-886264905d2a"));

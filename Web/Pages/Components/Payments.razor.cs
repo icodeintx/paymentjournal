@@ -24,11 +24,6 @@ public partial class Payments : ComponentBase
     {
     }
 
-    /// <summary>
-    /// Property to indicate if we are searching by ALL entries or not
-    /// </summary>
-    public bool IsAll => string.IsNullOrEmpty(Month) && string.IsNullOrEmpty(Year);
-
     [Parameter]
     public string Month { get; set; }
 
@@ -73,6 +68,11 @@ public partial class Payments : ComponentBase
         navigationManager.NavigateTo($"/edit/{model.PaymentItemId.ToString()}");
     }
 
+    protected void NavToPayments()
+    {
+        navigationManager.NavigateTo($"/insert");
+    }
+
     /// <summary>
     ///
     /// </summary>
@@ -87,21 +87,24 @@ public partial class Payments : ComponentBase
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        if (IsAll)
+
+        //check if we have Month and Year
+        if (string.IsNullOrWhiteSpace(Month) || string.IsNullOrWhiteSpace(Year))
         {
-            //PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
-            PaymentItems = repo.GetAllItems();
+            //one or both of the parameters above are blank so use this month and year
+            PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
         }
         else
         {
             try
             {
+                //Monty and Year were passed, try to parse them and use them.
                 PaymentItems = repo.GetItemsByMonthYear(int.Parse(Month), int.Parse(Year));
             }
             catch
             {
-                //PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
-                PaymentItems = repo.GetAllItems();
+                //the parsing failed above so use this month/year
+                PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
             }
         }
     }

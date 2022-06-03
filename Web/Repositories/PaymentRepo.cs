@@ -171,7 +171,8 @@ public class PaymentRepo : BaseRepo
             // Insert new PaymentItem document (Id will be auto-incremented)
             base.InsertDocument<PaymentItem>(document, DBCollection);
 
-            base.GetCollection<PaymentItem>(DBCollection).EnsureIndex(x => x.CreateDate);
+            //TODO fix this bellow.  collection is closed
+            //base.GetCollection<PaymentItem>(DBCollection).EnsureIndex(x => x.CreateDate);
 
             return new DbResult()
             {
@@ -204,8 +205,9 @@ public class PaymentRepo : BaseRepo
             // Insert new PaymentItem document (Id will be auto-incremented)
             base.UpdateDocument<PaymentItem>(document, DBCollection);
 
+            //TODO fix below, the collection is closed
             // Index document using document CreateDate property
-            base.GetCollection<PaymentItem>(DBCollection).EnsureIndex(x => x.CreateDate);
+            //base.GetCollection<PaymentItem>(DBCollection).EnsureIndex(x => x.CreateDate);
 
             return new DbResult()
             {

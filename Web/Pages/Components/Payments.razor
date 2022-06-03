@@ -2,19 +2,11 @@
 @page "/payments/{Month}/{Year}"
 
 
-
-
-
-@if(IsAll)
-{
-    <div class="alert-warning p-3 m-3">Displaying ALL entries</div>
-}
-else
-{
-    <div class="alert-success p-3 m-3">Displaying Filtered entries</div>
-}
+<div class="alert-success p-3 m-3">Displaying Filtered entries</div>
 
 <MonthYearSelector ReturnURL="/payments" />
+
+<button title="Insert Payment" class="btn btn-primary btn-sm m-2" @onclick="() => NavToPayments()"><i class="fa-solid fa-pen-to-square"></i>Insert Payment</button>
 
 <div class="rounded" >
     <table class="table table-sm">

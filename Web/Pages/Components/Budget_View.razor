@@ -5,6 +5,7 @@
 
 @using Blazorise
 
+
 <Switch TValue="bool" @bind-Checked="@EditMode">Edit Mode</Switch>
 
 
@@ -48,10 +49,6 @@
                                 <td class="p-1 text-end">Difference:</td>
                                 <td>$@(FormatMoney(Budget.TotalIncomes - Budget.TotalExpenses))</td>
                             </tr>
-                            <tr>
-                                <td class="p-1 text-end">DTI:</td>
-                                <td>@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
-                            </tr>
                         </table>      
                     </p>
                   </div>
@@ -83,7 +80,7 @@
                                             {
                                                         <tr>
                                                             <td>@item.Account</td>
-                                                            <td>$@(FormatMoney(item.Sum))</td>
+                                                            <td class="red_text">$@(FormatMoney(item.Sum))</td>
                                                         </tr>
                                             }
 
@@ -99,13 +96,22 @@
                 </div>
                 <div class="card">
                 <div class="card-header">
-                    Financial Summary
+                    Financial Stats
                 </div>
                   <div class="card-body">
                     @*<h5 class="card-title">Card title</h5>*@
                     <p class="card-text">
                         @*Content HERE*@
-
+                        <table style="width:350px" class="table table-striped table-sm ">
+                            <tr>
+                                <td class="p-1 text-end">Half Monthly Expenses:</td>
+                                <td class="blue_text">$@(FormatMoney(Budget.TotalExpenses /2))</td>
+                            </tr>
+                            <tr>
+                                <td class="p-1 text-end">Debt-To-Income Ratio:</td>
+                                <td class="blue_text">@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
+                            </tr>
+                        </table>      
                     </p>
                   </div>
                   <div class="card-footer">
