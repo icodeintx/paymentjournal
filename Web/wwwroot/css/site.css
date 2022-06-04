@@ -34,10 +34,21 @@ a, .btn-link {
     max-width: 300px;
 }
 
+.max-width-250 {
+    max-width: 250px;
+}
+
 .max-width-200 {
     max-width: 200px;
 }
 
+.max-width-150 {
+    max-width: 150px;
+}
+
+.max-width-100 {
+    max-width: 100px;
+}
 
 .full-width-100{
     width: 100%;

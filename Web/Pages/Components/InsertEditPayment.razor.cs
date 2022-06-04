@@ -12,12 +12,12 @@ using PaymentJournal.Web.Repositories;
 
 namespace PaymentJournal.Web.Pages.Components;
 
-public partial class EditPaymentItem : ComponentBase
+public partial class InsertEditPayment : ComponentBase
 {
     /// <summary>
     ///
     /// </summary>
-    public EditPaymentItem()
+    public InsertEditPayment()
     {
         PaymentItem = new PaymentItem();
     }
@@ -35,7 +35,7 @@ public partial class EditPaymentItem : ComponentBase
     public PaymentItem PaymentItem { get; set; }
 
     [Parameter]
-    public string PaymentItemId { get; set; }
+    public string PaymentItemId { get; set; } = string.Empty;
 
     /// <summary>
     ///
@@ -55,18 +55,40 @@ public partial class EditPaymentItem : ComponentBase
     /// </summary>
     public void HandleSubmit()
     {
-        if (!string.IsNullOrEmpty(PaymentItem.Note))
+        DbResult result;
+
+        if (PaymentItem.PaymentItemId == Guid.Empty)
         {
-            //there is a note so go from there.
-            var result = DB.UpdateDocument(PaymentItem);
+            //we have no valid ID so insert document
+            result = DB.InsertDocument(PaymentItem);
+        }
+        else
+        {
+            //we have valid ID so update document
+            result = DB.UpdateDocument(PaymentItem);
+        }
 
-            if (result.Success)
-            {
-                //NavigationManager.NavigateTo("/insert", true);
-                PaymentItem = new PaymentItem();
+        if (result.Success)
+        {
+            NavigationManager.NavigateTo("/payments", true);
+            //PaymentItem = new PaymentItem();
+        }
+    }
 
-                NavigationManager.NavigateTo("/payments");
-            }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    public bool IsValidPaymentItemId()
+    {
+        try
+        {
+            var tmpguid = Guid.Parse(PaymentItemId);
+            return true;
+        }
+        catch
+        {
+            return false;
         }
     }
 
@@ -93,9 +115,13 @@ public partial class EditPaymentItem : ComponentBase
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        if (PaymentItemId != String.Empty)
+        if (string.IsNullOrWhiteSpace(PaymentItemId) == false)
         {
             PaymentItem = DB.GetItemsById(Guid.Parse(PaymentItemId));
+        }
+        else
+        {
+            PaymentItem = new PaymentItem();
         }
     }
 }

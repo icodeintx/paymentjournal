@@ -1,7 +1,16 @@
-﻿@page "/insert"
+﻿@page "/payment/insert"
+@page "/payment/edit/{PaymentItemId}"
+@*@page "/insert"*@
 @using Blazorise
-<h3>Insert Payment</h3>
 
+@if(IsValidPaymentItemId())
+{
+    <h3>Edit Payment</h3>    
+}
+else
+{
+    <h3>Insert Payment</h3>
+}
 
 
 

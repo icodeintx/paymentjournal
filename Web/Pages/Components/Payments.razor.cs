@@ -65,12 +65,12 @@ public partial class Payments : ComponentBase
     /// <returns></returns>
     protected async Task EditDocument(PaymentItem model)
     {
-        navigationManager.NavigateTo($"/edit/{model.PaymentItemId.ToString()}");
+        navigationManager.NavigateTo($"/payment/edit/{model.PaymentItemId.ToString()}");
     }
 
     protected void NavToPayments()
     {
-        navigationManager.NavigateTo($"/insert");
+        navigationManager.NavigateTo($"/payment/insert");
     }
 
     /// <summary>
