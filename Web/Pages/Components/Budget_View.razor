@@ -36,18 +36,37 @@
                   <div class="card-body">
                     <p class="card-text">
                        @*Content HERE*@
+                       Monthly
                         <table style="width:220px" class="table table-striped table-sm ">
                             <tr>
                                 <td class="p-1 text-end">Total Expense:</td>
-                                <td class="red_text">$@Budget.TotalExpenses.ToString("0.00")</td>
+                                <td class="red_text">$@Budget.TotalMonthlyExpenses.ToString("0.00")</td>
                             </tr>
                             <tr>
                                 <td class="p-1 text-end">Total Income:</td>
-                                <td class="green_text">$@Budget.TotalIncomes.ToString("0.00")</td>
+                                <td class="green_text">$@Budget.TotalMonthlyIncomes.ToString("0.00")</td>
                             </tr>
                             <tr>
                                 <td class="p-1 text-end">Difference:</td>
-                                <td>$@(FormatMoney(Budget.TotalIncomes - Budget.TotalExpenses))</td>
+                                <td>$@(FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses))</td>
+                            </tr>
+                        </table>      
+                    </p>
+                    <p class="card-text">
+                       @*Content HERE*@
+                       Yearly
+                        <table style="width:220px" class="table table-striped table-sm ">
+                            <tr>
+                                <td class="p-1 text-end">Total Expense:</td>
+                                <td class="red_text">$@Budget.TotalYearlyExpenses.ToString("0.00")</td>
+                            </tr>
+                            <tr>
+                                <td class="p-1 text-end">Total Income:</td>
+                                <td class="green_text">$@Budget.TotalYearlyIncomes.ToString("0.00")</td>
+                            </tr>
+                            <tr>
+                                <td class="p-1 text-end">Difference:</td>
+                                <td>$@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
                             </tr>
                         </table>      
                     </p>
@@ -105,12 +124,17 @@
                         <table style="width:350px" class="table table-striped table-sm ">
                             <tr>
                                 <td class="p-1 text-end">Half Monthly Expenses:</td>
-                                <td class="blue_text">$@(FormatMoney(Budget.TotalExpenses /2))</td>
+                                <td class="blue_text">$@(FormatMoney(Budget.TotalMonthlyExpenses /2))</td>
                             </tr>
                             <tr>
                                 <td class="p-1 text-end">Debt-To-Income Ratio:</td>
                                 <td class="blue_text">@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
                             </tr>
+                            <tr>
+                                <td class="p-1 text-end">Yearly Witholdings:</td>
+                                <td title="Annual Salary - Yearly Income" class="blue_text">$@(FormatMoney(Budget.YearlyWitholdings))</td>
+                            </tr>
+
                         </table>      
                     </p>
                   </div>

@@ -13,8 +13,12 @@ public class Budget
     public DateTime LastSavedDate { get; set; } = DateTime.Now;
     public string Name { get; set; } = string.Empty;
     public List<OnlineService> OnlineServices { get; set; } = new();
-    public decimal TotalExpenses => Expenses.Select(y => y.Amount).Sum();
-    public decimal TotalIncomes => Incomes.Select(x => x.Amount).Sum();
+    public decimal TotalMonthlyExpenses => Expenses.Select(y => y.Amount).Sum();
+    public decimal TotalMonthlyIncomes => Incomes.Select(x => x.Amount).Sum();
+    public decimal TotalYearlyExpenses => Expenses.Select(y => y.Amount).Sum() * 12;
+    public decimal TotalYearlyIncomes => Incomes.Select(x => x.Amount).Sum() * 12;
+
+    public decimal YearlyWitholdings => AnnualSalary - TotalYearlyIncomes;
 
     /// <summary>
     /// Returns expenses summed by PayTo acct
@@ -39,10 +43,10 @@ public class Budget
     /// <returns></returns>
     private decimal CalculateDTI()
     {
-        if (AnnualSalary > 0 && TotalExpenses > 0)
+        if (AnnualSalary > 0 && TotalMonthlyExpenses > 0)
         {
             //Monthy Expenses / Annual Income (monthly) * 100
-            return (TotalExpenses / (AnnualSalary / 12)) * 100;
+            return (TotalMonthlyExpenses / (AnnualSalary / 12)) * 100;
         }
         else
         {

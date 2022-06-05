@@ -52,8 +52,8 @@
                         <td><button type="button" title="Edit Expense" class="btn btn-success btn-sm" @onclick="() => ViewBudget(item.BudgetId)"><i class="fa-solid fa-pen-to-square"></i></button></td>
                         <td >@item.Name</td>
                         <td >@(FormatPercent(item.Debt_Income_Ratio))%</td>
-                        <td>$@(FormatMoney(item.TotalExpenses))</td>
-                        <td>$@(FormatMoney(item.TotalIncomes))</td>
+                        <td>$@(FormatMoney(item.TotalMonthlyExpenses))</td>
+                        <td>$@(FormatMoney(item.TotalMonthlyIncomes))</td>
                         <td >@item.Expenses.Count</td>
                         <td >@item.Incomes.Count</td>
                         <td >@item.BankAccounts.Count</td>
