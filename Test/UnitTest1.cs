@@ -5,6 +5,8 @@ namespace Test
     [TestClass]
     public class UnitTest1
     {
+        private const string DBFile = "C:\\src\\PaymentJournal\\Web\\Data\\litedb.db";
+
         /// <summary>
         ///
         /// </summary>
@@ -12,7 +14,7 @@ namespace Test
         public void CanInsertDocument()
         {
             //arrange
-            PaymentJournal.Web.Repositories.PaymentRepo repo = new("C:\\src\\PaymentJournal\\Web\\Data\\litedb.db");
+            PaymentJournal.Web.Repositories.PaymentRepo repo = new(DBFile);
             PaymentItem item = new PaymentItem()
             {
                 Note = "this is my note",
@@ -48,7 +50,7 @@ namespace Test
         public void CanReadAllItems()
         {
             //arrange
-            PaymentJournal.Web.Repositories.PaymentRepo repo = new("C:\\temp\\litedb.db");
+            PaymentJournal.Web.Repositories.PaymentRepo repo = new(DBFile);
 
             //act
             var result = repo.GetAllItems();
@@ -64,10 +66,10 @@ namespace Test
         public void CanReadItemsByDate()
         {
             //arrange
-            PaymentJournal.Web.Repositories.PaymentRepo repo = new("C:\\temp\\litedb.db");
+            PaymentJournal.Web.Repositories.PaymentRepo repo = new(DBFile);
 
             //act
-            var result = repo.GetItemsByDate(new DateTime(2022, 5, 17));
+            var result = repo.GetItemsByDate(new DateTime(2022, 6, 3));
 
             Console.WriteLine(result[0].ToString());
             Console.WriteLine("test log");
@@ -80,10 +82,10 @@ namespace Test
         public void CanReadItemsByID()
         {
             //arrange
-            PaymentJournal.Web.Repositories.PaymentRepo repo = new("C:\\temp\\litedb.db");
+            PaymentJournal.Web.Repositories.PaymentRepo repo = new(DBFile);
 
             //act
-            var result = repo.GetItemsById(Guid.Parse("06257dc0-70cc-455c-9e06-886264905d2a"));
+            var result = repo.GetItemsById(Guid.Parse("3dac4311-8cde-4ffa-b545-cee39354d0e8"));
 
             Console.WriteLine(result);
             Console.WriteLine("test log");
