@@ -51,9 +51,10 @@ namespace Test
         {
             //arrange
             PaymentJournal.Web.Repositories.PaymentRepo repo = new(DBFile);
-
+            //TODO - fix this ID
+            Guid budgetId = Guid.Empty;
             //act
-            var result = repo.GetAllItems();
+            var result = repo.GetAllItems(budgetId);
 
             //assert
             Assert.IsTrue(result.Count > 0);
@@ -67,9 +68,11 @@ namespace Test
         {
             //arrange
             PaymentJournal.Web.Repositories.PaymentRepo repo = new(DBFile);
+            //TODO - fix this ID
+            Guid budgetId = Guid.Empty;
 
             //act
-            var result = repo.GetItemsByDate(new DateTime(2022, 6, 3));
+            var result = repo.GetItemsByDate(budgetId, new DateTime(2022, 6, 3));
 
             Console.WriteLine(result[0].ToString());
             Console.WriteLine("test log");

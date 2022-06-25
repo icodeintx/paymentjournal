@@ -45,11 +45,12 @@ public class PaymentRepo : BaseRepo
     ///
     /// </summary>
     /// <returns></returns>
-    public List<PaymentItem> GetAllItems()
+    public List<PaymentItem> GetAllItems(Guid budgetId)
     {
         try
         {
             var results = base.GetCollectionList<PaymentItem>(DBCollection)
+                .Where(x => x.BudgetId == budgetId)
                 .OrderByDescending(x => x.CreateDate).ToList();
 
             return results;
@@ -70,7 +71,9 @@ public class PaymentRepo : BaseRepo
         try
         {
             //monkey balls
-            var years = base.GetCollectionList<PaymentItem>(DBCollection).Select(x => x.CreateDate.Year).ToList().Distinct();
+            var years = base.GetCollectionList<PaymentItem>(DBCollection)
+                .Select(x => x.CreateDate.Year)
+                .ToList().Distinct();
 
             return years;
         }
@@ -86,12 +89,12 @@ public class PaymentRepo : BaseRepo
     /// </summary>
     /// <param name="date"></param>
     /// <returns></returns>
-    public List<PaymentItem> GetItemsByDate(DateTime date)
+    public List<PaymentItem> GetItemsByDate(Guid budgetId, DateTime date)
     {
         try
         {
             var results = base.GetCollectionList<PaymentItem>(DBCollection)
-                .Where(x => x.CreateDate.Date == date.Date)
+                .Where(x => x.CreateDate.Date == date.Date && x.BudgetId == budgetId)
                 .OrderBy(x => x.CreateDate)
                 .ToList();
 
@@ -132,12 +135,12 @@ public class PaymentRepo : BaseRepo
     /// <param name="month"></param>
     /// <param name="year"></param>
     /// <returns></returns>
-    public List<PaymentItem> GetItemsByMonthYear(int month, int year)
+    public List<PaymentItem> GetItemsByMonthYear(Guid budgetId, int month, int year)
     {
         try
         {
             var results = base.GetCollectionList<PaymentItem>(DBCollection)
-                .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year)
+                .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year && x.BudgetId == budgetId)
                 .OrderByDescending(x => x.CreateDate)
                 .ToList();
 

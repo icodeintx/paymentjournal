@@ -25,12 +25,20 @@ public partial class Payments : ComponentBase
     }
 
     [Parameter]
+    public string BudgetId { get; set; }
+
+    [Parameter]
     public string Month { get; set; }
 
     public List<PaymentItem> PaymentItems { get; set; }
 
     [Parameter]
     public string Year { get; set; }
+
+    protected string GetReturnURL => $"/payments/{BudgetId}";
+
+    [Inject]
+    private BudgetRepo budgetRepo { get; set; }
 
     [Inject]
     private IJSRuntime JSRuntime { get; set; }
@@ -68,9 +76,28 @@ public partial class Payments : ComponentBase
         navigationManager.NavigateTo($"/payment/edit/{model.PaymentItemId.ToString()}");
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="budgetId"></param>
+    /// <returns></returns>
+    protected string GetBudgetName()
+    {
+        if (!string.IsNullOrWhiteSpace(BudgetId))
+        {
+            var budget = budgetRepo.GetBudget(Guid.Parse(BudgetId));
+
+            return budget.Name;
+        }
+        else
+        {
+            return String.Empty;
+        }
+    }
+
     protected void NavToPayments()
     {
-        navigationManager.NavigateTo($"/payment/insert");
+        navigationManager.NavigateTo($"/payment/insert/{BudgetId}");
     }
 
     /// <summary>
@@ -92,19 +119,19 @@ public partial class Payments : ComponentBase
         if (string.IsNullOrWhiteSpace(Month) || string.IsNullOrWhiteSpace(Year))
         {
             //one or both of the parameters above are blank so use this month and year
-            PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+            PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), DateTime.Now.Month, DateTime.Now.Year);
         }
         else
         {
             try
             {
                 //Monty and Year were passed, try to parse them and use them.
-                PaymentItems = repo.GetItemsByMonthYear(int.Parse(Month), int.Parse(Year));
+                PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), int.Parse(Month), int.Parse(Year));
             }
             catch
             {
                 //the parsing failed above so use this month/year
-                PaymentItems = repo.GetItemsByMonthYear(DateTime.Now.Month, DateTime.Now.Year);
+                PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), DateTime.Now.Month, DateTime.Now.Year);
             }
         }
     }

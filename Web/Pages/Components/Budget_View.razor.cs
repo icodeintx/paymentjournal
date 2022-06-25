@@ -262,6 +262,11 @@ public partial class Budget_View : ComponentBase
         }
     }
 
+    protected void Payments(Guid budgetId)
+    {
+        NavigationManager.NavigateTo($"payments/{budgetId}");
+    }
+
     /// <summary>
     ///
     /// </summary>
