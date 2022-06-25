@@ -49,7 +49,7 @@
                 @foreach(var item in BudgetList)
                 {
                     <tr>
-                        <td><button type="button" title="Edit Expense" class="btn btn-success btn-sm" @onclick="() => ViewBudget(item.BudgetId)"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                        <td><button type="button" title="View Budget" class="btn btn-success btn-sm" @onclick="() => ViewBudget(item.BudgetId)"><i class="fa-solid fa-pen-to-square"></i></button></td>
                         <td >@item.Name</td>
                         <td >@(FormatPercent(item.Debt_Income_Ratio))%</td>
                         <td>$@(FormatMoney(item.TotalMonthlyExpenses))</td>

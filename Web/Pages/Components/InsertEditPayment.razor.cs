@@ -22,6 +22,9 @@ public partial class InsertEditPayment : ComponentBase
         PaymentItem = new PaymentItem();
     }
 
+    [Parameter]
+    public string BudgetId { get; set; }
+
     public int Counter { get; set; } = 0;
 
     [Inject]
@@ -70,7 +73,7 @@ public partial class InsertEditPayment : ComponentBase
 
         if (result.Success)
         {
-            NavigationManager.NavigateTo("/payments", true);
+            NavigationManager.NavigateTo($"/payments/{BudgetId}", true);
             //PaymentItem = new PaymentItem();
         }
     }
@@ -106,7 +109,7 @@ public partial class InsertEditPayment : ComponentBase
     /// </summary>
     protected void NavToPayments()
     {
-        NavigationManager.NavigateTo("/payments", true);
+        NavigationManager.NavigateTo($"/payments/{BudgetId}", true);
     }
 
     /// <summary>
@@ -118,10 +121,20 @@ public partial class InsertEditPayment : ComponentBase
         if (string.IsNullOrWhiteSpace(PaymentItemId) == false)
         {
             PaymentItem = DB.GetItemsById(Guid.Parse(PaymentItemId));
+            BudgetId = PaymentItem.BudgetId.ToString();
         }
         else
         {
-            PaymentItem = new PaymentItem();
+            //if we have BudgetId then create a new PaymentItem
+            if (!string.IsNullOrWhiteSpace(BudgetId))
+            {
+                PaymentItem = new PaymentItem();
+                PaymentItem.BudgetId = Guid.Parse(BudgetId);
+            }
+            else
+            {
+                throw new NullReferenceException(nameof(BudgetId));
+            }
         }
     }
 }

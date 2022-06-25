@@ -1,8 +1,12 @@
-﻿@page "/payments"
-@page "/payments/{Month}/{Year}"
+﻿@page "/payments/{BudgetId}"
+@page "/payments/{BudgetId}/{Month}/{Year}"
 @*<div class="alert-success p-3 m-3">Displaying Filtered entries</div>*@
 
-<MonthYearSelector ReturnURL="/payments" />
+<div class="d-grid gap-2 col-6 mx-auto text-center">
+        <h2>@GetBudgetName() - Payments</h2>
+</div>
+
+<MonthYearSelector ReturnURL="@GetReturnURL" />
 
 <button title="Insert Payment" class="btn btn-primary btn-sm m-2" @onclick="() => NavToPayments()"><i class="fa-solid fa-pen-to-square"></i>Insert Payment</button>
 
