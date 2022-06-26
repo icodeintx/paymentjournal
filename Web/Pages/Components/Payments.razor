@@ -10,7 +10,7 @@
 
 <button title="Insert Payment" class="btn btn-primary btn-sm m-2" @onclick="() => NavToPayments()"><i class="fa-solid fa-pen-to-square"></i>Insert Payment</button>
 
-<div class="rounded" >
+<div class="alert rounded" >
     <table class="table table-sm">
         <thead>
             <tr>
@@ -39,7 +39,7 @@
                         <td style="width:600px">@item.Note</td>
 
                         <td style="width:600px">
-                            <table class="table table-striped table-light table-sm ">
+                            <table class="table table-sm table-child">
                                 <thead>
                                     @if(item.Payees.Count > 0)
                                     {

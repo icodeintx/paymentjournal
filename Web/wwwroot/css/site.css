@@ -8,6 +8,32 @@ html, body {
     cursor: pointer;
 }
 
+.card {
+    background-color: #161b29;
+}
+
+.table {
+    background-color: #161b29;
+    color: #8186a1;
+}
+
+.table-child {
+    background-color: #161721;
+    color: #8186a1;
+}
+
+.card-header {
+    background-color: #283257;
+}
+
+.alert {
+    background-color: #161b29;
+}
+
+.alert_bg {
+    background-color: #161b29;
+}
+
 h1:focus {
     outline: none;
 }
@@ -30,7 +56,7 @@ a, .btn-link {
     outline: 1px solid #26b050;
 }
 
-.max-width-300{
+.max-width-300 {
     max-width: 300px;
 }
 
@@ -50,7 +76,7 @@ a, .btn-link {
     max-width: 100px;
 }
 
-.full-width-100{
+.full-width-100 {
     width: 100%;
 }
 
