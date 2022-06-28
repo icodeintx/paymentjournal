@@ -15,7 +15,7 @@
         <thead>
             <tr>
                 <td style="width:100px"></td>
-                <td hidden>Id</td>
+                <td hidden>PaymentItemId</td>
                 <td class="text-nowrap" style="width:100px">Date</td>
                 <td >Note</td>
                 <td></td>
@@ -30,7 +30,7 @@
                             <table>
                                 <tr>
                                     <td><button title="Delete Payment" class="btn btn-danger btn-sm" @onclick="() => DeleteDocument(item)"><i class="fa-solid fa-trash-can"></i></button></td>
-                                    <td><button title="Edit Payment" class="btn btn-primary btn-sm" @onclick="() => EditDocument(item)"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                                    <td><button title="Edit Payment {@item.PaymentItemId}" class="btn btn-primary btn-sm" @onclick="() => EditDocument(item)"><i class="fa-solid fa-pen-to-square"></i></button></td>
                                 </tr>
                             </table>
                         </td>
@@ -44,7 +44,7 @@
                                     @if(item.Payees.Count > 0)
                                     {
                                         <tr>
-                                            <td hidden>Id</td>
+                                            <td hidden>PayeeId</td>
                                             <td class="col-6">Payee</td>
                                             <td>Date</td>
                                             <td>Amount</td>
