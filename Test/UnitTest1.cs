@@ -5,7 +5,9 @@ namespace Test
     [TestClass]
     public class UnitTest1
     {
-        private const string DBFile = "C:\\src\\PaymentJournal\\Web\\Data\\litedb.db";
+        private const string DBFile = "C:\\src\\PaymentJournal\\Web\\Data\\litedb_test.db";
+        private Guid BudgetId = Guid.Parse("b08d1aa4-7524-4999-a610-47b84b756108");
+        private Guid PaymentItmeId = Guid.Parse("00c24b9e-048c-4648-a7ee-3befc33989a1");
 
         /// <summary>
         ///
@@ -68,11 +70,9 @@ namespace Test
         {
             //arrange
             PaymentJournal.Web.Repositories.PaymentRepo repo = new(DBFile);
-            //TODO - fix this ID
-            Guid budgetId = Guid.Empty;
 
             //act
-            var result = repo.GetItemsByDate(budgetId, new DateTime(2022, 6, 3));
+            var result = repo.GetItemsByDate(BudgetId, new DateTime(2022, 4, 21));
 
             Console.WriteLine(result[0].ToString());
             Console.WriteLine("test log");
@@ -88,7 +88,7 @@ namespace Test
             PaymentJournal.Web.Repositories.PaymentRepo repo = new(DBFile);
 
             //act
-            var result = repo.GetItemsById(Guid.Parse("3dac4311-8cde-4ffa-b545-cee39354d0e8"));
+            var result = repo.GetItemsById(PaymentItmeId);
 
             Console.WriteLine(result);
             Console.WriteLine("test log");
