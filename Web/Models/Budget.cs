@@ -45,7 +45,7 @@ public class Budget
     {
         if (AnnualSalary > 0 && TotalMonthlyExpenses > 0)
         {
-            //Monthy Expenses / Annual Income (monthly) * 100
+            //Monthy Expenses / (Annual Income / 12) * 100
             return (TotalMonthlyExpenses / (AnnualSalary / 12)) * 100;
         }
         else

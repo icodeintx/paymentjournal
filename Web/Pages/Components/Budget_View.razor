@@ -6,7 +6,7 @@
 @using Blazorise
 
 <div class="rounded-3">
-    <Switch TValue="bool" @bind-Checked="@EditMode">Edit Mode</Switch>
+    <Switch title="Enable to make page changes" TValue="bool" @bind-Checked="@EditMode">Edit Mode</Switch>
 
 
     <EditForm Model="Budget" OnValidSubmit="HandleSubmit">
@@ -127,7 +127,7 @@
                                 </tr>
                                 <tr>
                                     <td class="p-1 text-end">Debt-To-Income Ratio:</td>
-                                    <td class="blue_text">@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
+                                    <td title="Monthy Expenses / (Annual Income / 12) * 100" class="blue_text">@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
                                 </tr>
                                 <tr>
                                     <td class="p-1 text-end">Yearly Witholdings:</td>
@@ -154,7 +154,7 @@
                     <div class="col">
                         Annual Salary: <InputNumber style="width: 100px" disabled=@Disabled @bind-Value="Budget.AnnualSalary" />
                     </div>
-                    <div class="col">
+                    <div title="AnnualSalary / 12" class="col">
                         Monthly Gross: $@(FormatMoney(Budget.AnnualSalary / 12))
                     </div>
                     <div class="col">
@@ -196,7 +196,7 @@
                                     </td>
                                     <td ><InputText style="width: 150px" disabled=@Disabled @bind-Value="item.BillName" /></td>
                                     <td ><InputText style="width: 200px" disabled=@Disabled @bind-Value="item.PaidTo" /></td>
-                                    <td ><InputText style="width: 100px" disabled=@Disabled @bind-Value="item.PaidBy" /></td>
+                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 100px" disabled=@Disabled @bind-Value="item.PaidBy" /></td>
                                     <td ><InputNumber style="width: 80px" disabled=@Disabled @bind-Value="item.Amount" /></td>
                                     <td ><InputText style="width: 300px" disabled=@Disabled @bind-Value="item.Note" /></td>
                                     <td ><InputNumber style="width: 100px" disabled=@Disabled @bind-Value="item.EstimatedDueDay" /></td>
@@ -277,7 +277,7 @@
                                     </td>
                                     <td ><InputText style="width: 250px" disabled=@Disabled @bind-Value="item.Bank" /></td>
                                     <td ><InputText style="width: 150px" disabled=@Disabled @bind-Value="item.Type" /></td>
-                                    <td ><InputText style="width: 150px" disabled=@Disabled @bind-Value="item.AccountNumber" /></td>
+                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 150px" disabled=@Disabled @bind-Value="item.AccountNumber" /></td>
                                     <td ><InputText style="width: 300px" disabled=@Disabled @bind-Value="item.Description" /></td>
                                 </tr>
                             }
@@ -289,7 +289,7 @@
         </div>
 
         <div class="alert p-3 m-3 rounded" >
-            <h2>Credit Cards</h2>
+            <h2>Cards</h2>
             @if(Budget.CreditCards.Count > 0)
             {
                 <table style="width:800px"  class="table table-sm">
@@ -317,11 +317,11 @@
                                         </table>
                                     </td>
                                     <td ><InputText style="width: 150px" disabled=@Disabled @bind-Value="item.Holder" /></td>
-                                    <td ><InputText style="width: 100px" disabled=@Disabled @bind-Value="item.AccountNumber" /></td>
+                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 100px" disabled=@Disabled @bind-Value="item.AccountNumber" /></td>
                                     <td ><InputText style="width: 200px" disabled=@Disabled @bind-Value="item.Bank" /></td>
-                                    <td ><InputText style="width: 100px" disabled=@Disabled @bind-Value="item.AttachedTo" /></td>
+                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 100px" disabled=@Disabled @bind-Value="item.AttachedTo" /></td>
                                     <td ><InputText style="width: 300px" disabled=@Disabled @bind-Value="item.Description" /></td>
-                                    <td ><InputCheckbox style="width: 50px" disabled=@Disabled @bind-Value="item.IsDebt" /></td>
+                                    <td ><InputCheckbox title="Is This a Debt Card" style="width: 50px" disabled=@Disabled @bind-Value="item.IsDebt" /></td>
                                 </tr>
                             }
                     </tbody>
@@ -355,7 +355,7 @@
                                         </table>
                                     </td>
                                     <td ><InputText style="width: 150px" disabled=@Disabled @bind-Value="item.Service" /></td>
-                                    <td ><InputText style="width: 100px" disabled=@Disabled @bind-Value="item.PaidTo" /></td>
+                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 100px" disabled=@Disabled @bind-Value="item.PaidTo" /></td>
                                 </tr>
                             }
                     </tbody>
