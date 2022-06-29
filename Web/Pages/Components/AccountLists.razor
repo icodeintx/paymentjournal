@@ -1,5 +1,22 @@
-﻿<h3>AccountLists</h3>
-
-@code {
-
-}
+﻿
+<div class="alert max-width-350 rounded" >
+    Account Legend
+    <table class="table  table-sm">
+        <thead>
+            <tr>
+                <td><b>Acct</b></td>
+                <td><b>Description</b></td>
+            </tr>
+        </thead>
+ 
+        <tbody>
+           @foreach(AccountList item in Accounts.OrderBy(x => x.AccountNumber))
+            {
+                <tr>
+                    <td>@item.AccountNumber</td>
+                    <td>@item.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -28,7 +28,10 @@ public partial class InsertEditPayment : ComponentBase
     public int Counter { get; set; } = 0;
 
     [Inject]
-    public PaymentRepo DB { get; set; }
+    public PaymentRepo PaymentRepo { get; set; }
+
+    [Inject]
+    public BudgetRepo BudgetRepo { get; set; }
 
     public bool HasPayees => PaymentItem.Payees.Count > 0;
 
@@ -36,6 +39,7 @@ public partial class InsertEditPayment : ComponentBase
     public NavigationManager NavigationManager { get; set; }
 
     public PaymentItem PaymentItem { get; set; }
+    public Budget Budget { get; set; } 
 
     [Parameter]
     public string PaymentItemId { get; set; } = string.Empty;
@@ -63,12 +67,12 @@ public partial class InsertEditPayment : ComponentBase
         if (PaymentItem.PaymentItemId == Guid.Empty)
         {
             //we have no valid ID so insert document
-            result = DB.InsertDocument(PaymentItem);
+            result = PaymentRepo.InsertDocument(PaymentItem);
         }
         else
         {
             //we have valid ID so update document
-            result = DB.UpdateDocument(PaymentItem);
+            result = PaymentRepo.UpdateDocument(PaymentItem);
         }
 
         if (result.Success)
@@ -120,7 +124,7 @@ public partial class InsertEditPayment : ComponentBase
         base.OnParametersSet();
         if (string.IsNullOrWhiteSpace(PaymentItemId) == false)
         {
-            PaymentItem = DB.GetItemsById(Guid.Parse(PaymentItemId));
+            PaymentItem = PaymentRepo.GetItemsById(Guid.Parse(PaymentItemId));
             BudgetId = PaymentItem.BudgetId.ToString();
         }
         else
@@ -135,6 +139,12 @@ public partial class InsertEditPayment : ComponentBase
             {
                 throw new NullReferenceException(nameof(BudgetId));
             }
+        }
+
+        //if we have a budgetID then load the budget repo
+        if (!string.IsNullOrWhiteSpace(BudgetId))
+        {
+            Budget = BudgetRepo.GetBudget(Guid.Parse(BudgetId));
         }
     }
 }

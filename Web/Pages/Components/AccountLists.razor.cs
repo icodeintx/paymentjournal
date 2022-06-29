@@ -2,6 +2,7 @@
 using Microsoft.JSInterop;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
+using PaymentJournal.Web.Models;
 
 namespace PaymentJournal.Web.Pages.Components;
 
@@ -14,5 +15,6 @@ public partial class AccountLists : ComponentBase
     {
     }
 
-    public List<AccountLists> Account { get; set; } = new();
+    [Parameter]
+    public List<AccountList> Accounts { get; set; } = new();
 }

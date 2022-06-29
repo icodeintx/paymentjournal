@@ -3,6 +3,8 @@
 public class Budget
 {
     public decimal AnnualSalary { get; set; }
+
+    public List<AccountList> AccountLists => GetAccountLists();
     public List<BankAccount> BankAccounts { get; set; } = new();
     public Guid BudgetId { get; set; } = Guid.NewGuid();
     public DateTime CreateDate { get; set; } = DateTime.Now;
@@ -19,6 +21,52 @@ public class Budget
     public decimal TotalYearlyIncomes => Incomes.Select(x => x.Amount).Sum() * 12;
 
     public decimal YearlyWitholdings => AnnualSalary - TotalYearlyIncomes;
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public List<AccountList> GetAccountLists()
+    {
+        var list = new List<AccountList>(); 
+
+        //get accounts from Bank
+        foreach (var account in BankAccounts)
+        {
+            list.Add(
+                        new AccountList 
+                        { 
+                            AccountNumber = account.AccountNumber, 
+                            Description = account.Description 
+                        });
+        }
+
+        //get accounts from Cards
+        foreach (var account in CreditCards)
+        {
+            list.Add(
+                        new AccountList
+                        {
+                            AccountNumber = account.AccountNumber,
+                            Description = account.Description
+                        });
+        }
+
+        //get Accounts from Online Service
+        foreach (var account in OnlineServices)
+        {
+            list.Add(
+                        new AccountList
+                        {
+                            AccountNumber = account.PaidTo,
+                            Description = account.Service
+                        });
+        }
+
+        return list;
+    }
 
     /// <summary>
     /// Returns expenses summed by PayTo acct
