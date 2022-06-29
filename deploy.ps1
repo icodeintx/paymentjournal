@@ -1,4 +1,8 @@
 
+#First change directory to the Web Project
+Write-Output "Change folder to PaymentJournal.Web Project"
+Set-Location -Path \src\PaymentJournal\PaymentJournal.Web
+
 #Remove the 'publish' folder if it exists
 Remove-Item publish -Recurse
 Write-Output "Removing existing publish folder"
@@ -18,3 +22,7 @@ Write-Output "All files copied"
 #replace the application settings files with the originals
 Copy-Item C:\OneDrive\Personal\AmaraCode\production\apps\PaymentJournal\bak\appsettings.* C:\OneDrive\Personal\AmaraCode\production\apps\PaymentJournal\
 Write-Output "Application files replaced"
+
+#Change folder back to the one in History
+Write-Output "Changing folder to History -1"
+Set-Location -Path -
