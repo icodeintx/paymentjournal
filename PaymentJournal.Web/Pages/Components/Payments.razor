@@ -3,7 +3,7 @@
 @*<div class="alert-success p-3 m-3">Displaying Filtered entries</div>*@
 
 <div class="d-grid gap-2 col-6 mx-auto text-center">
-        <h2>@GetBudgetName() - Payments</h2>
+        <h2>@Budget.Name - Payments</h2>
 </div>
 
 <MonthYearSelector ReturnURL="@GetReturnURL" />
@@ -78,4 +78,4 @@
     </table>
 </div>
 
-
+<AccountLists Accounts="@Budget.AccountLists" /> 

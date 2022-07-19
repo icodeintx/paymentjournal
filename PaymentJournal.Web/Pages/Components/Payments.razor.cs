@@ -31,6 +31,8 @@ public partial class Payments : ComponentBase
     public string Month { get; set; }
 
     public List<PaymentItem> PaymentItems { get; set; }
+    
+    public Budget Budget {get; set;}
 
     [Parameter]
     public string Year { get; set; }
@@ -48,6 +50,8 @@ public partial class Payments : ComponentBase
 
     [Inject]
     private PaymentRepo repo { get; set; }
+
+    
 
     /// <summary>
     ///
@@ -76,25 +80,7 @@ public partial class Payments : ComponentBase
         navigationManager.NavigateTo($"/payment/edit/{model.PaymentItemId.ToString()}");
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="budgetId"></param>
-    /// <returns></returns>
-    protected string GetBudgetName()
-    {
-        if (!string.IsNullOrWhiteSpace(BudgetId))
-        {
-            var budget = budgetRepo.GetBudget(Guid.Parse(BudgetId));
-
-            return budget.Name;
-        }
-        else
-        {
-            return String.Empty;
-        }
-    }
-
+  
     protected void NavToPayments()
     {
         navigationManager.NavigateTo($"/payment/insert/{BudgetId}");
@@ -114,6 +100,13 @@ public partial class Payments : ComponentBase
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
+
+        if (!string.IsNullOrWhiteSpace(BudgetId))
+        {
+               Budget = budgetRepo.GetBudget(Guid.Parse(BudgetId));
+        }
+         
+         
 
         //check if we have Month and Year
         if (string.IsNullOrWhiteSpace(Month) || string.IsNullOrWhiteSpace(Year))
