@@ -22,24 +22,22 @@ public class Budget
 
     public decimal YearlyWitholdings => AnnualSalary - TotalYearlyIncomes;
 
-
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     public List<AccountList> GetAccountLists()
     {
-        var list = new List<AccountList>(); 
+        var list = new List<AccountList>();
 
         //get accounts from Bank
         foreach (var account in BankAccounts)
         {
             list.Add(
-                        new AccountList 
-                        { 
-                            AccountNumber = account.AccountNumber, 
-                            Description = account.Description 
+                        new AccountList
+                        {
+                            AccountNumber = account.AccountNumber,
+                            Description = account.Description
                         });
         }
 

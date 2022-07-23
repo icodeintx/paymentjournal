@@ -1,11 +1,4 @@
-﻿using System.Net.Http;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;

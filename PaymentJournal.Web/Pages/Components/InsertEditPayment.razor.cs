@@ -1,12 +1,4 @@
-﻿using System.Net.Http;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
 
@@ -39,7 +31,7 @@ public partial class InsertEditPayment : ComponentBase
     public NavigationManager NavigationManager { get; set; }
 
     public PaymentItem PaymentItem { get; set; }
-    public Budget Budget { get; set; } 
+    public Budget Budget { get; set; }
 
     [Parameter]
     public string PaymentItemId { get; set; } = string.Empty;

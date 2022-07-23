@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace PaymentJournal.Web.Models;
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 namespace PaymentJournal.Web.Models
 {

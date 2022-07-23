@@ -1,9 +1,6 @@
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.Extensions.DependencyInjection;
 using PaymentJournal.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);

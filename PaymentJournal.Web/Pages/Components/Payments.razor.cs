@@ -1,11 +1,4 @@
-﻿using System.Net.Http;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
@@ -31,8 +24,8 @@ public partial class Payments : ComponentBase
     public string Month { get; set; }
 
     public List<PaymentItem> PaymentItems { get; set; }
-    
-    public Budget Budget {get; set;}
+
+    public Budget Budget { get; set; }
 
     [Parameter]
     public string Year { get; set; }
@@ -50,8 +43,6 @@ public partial class Payments : ComponentBase
 
     [Inject]
     private PaymentRepo repo { get; set; }
-
-    
 
     /// <summary>
     ///
@@ -80,7 +71,6 @@ public partial class Payments : ComponentBase
         navigationManager.NavigateTo($"/payment/edit/{model.PaymentItemId.ToString()}");
     }
 
-  
     protected void NavToPayments()
     {
         navigationManager.NavigateTo($"/payment/insert/{BudgetId}");
@@ -103,10 +93,8 @@ public partial class Payments : ComponentBase
 
         if (!string.IsNullOrWhiteSpace(BudgetId))
         {
-               Budget = budgetRepo.GetBudget(Guid.Parse(BudgetId));
+            Budget = budgetRepo.GetBudget(Guid.Parse(BudgetId));
         }
-         
-         
 
         //check if we have Month and Year
         if (string.IsNullOrWhiteSpace(Month) || string.IsNullOrWhiteSpace(Year))
