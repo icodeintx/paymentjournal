@@ -13,5 +13,5 @@ public partial class AccountLists : ComponentBase
     }
 
     [Parameter]
-    public List<AccountList> Accounts { get; set; } = new();
+    public List<AccountList> AccountsList { get; set; } = new();
 }

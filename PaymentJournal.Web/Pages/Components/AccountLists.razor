@@ -10,7 +10,7 @@
         </thead>
  
         <tbody>
-           @foreach(AccountList item in Accounts.OrderBy(x => x.AccountNumber))
+           @foreach(AccountList item in AccountsList.OrderBy(x => x.AccountNumber))
             {
                 <tr>
                     <td>@item.AccountNumber</td>
