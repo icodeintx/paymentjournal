@@ -58,8 +58,9 @@ public class Budget
             list.Add(
                         new AccountList
                         {
-                            AccountNumber = account.PaidTo,
-                            Description = account.Service
+                            //AccountNumber = account.PaidTo,
+                            AccountNumber = "n/a",
+                            Description = $"{account.Service} ({account.PaidTo})"
                         });
         }
 
