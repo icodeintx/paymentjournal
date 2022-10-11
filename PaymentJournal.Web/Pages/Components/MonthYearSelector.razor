@@ -5,23 +5,23 @@
         <div class="row">
             <div class="col">
                 <div class="input-group mb-3">
-                        <span class="input-group-text">Month</span>
-                        <InputSelect class="form-select" id="month" name="Month" @bind-Value="MonthYearModel.Month">
-                            @for (int x = 1; x < 13; x++)
+                    <span class="input-group-text">Month</span>
+                    <InputSelect style="width: 150px" class="form-select" id="month" name="Month" @bind-Value="MonthYearModel.Month">
+                        @for (int x = 1; x < 13; x++)
+                        {
+                            @if (x == DateTime.Now.Month)
                             {
-                                @if (x == DateTime.Now.Month)
-                                {
-                                    <option selected value=@x>@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(x)</option>
-                                }
-                                else
-                                {
-                                    <option value=@x>@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(x)</option>
-                                }
+                                <option selected value=@x>@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(x)</option>
                             }
-                        </InputSelect>
+                            else
+                            {
+                                <option value=@x>@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(x)</option>
+                            }
+                        }
+                    </InputSelect>
                 
-                        <span class="input-group-text">Year</span>
-                        <InputSelect class="form-select" id="year" name="Year" @bind-Value="MonthYearModel.Year">
+                    <span class="input-group-text">Year</span>
+                    <InputSelect style="width: 150px" class="form-select" id="year" name="Year" @bind-Value="MonthYearModel.Year">
                             @foreach(var year in Years)
                             {
                                 if (year == DateTime.Now.Year)
