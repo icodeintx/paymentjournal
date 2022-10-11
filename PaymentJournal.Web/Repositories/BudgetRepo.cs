@@ -6,7 +6,7 @@ namespace PaymentJournal.Web.Repositories;
 /// <summary>
 ///
 /// </summary>
-public class BudgetRepo : BaseRepo
+public class BudgetRepo : BaseRepo<Budget>
 {
     private string DBCollection = "Budget";
 
@@ -28,7 +28,7 @@ public class BudgetRepo : BaseRepo
     {
         try
         {
-            base.DeleteDocument<PaymentItem>(budgetId, DBCollection);
+            base.DeleteDocument(budgetId, DBCollection);
 
             return new DbResult()
             {
@@ -54,7 +54,7 @@ public class BudgetRepo : BaseRepo
     {
         try
         {
-            var result = base.GetCollectionList<Budget>(DBCollection)
+            var result = base.GetCollectionList(DBCollection)
                 .OrderByDescending(y => y.CreateDate).ToList();
 
             return result;
@@ -75,7 +75,7 @@ public class BudgetRepo : BaseRepo
     {
         try
         {
-            var result = base.GetDocumentById<Budget>(budgetId, DBCollection);
+            var result = base.GetDocumentById(budgetId, DBCollection);
 
             return result;
         }
@@ -94,7 +94,7 @@ public class BudgetRepo : BaseRepo
     {
         try
         {
-            var result = base.GetCollectionList<Budget>(DBCollection)
+            var result = base.GetCollectionList(DBCollection)
                 .OrderByDescending(y => y.LastSavedDate).FirstOrDefault();
 
             return result;
@@ -125,7 +125,7 @@ public class BudgetRepo : BaseRepo
                 document.BudgetId = Guid.NewGuid();
             }
 
-            base.UpsertDocument<Budget>(document, DBCollection);
+            base.UpsertDocument(document, DBCollection);
 
             return new DbResult()
             {

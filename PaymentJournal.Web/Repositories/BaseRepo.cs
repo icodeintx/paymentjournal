@@ -3,8 +3,16 @@ using PaymentJournal.Web.Models;
 
 namespace PaymentJournal.Web.Repositories;
 
-public class BaseRepo
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public class BaseRepo<T>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="connectionString"></param>
     protected BaseRepo(string connectionString)
     {
         DatabaseName = connectionString;
@@ -14,13 +22,13 @@ public class BaseRepo
     protected string DatabaseName { get; set; } = String.Empty;
 
     /// <summary>
-    ///
+    /// Delete single document
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="documentId"></param>
     /// <param name="collectionName"></param>
     /// <returns></returns>
-    protected DbResult DeleteDocument<T>(Guid documentId, string collectionName)
+    protected DbResult DeleteDocument(Guid documentId, string collectionName)
     {
         try
         {
@@ -29,7 +37,7 @@ public class BaseRepo
                 // Get a collection (or create, if doesn't exist)
                 var col = Database.GetCollection<T>(collectionName);
 
-                // Insert new PaymentItem document (Id will be auto-incremented)
+                // Deletes document
                 col.Delete(documentId);
 
                 return new DbResult()
@@ -50,19 +58,19 @@ public class BaseRepo
     }
 
     /// <summary>
-    ///
+    /// Currently NOT USED - connection closes after using statement
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="collectionName"></param>
     /// <returns></returns>
-    protected ILiteCollection<T> GetCollection<T>(string collectionName)
+    protected ILiteQueryableResult<T> GetCollection(string collectionName)
     {
         try
         {
             using (Database = new LiteDatabase(DatabaseName))
             {
                 // Get a collection (or create, if doesn't exist)
-                var results = Database.GetCollection<T>(collectionName);
+                var results = Database.GetCollection<T>(collectionName).Query();
 
                 return results;
             }
@@ -75,12 +83,12 @@ public class BaseRepo
     }
 
     /// <summary>
-    ///
+    /// Gets all documents in a Collection or Creates a new collection if not exists
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="collectionName"></param>
     /// <returns></returns>
-    protected List<T> GetCollectionList<T>(string collectionName)
+    protected List<T> GetCollectionList(string collectionName)
     {
         try
         {
@@ -108,7 +116,7 @@ public class BaseRepo
     /// <param name="documentId"></param>
     /// <param name="collectionName"></param>
     /// <returns></returns>
-    protected T GetDocumentById<T>(Guid documentId, string collectionName)
+    protected T GetDocumentById(Guid documentId, string collectionName)
     {
         try
         {
@@ -136,7 +144,7 @@ public class BaseRepo
     /// <param name="document"></param>
     /// <param name="collectionName"></param>
     /// <returns></returns>
-    protected DbResult InsertDocument<T>(T document, string collectionName)
+    protected DbResult InsertDocument(T document, string collectionName)
     {
         try
         {
@@ -172,7 +180,7 @@ public class BaseRepo
     /// <param name="document"></param>
     /// <param name="collectionName"></param>
     /// <returns></returns>
-    protected DbResult UpdateDocument<T>(T document, string collectionName)
+    protected DbResult UpdateDocument(T document, string collectionName)
     {
         try
         {
@@ -208,7 +216,7 @@ public class BaseRepo
     /// <param name="document"></param>
     /// <param name="collectionName"></param>
     /// <returns></returns>
-    protected DbResult UpsertDocument<T>(T document, string collectionName)
+    protected DbResult UpsertDocument(T document, string collectionName)
     {
         try
         {

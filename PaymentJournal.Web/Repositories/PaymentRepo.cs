@@ -3,7 +3,7 @@ using PaymentJournal.Web.Models;
 
 namespace PaymentJournal.Web.Repositories;
 
-public class PaymentRepo : BaseRepo
+public class PaymentRepo : BaseRepo<PaymentItem>
 {
     private string DBCollection = "PaymentItems";
 
@@ -23,7 +23,7 @@ public class PaymentRepo : BaseRepo
     {
         try
         {
-            var result = base.DeleteDocument<PaymentItem>(paymentId, DBCollection);
+            var result = base.DeleteDocument(paymentId, DBCollection);
 
             return new DbResult()
             {
@@ -49,7 +49,7 @@ public class PaymentRepo : BaseRepo
     {
         try
         {
-            var results = base.GetCollectionList<PaymentItem>(DBCollection)
+            var results = base.GetCollectionList(DBCollection)
                 .Where(x => x.BudgetId == budgetId)
                 .OrderByDescending(x => x.CreateDate).ToList();
 
@@ -71,7 +71,7 @@ public class PaymentRepo : BaseRepo
         try
         {
             //monkey balls
-            var years = base.GetCollectionList<PaymentItem>(DBCollection)
+            var years = base.GetCollectionList(DBCollection)
                 .Select(x => x.CreateDate.Year)
                 .ToList().Distinct();
 
@@ -93,7 +93,7 @@ public class PaymentRepo : BaseRepo
     {
         try
         {
-            var results = base.GetCollectionList<PaymentItem>(DBCollection)
+            var results = base.GetCollectionList(DBCollection)
                 .Where(x => x.CreateDate.Date == date.Date && x.BudgetId == budgetId)
                 .OrderBy(x => x.CreateDate)
                 .ToList();
@@ -116,7 +116,7 @@ public class PaymentRepo : BaseRepo
     {
         try
         {
-            var results = base.GetCollectionList<PaymentItem>(DBCollection)
+            var results = base.GetCollectionList(DBCollection)
                 .Where(x => x.PaymentItemId == paymentItemId)
                 .ToList().FirstOrDefault();
 
@@ -139,7 +139,7 @@ public class PaymentRepo : BaseRepo
     {
         try
         {
-            var results = base.GetCollectionList<PaymentItem>(DBCollection)
+            var results = base.GetCollectionList(DBCollection)
                 .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year && x.BudgetId == budgetId)
                 .OrderByDescending(x => x.CreateDate)
                 .ToList();
@@ -172,7 +172,7 @@ public class PaymentRepo : BaseRepo
             FixDollarValues(document);
 
             // Insert new PaymentItem document (Id will be auto-incremented)
-            base.InsertDocument<PaymentItem>(document, DBCollection);
+            base.InsertDocument(document, DBCollection);
 
             //TODO fix this bellow.  collection is closed
             //base.GetCollection<PaymentItem>(DBCollection).EnsureIndex(x => x.CreateDate);
@@ -206,7 +206,7 @@ public class PaymentRepo : BaseRepo
             FixDollarValues(document);
 
             // Insert new PaymentItem document (Id will be auto-incremented)
-            base.UpdateDocument<PaymentItem>(document, DBCollection);
+            base.UpdateDocument(document, DBCollection);
 
             //TODO fix below, the collection is closed
             // Index document using document CreateDate property
