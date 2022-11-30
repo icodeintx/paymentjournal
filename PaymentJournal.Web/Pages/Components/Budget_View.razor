@@ -10,191 +10,118 @@
             <td class="float-end"><MudButton Variant="Variant.Filled" OnClick="() => Payments(Budget.BudgetId)" StartIcon="@Icons.Filled.Payment" Color="Color.Success">Payments</MudButton></td>
         </tr>
     </MudSimpleTable>
+    <MudSwitch @bind-Checked="@EditMode" Label="Edit Mode" Color="Color.Success" />
 </MudPaper>
 
 <MudGrid Spacing="1" Justify="Justify.Center">
     <MudItem>
-        <MudPaper Height="350px" Width="350px" Class="infobox">
+        <MudPaper Height="350px" Width="350px" Class="infobox" Style="border: 1px solid black;">
             <MudPaper Class="card-header" Height="40px">Financial Summary</MudPaper>
-            
             <MudStack>
                 <MudPaper Class="pa-3 bg-trans" Elevation="0">
-                    Monthly
-                    <table>
-                        <tr>
-                            <td class="p-1 text-end">Total Expense:</td>
-                            <td class="red_text">$@Budget.TotalMonthlyExpenses.ToString("0.00")</td>
-                        </tr>
-                        <tr>
-                            <td class="p-1 text-end">Total Income:</td>
-                            <td class="green_text">$@Budget.TotalMonthlyIncomes.ToString("0.00")</td>
-                        </tr>
-                        <tr>
-                            <td class="p-1 text-end">Difference:</td>
-                            <td>$@(FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses))</td>
-                        </tr>
-                    </table>
+                    <MudText Align="Align.Start" Typo="Typo.h6">Monthly</MudText>
+                    <MudPaper Class="d-flex justify-center bg-trans" Elevation="0">
+                        <table>
+                            <tr>
+                                <td class="p-1 text-end">Total Expense:</td>
+                                <td class="red_text">$@Budget.TotalMonthlyExpenses.ToString("0.00")</td>
+                            </tr>
+                            <tr>
+                                <td class="p-1 text-end">Total Income:</td>
+                                <td class="green_text">$@Budget.TotalMonthlyIncomes.ToString("0.00")</td>
+                            </tr>
+                            <tr>
+                                <td class="p-1 text-end">Difference:</td>
+                                <td>$@(FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses))</td>
+                            </tr>
+                        </table>
+                    </MudPaper>
                 </MudPaper>
                 <MudPaper Class="pa-3 bg-trans" Elevation="0">
-                    Yearly
-                    <table>
-                        <tr>
-                            <td class="p-1 text-end">Total Expense:</td>
-                            <td class="red_text">$@Budget.TotalYearlyExpenses.ToString("0.00")</td>
-                        </tr>
-                        <tr>
-                            <td class="p-1 text-end">Total Income:</td>
-                            <td class="green_text">$@Budget.TotalYearlyIncomes.ToString("0.00")</td>
-                        </tr>
-                        <tr>
-                            <td class="p-1 text-end">Difference:</td>
-                            <td>$@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
-                        </tr>
-                    </table>
+                    <MudText Align="Align.Start" Typo="Typo.h6">Yearly</MudText>
+                    <MudPaper Class="d-flex justify-center bg-trans" Elevation="0">
+                        <table>
+                            <tr>
+                                <td class="p-1 text-end">Total Expense:</td>
+                                <td class="red_text">$@Budget.TotalYearlyExpenses.ToString("0.00")</td>
+                            </tr>
+                            <tr>
+                                <td class="p-1 text-end">Total Income:</td>
+                                <td class="green_text">$@Budget.TotalYearlyIncomes.ToString("0.00")</td>
+                            </tr>
+                            <tr>
+                                <td class="p-1 text-end">Difference:</td>
+                                <td>$@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
+                            </tr>
+                        </table>
+                    </MudPaper>
                 </MudPaper>
             </MudStack>
         </MudPaper>
     </MudItem>
     <MudItem>
-        <MudPaper Height="350px" Width="350px"  Class="infobox">
+        <MudPaper Height="350px" Width="350px" Class="infobox" Style="border: 1px solid black;">
             <MudPaper Class="card-header" Height="40px">Expenses By Account</MudPaper>
+            <MudPaper Class="pa-3 bg-trans" Elevation="0">
+                @{
+                    var payGroups = Budget.GetExpensePayGroups();
+                    if (payGroups.Count > 0)
+                    {
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <td>Account</td>
+                                    <td>Sum</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in payGroups)
+                                {
+                                    <tr>
+                                        <td>@item.Account</td>
+                                        <td class="red_text">$@(FormatMoney(item.Sum))</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    }
+                }
+            </MudPaper>
         </MudPaper>
     </MudItem>
     <MudItem>
-        <MudPaper Height="350px" Width="350px" Class="infobox">
+        <MudPaper Height="350px" Width="350px" Class="infobox" Style="border: 1px solid black;">
             <MudPaper Class="card-header" Height="40px">Financial Stats</MudPaper>
+            <MudPaper Class="pa-3 bg-trans" Elevation="0">
+                <table style="width:100%" class="table table-striped table-sm ">
+                    <tr>
+                        <td class="p-1 text-end">Half Monthly Expenses:</td>
+                        <td class="blue_text">$@(FormatMoney(Budget.TotalMonthlyExpenses / 2))</td>
+                    </tr>
+                    <tr>
+                        <td class="p-1 text-end">Debt-To-Income Ratio:</td>
+                        <td title="Monthy Expenses / (Annual Income / 12) * 100" class="blue_text">@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
+                    </tr>
+                    <tr>
+                        <td class="p-1 text-end">Yearly Witholdings:</td>
+                        <td title="Annual Salary - Yearly Income" class="blue_text">$@(FormatMoney(Budget.YearlyWitholdings))</td>
+                    </tr>
+
+                </table>
+            </MudPaper>
         </MudPaper>
     </MudItem>
 </MudGrid>
 
 <div class="rounded-3">
     @*<Switch title="Enable to make page changes" TValue="bool" @bind-Checked="@EditMode">Edit Mode</Switch>*@
-
+    
+    
 
     <EditForm Model="Budget" OnValidSubmit="HandleSubmit">
 
-
-        <div class="row p-3 m-3 rounded">
-            <div class="col">
-                <div class="card-group">
-                    <div class="card">
-                    <div class="card-header">
-                        Financial Summary
-                    </div>
-                      <div class="card-body">
-                        <p class="card-text">
-                           @*Content HERE*@
-                           Monthly
-                            <table style="width:100%" class="table table-striped table-sm ">
-                                <tr>
-                                        <td class="p-1 text-end">Total Expense:</td>
-                                    <td class="red_text">$@Budget.TotalMonthlyExpenses.ToString("0.00")</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Total Income:</td>
-                                    <td class="green_text">$@Budget.TotalMonthlyIncomes.ToString("0.00")</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Difference:</td>
-                                    <td>$@(FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses))</td>
-                                </tr>
-                            </table>      
-                        </p>
-                        <p class="card-text">
-                           @*Content HERE*@
-                           Yearly
-                            <table class="table table-striped table-sm ">
-                                <tr>
-                                    <td class="p-1 text-end">Total Expense:</td>
-                                    <td class="red_text">$@Budget.TotalYearlyExpenses.ToString("0.00")</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Total Income:</td>
-                                    <td class="green_text">$@Budget.TotalYearlyIncomes.ToString("0.00")</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Difference:</td>
-                                    <td>$@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
-                                </tr>
-                            </table>      
-                        </p>
-                      </div>
-                      <div class="card-footer">
-                        <small class="text-muted">&nbsp</small>
-                      </div>
-                    </div>
-                    <div class="card">
-                    <div class="card-header">
-                        Expenses By Account
-                    </div>
-                      <div class="card-body">
-                        @*<h5 class="card-title">Card title</h5>*@
-                        <p class="card-text">
-                            @*Content HERE*@
-                            @{
-                                var payGroups = Budget.GetExpensePayGroups();
-                                if(payGroups.Count > 0)
-                                    {
-                                                <table class="table table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <td>Account</td>
-                                                            <td>Sum</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach(var item in payGroups)
-                                                {
-                                                            <tr>
-                                                                <td>@item.Account</td>
-                                                                <td class="red_text">$@(FormatMoney(item.Sum))</td>
-                                                            </tr>
-                                                }
-
-                                                    </tbody>
-                                                </table>                                
-                                    }
-                            }
-                        </p>
-                      </div>
-                      <div class="card-footer">
-                        <small class="text-muted">&nbsp</small>
-                      </div>
-                    </div>
-                    <div class="card">
-                    <div class="card-header">
-                        Financial Stats
-                    </div>
-                      <div class="card-body">
-                        @*<h5 class="card-title">Card title</h5>*@
-                        <p class="card-text">
-                            @*Content HERE*@
-                            <table style="width:100%" class="table table-striped table-sm ">
-                                <tr>
-                                    <td class="p-1 text-end">Half Monthly Expenses:</td>
-                                    <td class="blue_text">$@(FormatMoney(Budget.TotalMonthlyExpenses /2))</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Debt-To-Income Ratio:</td>
-                                    <td title="Monthy Expenses / (Annual Income / 12) * 100" class="blue_text">@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Yearly Witholdings:</td>
-                                    <td title="Annual Salary - Yearly Income" class="blue_text">$@(FormatMoney(Budget.YearlyWitholdings))</td>
-                                </tr>
-
-                            </table>      
-                        </p>
-                      </div>
-                      <div class="card-footer">
-                        <small class="text-muted">&nbsp</small>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-        </div>
-
-
+        
             <div class="alert p-3 m-3 rounded">
                 <div class="row">
                     <div class="col">
