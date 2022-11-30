@@ -1,7 +1,7 @@
 ﻿@page "/payment/insert/{BudgetId}"
 @page "/payment/edit/{PaymentItemId}"
 @*@page "/insert"*@
-@using Blazorise
+
 
 @if(IsValidPaymentItemId())
 {
@@ -23,8 +23,7 @@ else
             <div class="row">
                 <div class="col-12 b-3 p-3">
                     Note:
-                    @*<InputText class="full-width-100" @bind-Value="PaymentItem.Note" placeholder="" />*@
-                    <TextEdit @bind-Text="PaymentItem.Note" Placeholder="Some text value..." />
+                    @*<TextEdit @bind-Text="PaymentItem.Note" Placeholder="Some text value..." />*@
                 </div>
             </div>
             <div class="row">

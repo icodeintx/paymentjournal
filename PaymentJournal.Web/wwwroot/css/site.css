@@ -1,8 +1,39 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+:root {
+    --primary-bg-color: #000717;
+    --box-bg-color: #161b29;
+    --text-color: lightgray;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     /*font-size: 20px;*/
+}
+
+.bg-trans {
+    background-color: transparent;
+}
+
+.navlink {
+    padding: 5px;
+    margin: 10px;
+}
+
+.green_text {
+    color: green;
+}
+
+.red_text {
+    color: red;
+}
+
+.blue_text {
+    color: blue;
+}
+
+.infobox {
+    background-color: var(--box-bg-color);
 }
 
 .mouse-pointer {

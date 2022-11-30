@@ -3,26 +3,75 @@
 @page "/budget/view/{BudgetId}"
 
 
-@using Blazorise
+<MudPaper Width="100%" Square="false" Class="pa-10 ma-2 infobox" Outlined="true">
+    <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
+        <tr>
+            <td><MudText Typo="Typo.h4" Class="textsilver">Budget - Monthly Budget</MudText></td>
+            <td class="float-end"><MudButton Variant="Variant.Filled" OnClick="() => Payments(Budget.BudgetId)" StartIcon="@Icons.Filled.Payment" Color="Color.Success">Payments</MudButton></td>
+        </tr>
+    </MudSimpleTable>
+</MudPaper>
+
+<MudGrid Spacing="1" Justify="Justify.Center">
+    <MudItem>
+        <MudPaper Height="350px" Width="350px" Class="infobox">
+            <MudPaper Class="card-header" Height="40px">Financial Summary</MudPaper>
+            
+            <MudStack>
+                <MudPaper Class="pa-3 bg-trans" Elevation="0">
+                    Monthly
+                    <table>
+                        <tr>
+                            <td class="p-1 text-end">Total Expense:</td>
+                            <td class="red_text">$@Budget.TotalMonthlyExpenses.ToString("0.00")</td>
+                        </tr>
+                        <tr>
+                            <td class="p-1 text-end">Total Income:</td>
+                            <td class="green_text">$@Budget.TotalMonthlyIncomes.ToString("0.00")</td>
+                        </tr>
+                        <tr>
+                            <td class="p-1 text-end">Difference:</td>
+                            <td>$@(FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses))</td>
+                        </tr>
+                    </table>
+                </MudPaper>
+                <MudPaper Class="pa-3 bg-trans" Elevation="0">
+                    Yearly
+                    <table>
+                        <tr>
+                            <td class="p-1 text-end">Total Expense:</td>
+                            <td class="red_text">$@Budget.TotalYearlyExpenses.ToString("0.00")</td>
+                        </tr>
+                        <tr>
+                            <td class="p-1 text-end">Total Income:</td>
+                            <td class="green_text">$@Budget.TotalYearlyIncomes.ToString("0.00")</td>
+                        </tr>
+                        <tr>
+                            <td class="p-1 text-end">Difference:</td>
+                            <td>$@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
+                        </tr>
+                    </table>
+                </MudPaper>
+            </MudStack>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="350px" Width="350px"  Class="infobox">
+            <MudPaper Class="card-header" Height="40px">Expenses By Account</MudPaper>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="350px" Width="350px" Class="infobox">
+            <MudPaper Class="card-header" Height="40px">Financial Stats</MudPaper>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
 
 <div class="rounded-3">
-    <Switch title="Enable to make page changes" TValue="bool" @bind-Checked="@EditMode">Edit Mode</Switch>
+    @*<Switch title="Enable to make page changes" TValue="bool" @bind-Checked="@EditMode">Edit Mode</Switch>*@
 
 
     <EditForm Model="Budget" OnValidSubmit="HandleSubmit">
-
-    
-        <div class="alert p-3 m-3 border rounded alert_bg">
-            <div class="row">
-                <div class="col-6">
-                    <h2>Budget - @Budget.Name</h2>
-                </div>
-                <div class="col-6">
-                    <button type="button" title="Payments" class="btn btn-success btn-sm float-end" @onclick="() => Payments(Budget.BudgetId)"><i class="fa-solid fa-money-check-dollar"></i>Payments</button>
-                </div>
-            
-            </div>
-        </div>
 
 
         <div class="row p-3 m-3 rounded">
