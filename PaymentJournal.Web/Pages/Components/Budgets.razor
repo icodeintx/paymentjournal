@@ -1,21 +1,17 @@
 ﻿@page "/budgets"
 
 
-<div class="alert p-3 m-3 rounded">
-        <div class="row">
-            <div class="col-2">
-                <h2>Budgets</h2>
-            </div>
-            
-            <div class="col-10">
-                <button type="button" class="btn btn-primary btn-sm m-2" @onclick="() => CreateNewBudget()">Create New Budget</button>
-            </div>
-        </div>
-    </div>
+<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
+        <tr>
+            <td><MudText Typo="Typo.h5" Class="textsilver">Budgets</MudText></td>
+            <td class="float-end"><MudButton Variant="Variant.Text" OnClick="() => CreateNewBudget()" StartIcon="@Icons.Filled.Payment" Color="Color.Primary">Create New Budget</MudButton></td>
+        </tr>
+    </MudSimpleTable>
+</MudPaper>
 
-
-<div class="alert p-3 m-3 rounded" >
-    <table class="table table-sm">
+<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
         <thead>
             <tr>
                 <td></td>
@@ -34,22 +30,22 @@
         </thead>
 
         <tbody>
-                @foreach(var item in BudgetList)
-                {
-                    <tr>
-                        <td><button type="button" title="View Budget" class="btn btn-success btn-sm" @onclick="() => ViewBudget(item.BudgetId)"><i class="fa-solid fa-pen-to-square"></i></button></td>
-                        <td >@item.Name</td>
-                        <td >@(FormatPercent(item.Debt_Income_Ratio))%</td>
-                        <td>$@(FormatMoney(item.TotalMonthlyExpenses))</td>
-                        <td>$@(FormatMoney(item.TotalMonthlyIncomes))</td>
-                        <td >@item.Expenses.Count</td>
-                        <td >@item.Incomes.Count</td>
-                        <td >@item.BankAccounts.Count</td>
-                        <td >@item.CreditCards.Count</td>
-                        <td >@item.OnlineServices.Count</td>
-                        <td><button type="button" title="Delete Expense" class="btn btn-danger btn-sm" @onclick="() => DeleteBudget(item.BudgetId)"><i class="fa-solid fa-trash-can"></i></button></td>
-                    </tr>
-                }
+            @foreach (var item in BudgetList)
+            {
+                <tr>
+                    <td><MudIconButton Icon="@Icons.Filled.RemoveRedEye" aria-label="delete" Color="Color.Success" OnClick="() => ViewBudget(item.BudgetId)"></MudIconButton></td>
+                    <td>@item.Name</td>
+                    <td>@(FormatPercent(item.Debt_Income_Ratio))%</td>
+                    <td>@(FormatMoney(item.TotalMonthlyExpenses))</td>
+                    <td>@(FormatMoney(item.TotalMonthlyIncomes))</td>
+                    <td>@item.Expenses.Count</td>
+                    <td>@item.Incomes.Count</td>
+                    <td>@item.BankAccounts.Count</td>
+                    <td>@item.CreditCards.Count</td>
+                    <td>@item.OnlineServices.Count</td>
+                    <td><MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" Color="Color.Error" OnClick="() => DeleteBudget(item.BudgetId)"></MudIconButton></td>
+                </tr>
+            }
         </tbody>
-    </table>
-</div>
+    </MudSimpleTable>
+</MudPaper>
