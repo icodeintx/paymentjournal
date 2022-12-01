@@ -267,7 +267,7 @@ public partial class Budget_View : ComponentBase
     /// <returns></returns>
     private string FormatMoney(decimal value)
     {
-        return value.ToString("0.00");
+        return value.ToString("C");
     }
 
     /// <summary>
