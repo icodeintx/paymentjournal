@@ -5,12 +5,12 @@
 
 <MonthYearSelector ReturnURL="@GetReturnURL" />
 
-<MudButton StartIcon="@Icons.Filled.PostAdd" OnClick="() => NavToPayments()" Variant="Variant.Outlined" Color="Color.Secondary">Insert Payment</MudButton>
 
-<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true" Elevation="1">
+<MudButton StartIcon="@Icons.Filled.PostAdd" OnClick="() => NavToPayments()" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Insert Payment</MudButton>
     @if (PaymentItems.Count > 0)
     {
-        <MudSimpleTable Class="bg-trans" Outlined="false" Dense="true" Elevation="0">
+        <MudSimpleTable Class="infobox" Outlined="false" Dense="true" Elevation="0">
             <thead>
                 <tr>
                     <td style="width:100px"></td>
@@ -26,19 +26,19 @@
                 {
                     <tr>
                         <td>
-                            <MudButtonGroup Color="Color.Primary" Variant="Variant.Text">
+                            <MudButtonGroup Color="Color.Primary" Variant="Variant.Text" OverrideStyles="false">
                                 <MudIconButton OnClick="() => DeleteDocument(item)" Title="Delete Payment" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small" />
-                                <MudIconButton OnClick="() => EditDocument(item)" Title="Edit Payment" Icon="@Icons.Filled.Edit" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small" />
+                                <MudIconButton OnClick="() => EditDocument(item)" Title="Edit Payment" Icon="@Icons.Filled.Edit" Variant="Variant.Filled" Color="Color.Success" Size="Size.Small" />
                             </MudButtonGroup>
                         </td>
                         <td hidden>@item.PaymentItemId</td>
-                        <td class="text-nowrap" style="width:100px">@item.CreateDate.ToString("M-dd-yy")</td>
+                        <td class="text-nowrap" style="width:100px">@item.CreateDate.Value.ToString("M-dd-yy")</td>
                         <td style="width:600px">@item.Note</td>
                         <td style="width:600px">
                             @if (item.Payees.Count > 0)
                             {
-                                <MudPaper Width="100%" Square="false" Class="pa-1 ma-2 infobox" Outlined="true">
-                                    <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0" Dense="true" Hover="true" Bordered="true" Striped="true">
+                                <MudPaper Width="100%" Square="false" Class="pa-1 ma-2" Outlined="true">
+                                    <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0" Dense="true" Hover="true" Bordered="true">
                                         <thead>
                                             @if (item.Payees.Count > 0)
                                             {
@@ -56,7 +56,7 @@
                                                 <tr>
                                                     <td hidden>@payee.PayeeId</td>
                                                     <td>@payee.Name</td>
-                                                    <td>@payee.Date.ToString("M-dd-yy")</td>
+                                                    <td>@payee.Date.Value.ToString("M-dd-yy")</td>
                                                     <td>$@payee.AmountFormatted</td>
                                                 </tr>
                                             }

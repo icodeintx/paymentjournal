@@ -3,85 +3,68 @@
 @*@page "/insert"*@
 
 
-@if(IsValidPaymentItemId())
-{
-    <h3>Edit Payment</h3>    
-    <div>PaymentItemId: @PaymentItemId</div>
-}
-else
-{
-    <h3>Insert Payment</h3>
-    <div>BudgetId: @BudgetId</div>
-}
+<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    @if (IsValidPaymentItemId())
+    {
+        <MudText Typo="Typo.h3">Edit Payment</MudText>
+        <MudText Typo="Typo.body1">PaymentItemId: @PaymentItemId</MudText>
+    }
+    else
+    {
+        <MudText Typo="Typo.h3">Insert Payment</MudText>
+        <MudText Typo="Typo.body1">BudgetId: @BudgetId</MudText>
+    }
+</MudPaper>
 
+<EditForm Model="PaymentItem" OnValidSubmit="HandleSubmit">
+    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
 
-
-<div class="row g-3">
-    <div class="col-12 alert rounded p-3">
-        <EditForm Model="PaymentItem" OnValidSubmit="HandleSubmit">
+        <MudPaper Class="pa-3 infobox" Elevation="0">
+            <MudTextField Label="Note" Placeholder="Enter Note..." @bind-Value="PaymentItem.Note" Variant="Variant.Text" />
+        </MudPaper>
+        <MudPaper Width="200px" Class="pa-3 infobox" Elevation="0">
+            <MudDatePicker Label="Date" @bind-Date="PaymentItem.CreateDate" />
+        </MudPaper>
         
-            <div class="row">
-                <div class="col-12 b-3 p-3">
-                    Note:
-                    @*<TextEdit @bind-Text="PaymentItem.Note" Placeholder="Some text value..." />*@
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 b-3 p-3">
-                    Date:
-                    <InputDate @bind-Value="PaymentItem.CreateDate" />
-                </div>
-            </div>
-        
+
             @if (HasPayees == false)
             {
-                <div class="alert-success b-3 p-3">select "Add New Payee" button to add Payees </div>
+                <MudText Class="pa-3" Typo="Typo.subtitle1">Select "Add New Payee" button to add Payees</MudText>
             }
-            
-            
 
-            <div class="row b-3 p-3">
-                <div class="col-sm-6">
-                    <table  style="width:400px"  class="table table-sm ">
-                        <thead>
-                            @if (HasPayees)
-                            {
-                                <tr>
-                                    <td>Payee</td>
-                                    <td>Amount</td>
-                                    <td>Date</td>
-                                    <td></td>
-                                </tr>
-                            }
-                        </thead>
-                        <tbody>
-                            @foreach(var payee in @PaymentItem.Payees)
-                            {
-                                <tr>
-                                    <td><InputText style="width: 200px" @bind-Value="payee.Name" /></td>
-                                    <td><InputNumber style="width: 100px" @bind-Value="payee.Amount" /></td>
-                                    <td><InputDate @bind-Value="payee.Date" /></td>
-                                    <td><div class="mouse-pointer" @onclick="() => RemovePayee(payee)"><i class="fa-solid fa-trash-can"></i></div></td>
-                                </tr>
-                                Counter++;
-                            }
-                    
-                        </tbody>
-                    </table>    
-                    
-                </div>
-            </div>
-            
-            <div class="btn-group mb-3">
-                        <button type="button" class="btn btn-primary btn-sm" @onclick="() => AddNewPayee()">Add New Payee</button>
-                        <button type="button" class="btn btn-success btn-sm" @onclick="() => NavToPayments()">Cancel</button>
-                        <button type="submit" class="btn btn-danger btn-sm" >Save</button>
-            </div>
-
-        </EditForm>
+            <MudSimpleTable Class="bg-trans" Outlined="false" Dense="true" Elevation="0">
+                <thead>
+                    @if (HasPayees)
+                    {
+                        <tr>
+                            <td>Payee</td>
+                            <td>Amount</td>
+                            <td>Date</td>
+                            <td></td>
+                        </tr>
+                    }
+                </thead>
+                <tbody>
+                    @foreach (var payee in @PaymentItem.Payees)
+                    {
+                        <tr>
+                            <td><MudTextField  @bind-Value="payee.Name" Variant="Variant.Text" /></td>
+                            <td><MudNumericField HideSpinButtons="true" @bind-Value="payee.Amount" Variant="Variant.Text" /></td>
+                            <td><MudDatePicker @bind-Date="payee.Date" /></td>
+                            <td><MudIconButton OnClick="() => RemovePayee(payee)" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Small" /></td>
+                        </tr>
+                        Counter++;
+                    }
+                </tbody>
+            </MudSimpleTable>
         
-    </div>
 
-    <AccountLists AccountsList="@Budget.AccountLists" />
-</div>
+            <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled" OverrideStyles="false">
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="() => AddNewPayee()">Add Payee</MudButton>
+            <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="() => NavToPayments()">Cancel</MudButton>
+            <MudButton Color="Color.Info" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save</MudButton>
+            </MudButtonGroup>
 
+        <AccountLists AccountsList="@Budget.AccountLists" />
+    </MudPaper>
+</EditForm>
