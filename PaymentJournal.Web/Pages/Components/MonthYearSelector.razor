@@ -1,43 +1,36 @@
 ﻿@using System.Globalization
 
-<div class="alert p-3">
+<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
     <EditForm Model="@MonthYearModel" class="row row-cols-lg-auto align-items-center" OnValidSubmit="@HandleValidSubmit">
-        <div class="row">
-            <div class="col">
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Month</span>
-                    <InputSelect style="width: 150px" class="form-select" id="month" name="Month" @bind-Value="MonthYearModel.Month">
-                        @for (int x = 1; x < 13; x++)
+        <MudSimpleTable Class="pa-3 bg-trans" Outlined="false" Elevation="0">
+            <tr>
+                <td>
+                    <MudSelect Style="width: 300px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="MonthYearModel.Month">
+                        <MudSelectItem Value="1">January</MudSelectItem>
+                        <MudSelectItem Value="2">February</MudSelectItem>
+                        <MudSelectItem Value="3">March</MudSelectItem>
+                        <MudSelectItem Value="4">April</MudSelectItem>
+                        <MudSelectItem Value="5">May</MudSelectItem>
+                        <MudSelectItem Value="6">June</MudSelectItem>
+                        <MudSelectItem Value="7">July</MudSelectItem>
+                        <MudSelectItem Value="8">August</MudSelectItem>
+                        <MudSelectItem Value="9">September</MudSelectItem>
+                        <MudSelectItem Value="10">October</MudSelectItem>
+                        <MudSelectItem Value="11">November</MudSelectItem>
+                        <MudSelectItem Value="12">December</MudSelectItem>
+                    </MudSelect>
+                </td>
+                <td>
+                    <MudSelect Style="width: 100px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="MonthYearModel.Year">
+                        @foreach (var year in Years)
                         {
-                            @if (x == DateTime.Now.Month)
-                            {
-                                <option selected value=@x>@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(x)</option>
-                            }
-                            else
-                            {
-                                <option value=@x>@CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(x)</option>
-                            }
+                            <MudSelectItem Value="@year">@year</MudSelectItem>
                         }
-                    </InputSelect>
-                
-                    <span class="input-group-text">Year</span>
-                    <InputSelect style="width: 150px" class="form-select" id="year" name="Year" @bind-Value="MonthYearModel.Year">
-                            @foreach(var year in Years)
-                            {
-                                if (year == DateTime.Now.Year)
-                                {
-                                    <option selected>@year</option>
-                                }
-                                else
-                                {
-                                    <option>@year</option>
-                                }
-                            }
-                        </InputSelect>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-
-            </div>
-        </div>
+                    </MudSelect>
+                </td>
+            </tr>
+        </MudSimpleTable>
+        <MudButton Variant="Variant.Text" ButtonType="ButtonType.Submit" Color="Color.Primary">Search</MudButton>
     </EditForm>
-</div>
+</MudPaper>
+

@@ -1,41 +1,13 @@
-﻿@*<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href=""></a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>*@
+﻿
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link text-nowrap" href="budget/view">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Last Saved Budget
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link text-nowrap" href="budgets">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Budgets
-            </NavLink>
-        </div>
-        <div class="px-3">
-            @*using this as a spacer between menu item groups*@
-            <hr />
-        </div>
-        <div class="nav-item px-3 text-center">
-            AmaraCode LLC
-        </div>        
-    </nav>
-</div>
 
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+<MudNavMenu>
+    <MudNavLink Class="navlink" Href="budget/view" Icon="@Icons.Filled.Receipt" Match="NavLinkMatch.All">Last Saved Budget</MudNavLink>
+    <MudNavLink Class="navlink" Href="/budgets" Icon="@Icons.Filled.Ballot" Match="NavLinkMatch.Prefix">Budgets</MudNavLink>
+    <MudDivider DividerType="DividerType.Middle" />
+    <MudAlert Severity="Severity.Warning" NoIcon="true" ContentAlignment="HorizontalAlignment.Center" Class="my-2">AmaraCode LLC</MudAlert>
+    @*   <MudNavGroup Title="Settings" Expanded="true">
+    <MudNavLink Href="/users" Match="NavLinkMatch.Prefix">Users</MudNavLink>
+    <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
+    </MudNavGroup>*@
+</MudNavMenu>

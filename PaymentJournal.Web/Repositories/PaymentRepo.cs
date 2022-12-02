@@ -72,7 +72,7 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         {
             //monkey balls
             var years = base.GetCollectionList(DBCollection)
-                .Select(x => x.CreateDate.Year)
+                .Select(x => x.CreateDate.Value.Year)
                 .ToList().Distinct();
 
             return years;
@@ -94,7 +94,7 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         try
         {
             var results = base.GetCollectionList(DBCollection)
-                .Where(x => x.CreateDate.Date == date.Date && x.BudgetId == budgetId)
+                .Where(x => x.CreateDate.Value.Date == date.Date && x.BudgetId == budgetId)
                 .OrderBy(x => x.CreateDate)
                 .ToList();
 
@@ -140,7 +140,7 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         try
         {
             var results = base.GetCollectionList(DBCollection)
-                .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year && x.BudgetId == budgetId)
+                .Where(x => x.CreateDate.Value.Month == month && x.CreateDate.Value.Year == year && x.BudgetId == budgetId)
                 .OrderByDescending(x => x.CreateDate)
                 .ToList();
 

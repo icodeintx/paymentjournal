@@ -3,373 +3,286 @@
 @page "/budget/view/{BudgetId}"
 
 
-@using Blazorise
+<EditForm Model="Budget" OnValidSubmit="HandleSubmit">
 
-<div class="rounded-3">
-    <Switch title="Enable to make page changes" TValue="bool" @bind-Checked="@EditMode">Edit Mode</Switch>
-
-
-    <EditForm Model="Budget" OnValidSubmit="HandleSubmit">
-
-    
-        <div class="alert p-3 m-3 border rounded alert_bg">
-            <div class="row">
-                <div class="col-6">
-                    <h2>Budget - @Budget.Name</h2>
-                </div>
-                <div class="col-6">
-                    <button type="button" title="Payments" class="btn btn-success btn-sm float-end" @onclick="() => Payments(Budget.BudgetId)"><i class="fa-solid fa-money-check-dollar"></i>Payments</button>
-                </div>
-            
-            </div>
-        </div>
+    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+        <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
+            <tr>
+                <td><MudText Typo="Typo.h5" Class="textsilver">Monthly Budget</MudText></td>
+                <td class="float-end"><MudButton Variant="Variant.Filled" OnClick="() => Payments(Budget.BudgetId)" StartIcon="@Icons.Filled.Payment" Color="Color.Success">Payments</MudButton></td>
+            </tr>
+        </MudSimpleTable>
+        <MudSwitch @bind-Checked="@EditMode" Label="Edit Mode" Color="Color.Success" />
+    </MudPaper>
 
 
-        <div class="row p-3 m-3 rounded">
-            <div class="col">
-                <div class="card-group">
-                    <div class="card">
-                    <div class="card-header">
-                        Financial Summary
-                    </div>
-                      <div class="card-body">
-                        <p class="card-text">
-                           @*Content HERE*@
-                           Monthly
-                            <table style="width:100%" class="table table-striped table-sm ">
-                                <tr>
-                                        <td class="p-1 text-end">Total Expense:</td>
-                                    <td class="red_text">$@Budget.TotalMonthlyExpenses.ToString("0.00")</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Total Income:</td>
-                                    <td class="green_text">$@Budget.TotalMonthlyIncomes.ToString("0.00")</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Difference:</td>
-                                    <td>$@(FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses))</td>
-                                </tr>
-                            </table>      
-                        </p>
-                        <p class="card-text">
-                           @*Content HERE*@
-                           Yearly
-                            <table class="table table-striped table-sm ">
+    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+        <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
+            <tr>
+                <td><MudTextField Disabled="Disabled" @bind-Value="Budget.Name" Label="Budget Name" Variant="Variant.Text" /></td>
+                <td><MudTextField Disabled="Disabled" @bind-Value="Budget.AnnualSalary" Label="Anual Salary" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" /></td>
+                <td><MudField Label="Monthly Gross" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney">@(FormatMoney(Budget.AnnualSalary / 12))</MudField></td>
+                <td class="float-end"><MudButton StartIcon="@Icons.Material.Filled.Delete" Disabled="Disabled" OnClick="() => DeleteBudget(Budget.BudgetId)" Variant="Variant.Text" Color="Color.Error">Delete Budget</MudButton></td>
+            </tr>
+        </MudSimpleTable>
+    </MudPaper>
+
+    <MudGrid Spacing="1" Justify="Justify.Center">
+        <MudItem>
+            <MudPaper Height="350px" Width="350px" Class="infobox" Style="border: 1px solid black;">
+                <MudPaper Class="card-header" Height="40px">Financial Summary</MudPaper>
+                <MudStack>
+                    <MudPaper Class="pa-3 bg-trans" Elevation="0">
+                        <MudText Align="Align.Start" Typo="Typo.h6">Monthly</MudText>
+                        <MudPaper Class="d-flex justify-center bg-trans" Elevation="0">
+                            <table>
                                 <tr>
                                     <td class="p-1 text-end">Total Expense:</td>
-                                    <td class="red_text">$@Budget.TotalYearlyExpenses.ToString("0.00")</td>
+                                    <td class="red_text">@Budget.TotalMonthlyExpenses.ToString("C")</td>
                                 </tr>
                                 <tr>
                                     <td class="p-1 text-end">Total Income:</td>
-                                    <td class="green_text">$@Budget.TotalYearlyIncomes.ToString("0.00")</td>
+                                    <td class="green_text">@Budget.TotalMonthlyIncomes.ToString("C")</td>
                                 </tr>
                                 <tr>
                                     <td class="p-1 text-end">Difference:</td>
-                                    <td>$@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
+                                    <td>@(FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses))</td>
                                 </tr>
-                            </table>      
-                        </p>
-                      </div>
-                      <div class="card-footer">
-                        <small class="text-muted">&nbsp</small>
-                      </div>
-                    </div>
-                    <div class="card">
-                    <div class="card-header">
-                        Expenses By Account
-                    </div>
-                      <div class="card-body">
-                        @*<h5 class="card-title">Card title</h5>*@
-                        <p class="card-text">
-                            @*Content HERE*@
-                            @{
-                                var payGroups = Budget.GetExpensePayGroups();
-                                if(payGroups.Count > 0)
+                            </table>
+                        </MudPaper>
+                    </MudPaper>
+                    <MudPaper Class="pa-3 bg-trans" Elevation="0">
+                        <MudText Align="Align.Start" Typo="Typo.h6">Yearly</MudText>
+                        <MudPaper Class="d-flex justify-center bg-trans" Elevation="0">
+                            <table>
+                                <tr>
+                                    <td class="p-1 text-end">Total Expense:</td>
+                                    <td class="red_text">@Budget.TotalYearlyExpenses.ToString("C")</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-end">Total Income:</td>
+                                    <td class="green_text">@Budget.TotalYearlyIncomes.ToString("C")</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-1 text-end">Difference:</td>
+                                    <td>@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
+                                </tr>
+                            </table>
+                        </MudPaper>
+                    </MudPaper>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+        <MudItem>
+            <MudPaper Height="350px" Width="350px" Class="infobox" Style="border: 1px solid black;">
+                <MudPaper Class="card-header" Height="40px">Expenses By Account</MudPaper>
+                <MudPaper Class="pa-3 bg-trans" Elevation="0">
+                    @{
+                        var payGroups = Budget.GetExpensePayGroups();
+                        if (payGroups.Count > 0)
+                        {
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <td>Account</td>
+                                        <td>Sum</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in payGroups)
                                     {
-                                                <table class="table table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <td>Account</td>
-                                                            <td>Sum</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach(var item in payGroups)
-                                                {
-                                                            <tr>
-                                                                <td>@item.Account</td>
-                                                                <td class="red_text">$@(FormatMoney(item.Sum))</td>
-                                                            </tr>
-                                                }
-
-                                                    </tbody>
-                                                </table>                                
+                                        <tr>
+                                            <td>@item.Account</td>
+                                            <td class="red_text">@item.Sum.ToString("C")</td>
+                                        </tr>
                                     }
-                            }
-                        </p>
-                      </div>
-                      <div class="card-footer">
-                        <small class="text-muted">&nbsp</small>
-                      </div>
-                    </div>
-                    <div class="card">
-                    <div class="card-header">
-                        Financial Stats
-                    </div>
-                      <div class="card-body">
-                        @*<h5 class="card-title">Card title</h5>*@
-                        <p class="card-text">
-                            @*Content HERE*@
-                            <table style="width:100%" class="table table-striped table-sm ">
-                                <tr>
-                                    <td class="p-1 text-end">Half Monthly Expenses:</td>
-                                    <td class="blue_text">$@(FormatMoney(Budget.TotalMonthlyExpenses /2))</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Debt-To-Income Ratio:</td>
-                                    <td title="Monthy Expenses / (Annual Income / 12) * 100" class="blue_text">@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-1 text-end">Yearly Witholdings:</td>
-                                    <td title="Annual Salary - Yearly Income" class="blue_text">$@(FormatMoney(Budget.YearlyWitholdings))</td>
-                                </tr>
 
-                            </table>      
-                        </p>
-                      </div>
-                      <div class="card-footer">
-                        <small class="text-muted">&nbsp</small>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-        </div>
-
-
-            <div class="alert p-3 m-3 rounded">
-                <div class="row">
-                    <div class="col">
-                        Budget Name: <InputText disabled=@Disabled @bind-Value="Budget.Name" />
-                    </div>
-                    <div class="col">
-                        Annual Salary: <InputNumber style="width: 100px" disabled=@Disabled @bind-Value="Budget.AnnualSalary" />
-                    </div>
-                    <div title="AnnualSalary / 12" class="col">
-                        Monthly Gross: $@(FormatMoney(Budget.AnnualSalary / 12))
-                    </div>
-                    <div class="col">
-                        <button type="button" disabled=@Disabled title="Delete Budget" class="btn btn-danger btn-sm float-end" @onclick="() => DeleteBudget(Budget.BudgetId)"><i class="fa-solid fa-trash-can"></i>Delete Budget</button>
-                    </div>
-                </div>
-            </div>
-        
-
-
-        <div class="alert p-3 m-3 rounded" >
-            <h2>Monthly Expenses</h2>
-            @if(Budget.Expenses.Count > 0)
-            {
-                <table style="width:900px" class="table table-sm">
-                    <thead>
+                                </tbody>
+                            </table>
+                        }
+                    }
+                </MudPaper>
+            </MudPaper>
+        </MudItem>
+        <MudItem>
+            <MudPaper Height="350px" Width="350px" Class="infobox" Style="border: 1px solid black;">
+                <MudPaper Class="card-header" Height="40px">Financial Stats</MudPaper>
+                <MudPaper Class="pa-3 bg-trans" Elevation="0">
+                    <table style="width:100%" class="table table-striped table-sm ">
                         <tr>
-                            <td></td>
-                            <td>Bill Name</td>
-                            <td>Paid To</td>
-                            <td>Paid By Acct</td>
-                            <td>Amount</td>
-                            <td>Note</td>
-                            <td>Est. Due Day</td>
-
+                            <td class="p-1 text-end">Half Monthly Expenses:</td>
+                            <td class="blue_text">@(FormatMoney(Budget.TotalMonthlyExpenses / 2))</td>
                         </tr>
-                    </thead>
-
-                    <tbody>
-                            @foreach(var item in Budget.Expenses)
-                            {
-                                <tr>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td><button disabled=@Disabled type="button" title="Delete Expense" class="btn btn-danger btn-sm" @onclick="() => DeleteExpense(item)"><i class="fa-solid fa-trash-can"></i></button></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td ><InputText style="width: 250px" disabled=@Disabled @bind-Value="item.BillName" /></td>
-                                    <td ><InputText style="width: 220px" disabled=@Disabled @bind-Value="item.PaidTo" /></td>
-                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 100px" disabled=@Disabled @bind-Value="item.PaidBy" /></td>
-                                    <td ><InputNumber style="width: 150px" disabled=@Disabled @bind-Value="item.Amount" /></td>
-                                    <td ><InputText style="width: 400px" disabled=@Disabled @bind-Value="item.Note" /></td>
-                                    <td ><InputNumber style="width: 100px" disabled=@Disabled @bind-Value="item.EstimatedDueDay" /></td>
-                                </tr>
-                            }
-                    </tbody>
-                </table>
-            }
-        
-            <button type="button" disabled=@Disabled title="Add Expense" class="btn btn-primary btn-sm" @onclick="() => AddExpense()"><i class="fa-solid fa-plus"></i></button>
-        </div>
-
-        <div class="alert p-3 m-3 rounded" >
-            <h2>Monthly Income</h2>
-            @if(Budget.Incomes.Count > 0)
-            {
-                <table style="width:550px" class="table table-sm">
-                    <thead>
                         <tr>
-                            <td></td>
-                            <td>Employer</td>
-                            <td>Type</td> @*like payroll*@
-                            <td>Amount</td>
-
+                            <td class="p-1 text-end">Debt-To-Income Ratio:</td>
+                            <td title="Monthy Expenses / (Annual Income / 12) * 100" class="blue_text">@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
                         </tr>
-                    </thead>
-
-                    <tbody>
-                            @foreach(var item in Budget.Incomes)
-                            {
-                                <tr>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td><button disabled=@Disabled type="button" title="Delete Income" class="btn btn-danger btn-sm" @onclick="() => DeleteIncome(item)"><i class="fa-solid fa-trash-can"></i></button></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td ><InputText style="width: 250px" disabled=@Disabled @bind-Value="item.Employer" /></td>
-                                    <td ><InputText style="width: 250px" disabled=@Disabled @bind-Value="item.Type" /></td>
-                                    <td ><InputNumber style="width: 150px" disabled=@Disabled @bind-Value="item.Amount" /></td>
-                                </tr>
-                            }
-                    </tbody>
-                </table>    
-            }
-        
-            <button disabled=@Disabled type="button" title="Add Income" class="btn btn-primary btn-sm" @onclick="() => AddIncome()"><i class="fa-solid fa-plus"></i></button>
-        </div>
-
-
-        <div class="alert p-3 m-3 rounded" >
-            <h2>Bank Accounts</h2>
-            @if(Budget.BankAccounts.Count > 0)
-            {
-                <table style="width:800px" class="table table-sm">
-                    <thead>
                         <tr>
-                            <td></td>
-                            <td>Bank</td>
-                            <td>Type</td> @*like checking savings*@
-                            <td>Acct</td>
-                            <td>Description</td> @*bills, direct deposit, land*@
-
+                            <td class="p-1 text-end">Yearly Witholdings:</td>
+                            <td title="Annual Salary - Yearly Income" class="blue_text">@(Budget.YearlyWitholdings.ToString("C"))</td>
                         </tr>
-                    </thead>
 
-                    <tbody>
-                            @foreach(var item in Budget.BankAccounts)
-                            {
-                                <tr>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td><button disabled=@Disabled type="button" title="Delete Bank Account" class="btn btn-danger btn-sm" @onclick="() => DeleteBankAccount(item)"><i class="fa-solid fa-trash-can"></i></button></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td ><InputText style="width: 250px" disabled=@Disabled @bind-Value="item.Bank" /></td>
-                                    <td ><InputText style="width: 150px" disabled=@Disabled @bind-Value="item.Type" /></td>
-                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 150px" disabled=@Disabled @bind-Value="item.AccountNumber" /></td>
-                                    <td ><InputText style="width: 400px" disabled=@Disabled @bind-Value="item.Description" /></td>
-                                </tr>
-                            }
-                    </tbody>
-                </table>   
-            }
-        
-            <button type="button" disabled=@Disabled title="Add Bank Account" class="btn btn-primary btn-sm" @onclick="() => AddBankAccount()"><i class="fa-solid fa-plus"></i></button>
-        </div>
-
-        <div class="alert p-3 m-3 rounded" >
-            <h2>Cards</h2>
-            @if(Budget.CreditCards.Count > 0)
-            {
-                <table style="width:800px"  class="table table-sm">
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td>Holder</td>  @*visa, mc*@
-                            <td>Acct</td>
-                            <td>Bank</td>
-                            <td>AcctAttached</td>
-                            <td>Description</td> @*bills, direct deposit, land*@
-                            <td>Debt?</td>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                            @foreach(var item in Budget.CreditCards)
-                            {
-                                <tr>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td><button disabled=@Disabled type="button" title="Delete Credit Card" class="btn btn-danger btn-sm" @onclick="() => DeleteCreditCard(item)"><i class="fa-solid fa-trash-can"></i></button></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td ><InputText style="width: 150px" disabled=@Disabled @bind-Value="item.Holder" /></td>
-                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 100px" disabled=@Disabled @bind-Value="item.AccountNumber" /></td>
-                                    <td ><InputText style="width: 200px" disabled=@Disabled @bind-Value="item.Bank" /></td>
-                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 100px" disabled=@Disabled @bind-Value="item.AttachedTo" /></td>
-                                    <td ><InputText style="width: 400px" disabled=@Disabled @bind-Value="item.Description" /></td>
-                                    <td ><InputCheckbox title="Is This a Debt Card" style="width: 50px" disabled=@Disabled @bind-Value="item.IsDebt" /></td>
-                                </tr>
-                            }
-                    </tbody>
-                </table>
-            }
-            <button type="button" disabled=@Disabled title="Add Credit Card" class="btn btn-primary btn-sm" @onclick="() => AddCreditCard()"><i class="fa-solid fa-plus"></i></button>
-        </div>
+                    </table>
+                </MudPaper>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
 
 
-        <div class="alert p-3 m-3 rounded" >
-            <h2>Online Services</h2>
-            @if(Budget.OnlineServices.Count > 0)
-            {
-                <table style="width:300px" class="table table-sm">
-                    <thead>
-                        <tr>
-                            <td>&nbsp</td>
-                            <td>Service</td>  @*paypal, venmo*@
-                            <td>PaidTo</td>  @*acct number charge with this service*@
-                        </tr>
-                    </thead>
-                    <tbody>
-                            @foreach(var item in Budget.OnlineServices)
-                            {
-                                <tr>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td><button disabled=@Disabled type="button" title="Delete Online Service" class="btn btn-danger btn-sm" @onclick="() => DeleteOnlineService(item)"><i class="fa-solid fa-trash-can"></i></button></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td ><InputText style="width: 250px" disabled=@Disabled @bind-Value="item.Service" /></td>
-                                    <td ><InputText title="Expecting Last-4 of Account" style="width: 100px" disabled=@Disabled @bind-Value="item.PaidTo" /></td>
-                                </tr>
-                            }
-                    </tbody>
-                </table>     
-            }
-            <button type="button" disabled=@Disabled title="Add Online Service" class="btn btn-primary btn-sm" @onclick="() => AddOnlineService()"><i class="fa-solid fa-plus"></i></button>
-        </div>
+    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+        <MudField Variant="Variant.Text">Monthy Expenses</MudField>
+        <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>Bill Name</td>
+                        <td>Paid To</td>
+                        <td>Paid By Acct</td>
+                        <td>Amount</td>
+                        <td>Note</td>
+                        <td>Est. Due Day</td>
 
-        <div class="d-grid gap-2 col-6 mx-auto p-3 m-3">
-            <button Disabled=@Disabled type="submit" class="btn btn-primary">Save</button>
-        </div>
-        <div class="d-grid gap-2 col-6 mx-auto text-center">
-            @Budget.BudgetId
-        </div>
-    </EditForm>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Budget.Expenses)
+                {
+                    <tr>
+                        <td><MudIconButton Disabled="Disabled" Icon="@Icons.Material.Filled.Delete" aria-label="delete" Color="Color.Error" OnClick="() => DeleteExpense(item)"></MudIconButton></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.BillName" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.PaidTo" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.PaidBy" Variant="Variant.Text" /></td>
+                        <td><MudNumericField Disabled="Disabled" HideSpinButtons="true" @bind-Value="item.Amount" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.Note" Variant="Variant.Text" /></td>
+                        <td><MudNumericField Disabled="Disabled" HideSpinButtons="true" @bind-Value="item.EstimatedDueDay" Variant="Variant.Text" /></td>
+                    </tr>
+                }
+            </tbody>
+        </MudSimpleTable>
+        <MudButton Variant="Variant.Text" OnClick="() => AddExpense()" Disabled="Disabled" Color="Color.Primary">Add Expense</MudButton>
+    </MudPaper>
 
-</div>
+
+    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+        <MudField Variant="Variant.Text">Monthy Income</MudField>
+        <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Employer</td>
+                    <td>Type</td> @*like payroll*@
+                    <td>Amount</td>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Budget.Incomes)
+                {
+                    <tr>
+                        <td><MudIconButton Disabled="Disabled" Icon="@Icons.Material.Filled.Delete" aria-label="delete" Color="Color.Error" OnClick="() => DeleteIncome(item)"></MudIconButton></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.Employer" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.Type" Variant="Variant.Text" /></td>
+                        <td><MudNumericField Disabled="Disabled" HideSpinButtons="true" @bind-Value="item.Amount" Variant="Variant.Text" /></td>
+                    </tr>
+                }
+            </tbody>
+        </MudSimpleTable>
+        <MudButton Variant="Variant.Text" OnClick="() => AddIncome()" Disabled="Disabled" Color="Color.Primary">Add Income</MudButton>
+    </MudPaper>
+    
+
+    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+        <MudField Variant="Variant.Text">Bank Accounts</MudField>
+        <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Bank</td>
+                    <td>Type</td> @*like checking savings*@
+                    <td>Acct</td>
+                    <td>Description</td> @*bills, direct deposit, land*@
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Budget.BankAccounts)
+                {
+                    <tr>
+                        <td><MudIconButton Disabled="Disabled" Icon="@Icons.Material.Filled.Delete" aria-label="delete" Color="Color.Error" OnClick="() => DeleteBankAccount(item)"></MudIconButton></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.Bank" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.Type" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.AccountNumber" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.Description" Variant="Variant.Text" /></td>
+                    </tr>
+                }
+            </tbody>
+        </MudSimpleTable>
+        <MudButton Variant="Variant.Text" OnClick="() => AddBankAccount()" Disabled="Disabled" Color="Color.Primary">Add Bank Account</MudButton>
+    </MudPaper>
+
+
+    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+        <MudField Variant="Variant.Text">Cards</MudField>
+        <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Holder</td>  @*visa, mc*@
+                    <td>Acct</td>
+                    <td>Bank</td>
+                    <td>AcctAttached</td>
+                    <td>Description</td> @*bills, direct deposit, land*@
+                    <td>Debt?</td>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Budget.CreditCards)
+                {
+                    <tr>
+                        <td><MudIconButton Disabled="Disabled" Icon="@Icons.Material.Filled.Delete" aria-label="delete" Color="Color.Error" OnClick="() => DeleteCreditCard(item)"></MudIconButton></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.Holder" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.AccountNumber" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.Bank" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.AttachedTo" Variant="Variant.Text" /></td>
+                        <td><MudTextField Disabled="Disabled" @bind-Value="item.Description" Variant="Variant.Text" /></td>
+                        <td><MudCheckBox Disabled="Disabled" Label="Debt" @bind-Checked="@item.IsDebt" Color="Color.Primary"></MudCheckBox></td>
+                    </tr>
+                }
+            </tbody>
+        </MudSimpleTable>
+        <MudButton Variant="Variant.Text" OnClick="() => AddCreditCard()" Disabled="Disabled" Color="Color.Primary">Add Card</MudButton>
+    </MudPaper>
+
+    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+        <MudField Variant="Variant.Text">Online Services</MudField>
+        <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
+            <thead>
+                    <tr>
+                        <td>&nbsp</td>
+                        <td>Service</td>  @*paypal, venmo*@
+                        <td>PaidTo</td>  @*acct number charge with this service*@
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach(var item in Budget.OnlineServices)
+                        {
+                            <tr>
+                                <td><MudIconButton Disabled="Disabled" Icon="@Icons.Material.Filled.Delete" aria-label="delete" Color="Color.Error" OnClick="() => DeleteOnlineService(item)"></MudIconButton></td>
+                                <td><MudTextField Disabled="Disabled" @bind-Value="item.Service" Variant="Variant.Text" /></td>
+                                <td><MudTextField title="Expecting Last-4 of Account" Disabled="Disabled" @bind-Value="item.PaidTo" Variant="Variant.Text" /></td>
+                            </tr>
+                        }
+                </tbody>
+        </MudSimpleTable>
+        <MudButton Variant="Variant.Text" OnClick="() => AddOnlineService()" Disabled="Disabled" Color="Color.Primary">Add Online Service</MudButton>
+    </MudPaper>
+
+    
+    <MudButton Disabled="Disabled" Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit" FullWidth="true">Save Changes</MudButton>
+    <MudText Align="Align.Center" >@Budget.BudgetId</MudText>
+    
+</EditForm>
+

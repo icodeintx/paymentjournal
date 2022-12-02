@@ -1,6 +1,4 @@
-using Blazorise;
-using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
+using MudBlazor.Services;
 using PaymentJournal.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,13 +13,7 @@ builder.Services.AddTransient<BudgetRepo>(s => new BudgetRepo(connectionString))
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services
-    .AddBlazorise(options =>
-    {
-        options.Immediate = true;
-    })
-    .AddBootstrapProviders()
-    .AddFontAwesomeIcons();
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 

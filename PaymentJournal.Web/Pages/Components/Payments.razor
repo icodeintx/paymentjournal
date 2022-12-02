@@ -1,81 +1,92 @@
 ﻿@page "/payments/{BudgetId}"
 @page "/payments/{BudgetId}/{Month}/{Year}"
-@*<div class="alert-success p-3 m-3">Displaying Filtered entries</div>*@
 
-<div class="d-grid gap-2 col-6 mx-auto text-center">
-        <h2>@Budget.Name - Payments</h2>
-</div>
+<PageTitle>@Budget.Name - Payments</PageTitle>
 
 <MonthYearSelector ReturnURL="@GetReturnURL" />
 
-<button title="Insert Payment" class="btn btn-primary btn-sm m-2" @onclick="() => NavToPayments()"><i class="fa-solid fa-pen-to-square"></i>Insert Payment</button>
 
-<div class="alert rounded" >
-    <table class="table table-sm">
-        <thead>
-            <tr>
-                <td style="width:100px"></td>
-                <td hidden>PaymentItemId</td>
-                <td class="text-nowrap" style="width:100px">Date</td>
-                <td >Note</td>
-                <td></td>
-            </tr>
-        </thead>
+<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true" Elevation="1">
+<MudButton StartIcon="@Icons.Filled.PostAdd" OnClick="() => NavToPayments()" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Insert Payment</MudButton>
+    @if (PaymentItems.Count > 0)
+    {
+        <MudSimpleTable Class="infobox" Outlined="false" Dense="true" Elevation="0">
+            <thead>
+                <tr>
+                    <td style="width:100px"></td>
+                    <td hidden>PaymentItemId</td>
+                    <td class="text-nowrap" style="width:100px">Date</td>
+                    <td>Note</td>
+                    <td></td>
+                </tr>
+            </thead>
 
-        <tbody>
-                @foreach(var item in PaymentItems)
+            <tbody>
+                @foreach (var item in PaymentItems)
                 {
                     <tr>
-                        <td >
-                            <table>
-                                <tr>
-                                    <td><button title="Delete Payment" class="btn btn-danger btn-sm" @onclick="() => DeleteDocument(item)"><i class="fa-solid fa-trash-can"></i></button></td>
-                                    <td><button title="Edit Payment {@item.PaymentItemId}" class="btn btn-primary btn-sm" @onclick="() => EditDocument(item)"><i class="fa-solid fa-pen-to-square"></i></button></td>
-                                </tr>
-                            </table>
+                        <td>
+                            <MudButtonGroup Color="Color.Primary" Variant="Variant.Text" OverrideStyles="false">
+                                <MudIconButton OnClick="() => DeleteDocument(item)" Title="Delete Payment" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small" />
+                                <MudIconButton OnClick="() => EditDocument(item)" Title="Edit Payment" Icon="@Icons.Filled.Edit" Variant="Variant.Filled" Color="Color.Success" Size="Size.Small" />
+                            </MudButtonGroup>
                         </td>
                         <td hidden>@item.PaymentItemId</td>
-                        <td class="text-nowrap" style="width:100px">@item.CreateDate.ToString("M-dd-yy")</td>
+                        <td class="text-nowrap" style="width:100px">@item.CreateDate.Value.ToString("M-dd-yy")</td>
                         <td style="width:600px">@item.Note</td>
-
                         <td style="width:600px">
-                            <table class="table table-sm table-child">
-                                <thead>
-                                    @if(item.Payees.Count > 0)
-                                    {
-                                        <tr>
-                                            <td hidden>PayeeId</td>
-                                            <td class="col-6">Payee</td>
-                                            <td>Date</td>
-                                            <td>Amount</td>
-                                        </tr>
-                                    }
-                                </thead>
-                                <tbody>
-                                    @foreach(var payee in item.Payees)
-                                    {
-                                        <tr>
-                                            <td hidden>@payee.PayeeId</td>
-                                            <td>@payee.Name</td>
-                                            <td>@payee.Date.ToString("M-dd-yy")</td>
-                                            <td>$@payee.AmountFormatted</td>
-                                        </tr>
-                                    }
-                                @if (item.Payees.Count > 0)
-                                {
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td><b>$@item.Payees.Sum(x => x.Amount).ToString("0.00")</b></td>
-                                    </tr>
-                                }
-                            </tbody>
-                            </table>
+                            @if (item.Payees.Count > 0)
+                            {
+                                <MudPaper Width="100%" Square="false" Class="pa-1 ma-2" Outlined="true">
+                                    <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0" Dense="true" Hover="true" Bordered="true">
+                                        <thead>
+                                            @if (item.Payees.Count > 0)
+                                            {
+                                                <tr>
+                                                    <td hidden>PayeeId</td>
+                                                    <td class="col-6">Payee</td>
+                                                    <td>Date</td>
+                                                    <td>Amount</td>
+                                                </tr>
+                                            }
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var payee in item.Payees)
+                                            {
+                                                <tr>
+                                                    <td hidden>@payee.PayeeId</td>
+                                                    <td>@payee.Name</td>
+                                                    <td>@payee.Date.Value.ToString("M-dd-yy")</td>
+                                                    <td>$@payee.AmountFormatted</td>
+                                                </tr>
+                                            }
+                                            @if (item.Payees.Count > 0)
+                                            {
+                                                <tr>
+                                                    <td colspan="2"></td>
+                                                    <td><b>@item.Payees.Sum(x => x.Amount).ToString("C")</b></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </MudSimpleTable>
+                                </MudPaper>
+                            }
+                            else
+                            {
+                                <div>&nbsp</div>
+                            }
+
                         </td>
                     </tr>
                 }
-        </tbody>
-
-    </table>
-</div>
+            </tbody>
+        </MudSimpleTable>
+    }
+    else
+    {
+        <MudText>No Payments</MudText>
+    }
+    
+</MudPaper>
 
 <AccountLists AccountsList="@Budget.AccountLists" /> 

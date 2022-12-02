@@ -1,7 +1,6 @@
-﻿
-<div class="alert max-width-350 rounded" >
-    Account Legend
-    <table class="table  table-sm">
+﻿<MudPaper Width="30%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <MudText>Account Legend</MudText>
+    <MudSimpleTable Class="bg-trans" Outlined="false" Dense="true" Elevation="0">
         <thead>
             <tr>
                 <td><b>Acct</b></td>
@@ -13,10 +12,10 @@
            @foreach(AccountList item in AccountsList.OrderBy(x => x.AccountNumber))
             {
                 <tr>
-                    <td>@item.AccountNumber</td>
+                    <td><MudText Color="Color.Info">@item.AccountNumber</MudText></td>
                     <td>@item.Description</td>
                 </tr>
             }
         </tbody>
-    </table>
-</div>
+    </MudSimpleTable>
+</MudPaper>
