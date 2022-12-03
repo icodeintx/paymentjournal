@@ -54,7 +54,7 @@
                     <MudPaper Class="pa-3 bg-trans" Elevation="0">
                         <MudText Align="Align.Start" Typo="Typo.h6">Yearly</MudText>
                         <MudPaper Class="d-flex justify-center bg-trans" Elevation="0">
-                            <table>
+                            <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0" Dense="true" Hover="true" Bordered="true">
                                 <tr>
                                     <td class="p-1 text-end">Total Expense:</td>
                                     <td class="red_text">@Budget.TotalYearlyExpenses.ToString("C")</td>
@@ -67,7 +67,7 @@
                                     <td class="p-1 text-end">Difference:</td>
                                     <td>@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
                                 </tr>
-                            </table>
+                            </MudSimpleTable>
                         </MudPaper>
                     </MudPaper>
                 </MudStack>
@@ -81,7 +81,7 @@
                         var payGroups = Budget.GetExpensePayGroups();
                         if (payGroups.Count > 0)
                         {
-                            <table class="table table-sm">
+                            <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0" Dense="true" Hover="true" Bordered="true">
                                 <thead>
                                     <tr>
                                         <td>Account</td>
@@ -98,7 +98,7 @@
                                     }
 
                                 </tbody>
-                            </table>
+                            </MudSimpleTable>
                         }
                     }
                 </MudPaper>
@@ -108,7 +108,7 @@
             <MudPaper Height="350px" Width="350px" Class="infobox" Style="border: 1px solid black;">
                 <MudPaper Class="card-header" Height="40px">Financial Stats</MudPaper>
                 <MudPaper Class="pa-3 bg-trans" Elevation="0">
-                    <table style="width:100%" class="table table-striped table-sm ">
+                    <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0" Dense="true" Hover="true" Bordered="true">
                         <tr>
                             <td class="p-1 text-end">Half Monthly Expenses:</td>
                             <td class="blue_text">@(FormatMoney(Budget.TotalMonthlyExpenses / 2))</td>
@@ -121,8 +121,7 @@
                             <td class="p-1 text-end">Yearly Witholdings:</td>
                             <td title="Annual Salary - Yearly Income" class="blue_text">@(Budget.YearlyWitholdings.ToString("C"))</td>
                         </tr>
-
-                    </table>
+                    </MudSimpleTable>
                 </MudPaper>
             </MudPaper>
         </MudItem>
