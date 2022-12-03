@@ -1,23 +1,22 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 :root {
-    --primary-bg-color: #000717;
+    --primary-bg-color: #0a081c;
     --box-bg-color: #161b29;
     --text-color: lightgray;
 }
 
+.page {
+    background-color: var(--primary-bg-color);
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    /*font-size: 20px;*/
+    background-color: var(--primary-bg-color);
 }
 
 .bg-trans {
     background-color: transparent;
-}
-
-.navlink {
-    padding: 5px;
-    margin: 10px;
 }
 
 .green_text {
@@ -40,33 +39,6 @@ html, body {
     cursor: pointer;
 }
 
-.card {
-    background-color: #161b29;
-}
-
-.table {
-    background-color: #161b29;
-    color: #8186a1;
-}
-
-.table-child {
-    background-color: #161721;
-    color: #8186a1;
-}
-
-.card-header {
-    background-color: #283257;
-    /*border: 1px solid black;*/
-}
-
-.alert {
-    background-color: #161b29;
-}
-
-.alert_bg {
-    background-color: #161b29;
-}
-
 h1:focus {
     outline: none;
 }
@@ -87,38 +59,6 @@ a, .btn-link {
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
-}
-
-.max-width-400 {
-    max-width: 400px;
-}
-
-.max-width-350 {
-    max-width: 350px;
-}
-
-.max-width-300 {
-    max-width: 300px;
-}
-
-.max-width-250 {
-    max-width: 250px;
-}
-
-.max-width-200 {
-    max-width: 200px;
-}
-
-.max-width-150 {
-    max-width: 150px;
-}
-
-.max-width-100 {
-    max-width: 100px;
-}
-
-.full-width-100 {
-    width: 100%;
 }
 
 .invalid {
