@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MudBlazor;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
 
@@ -17,6 +18,8 @@ public partial class Payments : ComponentBase
     {
     }
 
+    public Budget Budget { get; set; }
+
     [Parameter]
     public string BudgetId { get; set; }
 
@@ -24,8 +27,6 @@ public partial class Payments : ComponentBase
     public string Month { get; set; }
 
     public List<PaymentItem> PaymentItems { get; set; }
-
-    public Budget Budget { get; set; }
 
     [Parameter]
     public string Year { get; set; }
@@ -50,13 +51,24 @@ public partial class Payments : ComponentBase
     /// <param name="model"></param>
     protected async Task DeleteDocument(PaymentItem model)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Delete Payment Item? This process cannot be undone after clicking SAVE.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
 
-        if (confirmed)
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
         {
-            //remove from gui
+            return;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
+        {
             PaymentItems.Remove(model);
-
             repo.DeleteDocument(model.PaymentItemId);
         }
     }

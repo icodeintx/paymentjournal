@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MudBlazor;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
 
@@ -11,7 +12,9 @@ public partial class Budgets : ComponentBase
     public string BudgetId { get; set; } = string.Empty;
 
     public List<Budget> BudgetList { get; set; } = new();
+
     public bool Disabled { get; set; } = true;
+
     public string Message { get; set; } = string.Empty;
 
     [Inject]
@@ -29,10 +32,24 @@ public partial class Budgets : ComponentBase
     /// <param name="budgetId"></param>
     public async void DeleteBudget(Guid budgetId)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this BUDGET?");
-        if (confirmed)
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Delete Payment Item? This process cannot be undone after clicking SAVE.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
         {
-            DbResult result = Repo.DeleteBudget(budgetId);
+            return;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
+        {
+            DbResult dbresult = Repo.DeleteBudget(budgetId);
             NavigationManager.NavigateTo("/budgets", true);
         }
     }
