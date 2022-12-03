@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MudBlazor;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
 
@@ -26,6 +27,8 @@ public partial class Budget_View : ComponentBase
         }
     }
 
+    //[Inject] IDialogService DialogService { get; set; }
+
     public string Message { get; set; } = string.Empty;
 
     [Inject]
@@ -43,10 +46,24 @@ public partial class Budget_View : ComponentBase
     /// <param name="budgetId"></param>
     public async void DeleteBudget(Guid budgetId)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this BUDGET?");
-        if (confirmed)
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Delete Budget {this.Budget.Name}? This process cannot be undone.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
         {
-            DbResult result = Repo.DeleteBudget(budgetId);
+            return;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
+        {
+            DbResult deleteResult = Repo.DeleteBudget(budgetId);
             NavigationManager.NavigateTo("/budgets", true);
         }
     }
@@ -122,8 +139,22 @@ public partial class Budget_View : ComponentBase
     /// <returns></returns>
     protected async Task<bool> DeleteBankAccount(BankAccount model)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
-        if (confirmed)
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Delete Bank Account {model.Bank}? This process cannot be undone after clicking SAVE.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
+        {
+            return false;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
         {
             return Budget.BankAccounts.Remove(model);
         }
@@ -140,8 +171,22 @@ public partial class Budget_View : ComponentBase
     /// <returns></returns>
     protected async Task<bool> DeleteCreditCard(CreditCard model)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
-        if (confirmed)
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Delete Card {model.Holder}? This process cannot be undone after clicking SAVE.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
+        {
+            return false;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
         {
             return Budget.CreditCards.Remove(model);
         }
@@ -158,8 +203,22 @@ public partial class Budget_View : ComponentBase
     /// <returns></returns>
     protected async Task<bool> DeleteExpense(Expense model)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
-        if (confirmed)
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Delete Monthy Expense {model.BillName}? This process cannot be undone after clicking SAVE.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
+        {
+            return false;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
         {
             return Budget.Expenses.Remove(model);
         }
@@ -176,8 +235,22 @@ public partial class Budget_View : ComponentBase
     /// <returns></returns>
     protected async Task<bool> DeleteIncome(Income model)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
-        if (confirmed)
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Delete Income {model.Employer}? This process cannot be undone after clicking SAVE.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
+        {
+            return false;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
         {
             return Budget.Incomes.Remove(model);
         }
@@ -194,8 +267,22 @@ public partial class Budget_View : ComponentBase
     /// <returns></returns>
     protected async Task<bool> DeleteOnlineService(OnlineService model)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?");
-        if (confirmed)
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Delete Online Service {model.Service}? This process cannot be undone after clicking SAVE.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
+        {
+            return false;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
         {
             return Budget.OnlineServices.Remove(model);
         }
