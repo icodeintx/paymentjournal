@@ -1,20 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace PaymentJournal.Web.Models
+﻿namespace PaymentJournal.Web.Models
 {
     public class MonthYear
     {
         public MonthYear()
         {
-            //CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(DateTime.Now.Month);
-            Month = DateTime.Now.Month;
-            Year = DateTime.Now.Year;
+            if (this.Month == 0)
+            {
+                Month = DateTime.Now.Month;
+            }
+
+            if (this.Year == 0)
+            {
+                Year = DateTime.Now.Year;
+            }
         }
 
-        [BindProperty]
+        //[BindProperty]
         public int Month { get; set; }
 
-        [BindProperty]
+        //[BindProperty]
         public int Year { get; set; }
     }
 }

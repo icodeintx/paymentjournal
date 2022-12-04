@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using MudBlazor;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
@@ -23,13 +22,7 @@ public partial class Payments : ComponentBase
     [Parameter]
     public string BudgetId { get; set; }
 
-    [Parameter]
-    public string Month { get; set; }
-
     public List<PaymentItem> PaymentItems { get; set; }
-
-    [Parameter]
-    public string Year { get; set; }
 
     protected string GetReturnURL => $"/payments/{BudgetId}";
 
@@ -37,7 +30,7 @@ public partial class Payments : ComponentBase
     private BudgetRepo budgetRepo { get; set; }
 
     [Inject]
-    private IJSRuntime JSRuntime { get; set; }
+    private CacheRepo CacheRepo { get; set; }
 
     [Inject]
     private NavigationManager navigationManager { get; set; }
@@ -88,12 +81,9 @@ public partial class Payments : ComponentBase
         navigationManager.NavigateTo($"/payment/insert/{BudgetId}");
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     protected override void OnInitialized()
     {
-        base.OnInitialized();
+        var x = 1;
     }
 
     /// <summary>
@@ -101,15 +91,15 @@ public partial class Payments : ComponentBase
     /// </summary>
     protected override void OnParametersSet()
     {
-        base.OnParametersSet();
-
         if (!string.IsNullOrWhiteSpace(BudgetId))
         {
             Budget = budgetRepo.GetBudget(Guid.Parse(BudgetId));
         }
 
+        var appState = CacheRepo.GetAppState();
+
         //check if we have Month and Year
-        if (string.IsNullOrWhiteSpace(Month) || string.IsNullOrWhiteSpace(Year))
+        if (appState.MonthYear == null || appState.MonthYear.Month == 0 || appState.MonthYear.Year == 0)
         {
             //one or both of the parameters above are blank so use this month and year
             PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), DateTime.Now.Month, DateTime.Now.Year);
@@ -118,8 +108,9 @@ public partial class Payments : ComponentBase
         {
             try
             {
+                appState.test = 11;
                 //Monty and Year were passed, try to parse them and use them.
-                PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), int.Parse(Month), int.Parse(Year));
+                PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), appState.MonthYear.Month, appState.MonthYear.Year);
             }
             catch
             {

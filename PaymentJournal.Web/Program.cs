@@ -8,6 +8,7 @@ string connectionString = builder.Configuration.GetConnectionString("LiteDb");
 
 builder.Services.AddTransient<PaymentRepo>(s => new PaymentRepo(connectionString));
 builder.Services.AddTransient<BudgetRepo>(s => new BudgetRepo(connectionString));
+builder.Services.AddTransient<CacheRepo>(s => new CacheRepo(connectionString));
 
 // Add services to the container.
 builder.Services.AddRazorPages();

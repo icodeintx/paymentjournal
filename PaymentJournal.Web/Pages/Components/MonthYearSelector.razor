@@ -1,11 +1,11 @@
 ﻿@using System.Globalization
 
 <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
-    <EditForm Model="@MonthYearModel" class="row row-cols-lg-auto align-items-center" OnValidSubmit="@HandleValidSubmit">
+    <EditForm Model="@AppState.MonthYear" class="row row-cols-lg-auto align-items-center" OnValidSubmit="@HandleValidSubmit">
         <MudSimpleTable Class="pa-3 bg-trans" Outlined="false" Elevation="0">
             <tr>
                 <td>
-                    <MudSelect Style="width: 300px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="MonthYearModel.Month">
+                    <MudSelect Style="width: 300px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="AppState.MonthYear.Month">
                         <MudSelectItem Value="1">January</MudSelectItem>
                         <MudSelectItem Value="2">February</MudSelectItem>
                         <MudSelectItem Value="3">March</MudSelectItem>
@@ -21,7 +21,7 @@
                     </MudSelect>
                 </td>
                 <td>
-                    <MudSelect Style="width: 100px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="MonthYearModel.Year">
+                    <MudSelect Style="width: 100px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="AppState.MonthYear.Year">
                         @foreach (var year in Years)
                         {
                             <MudSelectItem Value="@year">@year</MudSelectItem>

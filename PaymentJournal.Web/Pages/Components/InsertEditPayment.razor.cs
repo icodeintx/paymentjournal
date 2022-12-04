@@ -14,16 +14,15 @@ public partial class InsertEditPayment : ComponentBase
         PaymentItem = new PaymentItem();
     }
 
+    public Budget Budget { get; set; }
+
     [Parameter]
     public string BudgetId { get; set; }
 
-    public int Counter { get; set; } = 0;
-
-    [Inject]
-    public PaymentRepo PaymentRepo { get; set; }
-
     [Inject]
     public BudgetRepo BudgetRepo { get; set; }
+
+    public int Counter { get; set; } = 0;
 
     public bool HasPayees => PaymentItem.Payees.Count > 0;
 
@@ -31,10 +30,12 @@ public partial class InsertEditPayment : ComponentBase
     public NavigationManager NavigationManager { get; set; }
 
     public PaymentItem PaymentItem { get; set; }
-    public Budget Budget { get; set; }
 
     [Parameter]
     public string PaymentItemId { get; set; } = string.Empty;
+
+    [Inject]
+    public PaymentRepo PaymentRepo { get; set; }
 
     /// <summary>
     ///
