@@ -3,6 +3,11 @@ using PaymentJournal.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//setup logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
 //pull connection string from config file
 string connectionString = builder.Configuration.GetConnectionString("LiteDb");
 

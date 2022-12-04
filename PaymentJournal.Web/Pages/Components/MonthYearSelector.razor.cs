@@ -7,6 +7,9 @@ namespace PaymentJournal.Web.Pages.Components;
 public partial class MonthYearSelector : ComponentBase
 {
     [Parameter]
+    public EventCallback<MonthYear> OnSearch { get; set; }
+
+    [Parameter]
     public string ReturnURL { get; set; } = "";
 
     public IEnumerable<int> Years { get; set; }
@@ -22,12 +25,17 @@ public partial class MonthYearSelector : ComponentBase
     [Inject]
     private PaymentRepo repo { get; set; }
 
-    public void HandleValidSubmit()
+    public async Task MonthClosed()
     {
         CacheRepo.SaveAppState(AppState);
+        await OnSearch.InvokeAsync(AppState.MonthYear);
+    }
 
-        var redirectTo = $"{ReturnURL}";
-        Nav.NavigateTo(redirectTo, true);
+    public async Task SetToday()
+    {
+        AppState.MonthYear.Month = DateTime.Now.Month;
+        AppState.MonthYear.Year = DateTime.Now.Year;
+        await MonthClosed();
     }
 
     protected override void OnParametersSet()

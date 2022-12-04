@@ -1,36 +1,28 @@
 ﻿@using System.Globalization
 
-<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
-    <EditForm Model="@AppState.MonthYear" class="row row-cols-lg-auto align-items-center" OnValidSubmit="@HandleValidSubmit">
-        <MudSimpleTable Class="pa-3 bg-trans" Outlined="false" Elevation="0">
-            <tr>
-                <td>
-                    <MudSelect Style="width: 300px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="AppState.MonthYear.Month">
-                        <MudSelectItem Value="1">January</MudSelectItem>
-                        <MudSelectItem Value="2">February</MudSelectItem>
-                        <MudSelectItem Value="3">March</MudSelectItem>
-                        <MudSelectItem Value="4">April</MudSelectItem>
-                        <MudSelectItem Value="5">May</MudSelectItem>
-                        <MudSelectItem Value="6">June</MudSelectItem>
-                        <MudSelectItem Value="7">July</MudSelectItem>
-                        <MudSelectItem Value="8">August</MudSelectItem>
-                        <MudSelectItem Value="9">September</MudSelectItem>
-                        <MudSelectItem Value="10">October</MudSelectItem>
-                        <MudSelectItem Value="11">November</MudSelectItem>
-                        <MudSelectItem Value="12">December</MudSelectItem>
-                    </MudSelect>
-                </td>
-                <td>
-                    <MudSelect Style="width: 100px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="AppState.MonthYear.Year">
-                        @foreach (var year in Years)
-                        {
-                            <MudSelectItem Value="@year">@year</MudSelectItem>
-                        }
-                    </MudSelect>
-                </td>
-            </tr>
-        </MudSimpleTable>
-        <MudButton Variant="Variant.Text" ButtonType="ButtonType.Submit" Color="Color.Primary">Search</MudButton>
-    </EditForm>
+<MudPaper Width="50%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+      <MudStack Row="true">
+        <MudSelect sel Style="width: 300px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" SelectedValuesChanged="@MonthClosed" @bind-Value="AppState.MonthYear.Month">
+            <MudSelectItem Value="1">January</MudSelectItem>
+            <MudSelectItem Value="2">February</MudSelectItem>
+            <MudSelectItem Value="3">March</MudSelectItem>
+            <MudSelectItem Value="4">April</MudSelectItem>
+            <MudSelectItem Value="5">May</MudSelectItem>
+            <MudSelectItem Value="6">June</MudSelectItem>
+            <MudSelectItem Value="7">July</MudSelectItem>
+            <MudSelectItem Value="8">August</MudSelectItem>
+            <MudSelectItem Value="9">September</MudSelectItem>
+            <MudSelectItem Value="10">October</MudSelectItem>
+            <MudSelectItem Value="11">November</MudSelectItem>
+            <MudSelectItem Value="12">December</MudSelectItem>
+        </MudSelect>
+        <MudSelect Style="width: 100px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="AppState.MonthYear.Year">
+            @foreach (var year in Years)
+            {
+                <MudSelectItem Value="@year">@year</MudSelectItem>
+            }
+        </MudSelect>
+        <MudButton Variant="Variant.Text" OnClick="SetToday" Color="Color.Primary">Today</MudButton>
+    </MudStack>
 </MudPaper>
 

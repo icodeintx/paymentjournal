@@ -3,68 +3,74 @@
 @*@page "/insert"*@
 
 
-<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
-    @if (IsValidPaymentItemId())
-    {
-        <MudText Typo="Typo.h3">Edit Payment</MudText>
-        <MudText Typo="Typo.body1">PaymentItemId: @PaymentItemId</MudText>
-    }
-    else
-    {
-        <MudText Typo="Typo.h3">Insert Payment</MudText>
-        <MudText Typo="Typo.body1">BudgetId: @BudgetId</MudText>
-    }
-</MudPaper>
-
-<EditForm Model="PaymentItem" OnValidSubmit="HandleSubmit">
+<MudStack Row="false">
     <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
-
-        <MudPaper Class="pa-3 infobox" Elevation="0">
-            <MudTextField Label="Note" Placeholder="Enter Note..." @bind-Value="PaymentItem.Note" Variant="Variant.Text" />
-        </MudPaper>
-        <MudPaper Width="200px" Class="pa-3 infobox" Elevation="0">
-            <MudDatePicker Label="Date" @bind-Date="PaymentItem.CreateDate" />
-        </MudPaper>
-        
-
-            @if (HasPayees == false)
-            {
-                <MudText Class="pa-3" Typo="Typo.subtitle1">Select "Add New Payee" button to add Payees</MudText>
-            }
-
-            <MudSimpleTable Class="bg-trans" Outlined="false" Dense="true" Elevation="0">
-                <thead>
-                    @if (HasPayees)
-                    {
-                        <tr>
-                            <td>Payee</td>
-                            <td>Amount</td>
-                            <td>Date</td>
-                            <td></td>
-                        </tr>
-                    }
-                </thead>
-                <tbody>
-                    @foreach (var payee in @PaymentItem.Payees)
-                    {
-                        <tr>
-                            <td><MudTextField  @bind-Value="payee.Name" Variant="Variant.Text" /></td>
-                            <td><MudNumericField HideSpinButtons="true" @bind-Value="payee.Amount" Variant="Variant.Text" /></td>
-                            <td><MudDatePicker @bind-Date="payee.Date" /></td>
-                            <td><MudIconButton OnClick="() => RemovePayee(payee)" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Small" /></td>
-                        </tr>
-                        Counter++;
-                    }
-                </tbody>
-            </MudSimpleTable>
-        
-
-            <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled" OverrideStyles="false">
-            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="() => AddNewPayee()">Add Payee</MudButton>
-            <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="() => NavToPayments()">Cancel</MudButton>
-            <MudButton Color="Color.Info" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save</MudButton>
-            </MudButtonGroup>
-
-        <AccountLists AccountsList="@Budget.AccountLists" />
+        @if (IsValidPaymentItemId())
+        {
+            <MudText Typo="Typo.h3">Edit Payment</MudText>
+            <MudText Typo="Typo.body1">PaymentItemId: @PaymentItemId</MudText>
+        }
+        else
+        {
+            <MudText Typo="Typo.h3">Insert Payment</MudText>
+            <MudText Typo="Typo.body1">BudgetId: @BudgetId</MudText>
+        }
     </MudPaper>
-</EditForm>
+
+    <EditForm Model="PaymentItem" OnValidSubmit="HandleSubmit">
+        <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+            <MudStack Row="false">
+                <MudPaper Class="pa-3 infobox" Elevation="0">
+                    <MudTextField Label="Note" Placeholder="Enter Note..." @bind-Value="PaymentItem.Note" Variant="Variant.Text" />
+                </MudPaper>
+
+                <MudPaper Width="200px" Class="pa-3 infobox" Elevation="0">
+                    <MudDatePicker Label="Date" @bind-Date="PaymentItem.CreateDate" />
+                </MudPaper>
+
+                @if (HasPayees == false)
+                {
+                    <MudText Class="pa-3" Typo="Typo.subtitle1">Select "Add New Payee" button to add Payees</MudText>
+                }
+
+                <MudSimpleTable Class="bg-trans" Outlined="false" Dense="true" Elevation="0">
+                    <thead>
+                        @if (HasPayees)
+                        {
+                            <tr>
+                                <td>Payee</td>
+                                <td>Amount</td>
+                                <td>Date</td>
+                                <td></td>
+                            </tr>
+                        }
+                    </thead>
+                    <tbody>
+                        @foreach (var payee in @PaymentItem.Payees)
+                        {
+                            <tr>
+                                <td><MudTextField @bind-Value="payee.Name" Variant="Variant.Text" /></td>
+                                <td><MudNumericField HideSpinButtons="true" @bind-Value="payee.Amount" Variant="Variant.Text" /></td>
+                                <td><MudDatePicker @bind-Date="payee.Date" /></td>
+                                <td><MudIconButton OnClick="() => RemovePayee(payee)" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Small" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+
+
+                <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled" OverrideStyles="false">
+                    <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="() => AddNewPayee()">Add Payee</MudButton>
+                    <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="() => NavToPayments()">Cancel</MudButton>
+                    <MudButton Color="Color.Info" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save</MudButton>
+                </MudButtonGroup>
+            </MudStack>
+        </MudPaper>
+    </EditForm>
+
+    <AccountLists AccountsList="@Budget.AccountLists" />
+</MudStack>
+
+
+
+
