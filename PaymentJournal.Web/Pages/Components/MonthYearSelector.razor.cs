@@ -6,12 +6,15 @@ namespace PaymentJournal.Web.Pages.Components;
 
 public partial class MonthYearSelector : ComponentBase
 {
-    public MonthYear MonthYearModel { get; set; } = new MonthYear();
-
     [Parameter]
     public string ReturnURL { get; set; } = "";
 
     public IEnumerable<int> Years { get; set; }
+
+    private AppState AppState { get; set; }
+
+    [Inject]
+    private CacheRepo CacheRepo { get; set; }
 
     [Inject]
     private NavigationManager Nav { get; set; }
@@ -21,14 +24,19 @@ public partial class MonthYearSelector : ComponentBase
 
     public void HandleValidSubmit()
     {
-        var redirectTo = $"{ReturnURL}/{MonthYearModel.Month}/{MonthYearModel.Year}";
-        Nav.NavigateTo(redirectTo);
+        CacheRepo.SaveAppState(AppState);
+
+        var redirectTo = $"{ReturnURL}";
+        Nav.NavigateTo(redirectTo, true);
     }
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
-        base.OnInitialized();
+        AppState = CacheRepo.GetAppState();
 
-        Years = repo.GetDistintYears();
+        if (Years == null)
+        {
+            Years = repo.GetDistintYears();
+        }
     }
 }

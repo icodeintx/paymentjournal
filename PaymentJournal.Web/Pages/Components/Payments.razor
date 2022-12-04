@@ -1,13 +1,13 @@
 ﻿@page "/payments/{BudgetId}"
-@page "/payments/{BudgetId}/{Month}/{Year}"
 
 <PageTitle>@Budget.Name - Payments</PageTitle>
 
-<MonthYearSelector ReturnURL="@GetReturnURL" />
+<MonthYearSelector ReturnURL="@GetReturnURL"/>
 
 
 <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true" Elevation="1">
 <MudButton StartIcon="@Icons.Filled.PostAdd" OnClick="() => NavToPayments()" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Insert Payment</MudButton>
+<hr />
     @if (PaymentItems.Count > 0)
     {
         <MudSimpleTable Class="infobox" Outlined="false" Dense="true" Elevation="0">
@@ -28,7 +28,7 @@
                         <td>
                             <MudButtonGroup Color="Color.Primary" Variant="Variant.Text" OverrideStyles="false">
                                 <MudIconButton OnClick="() => DeleteDocument(item)" Title="Delete Payment" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small" />
-                                <MudIconButton OnClick="() => EditDocument(item)" Title="Edit Payment" Icon="@Icons.Filled.Edit" Variant="Variant.Filled" Color="Color.Success" Size="Size.Small" />
+                                <MudIconButton OnClick="() => EditDocument(item)" Title="Edit Payment" Icon="@Icons.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                             </MudButtonGroup>
                         </td>
                         <td hidden>@item.PaymentItemId</td>
@@ -75,7 +75,6 @@
                             {
                                 <div>&nbsp</div>
                             }
-
                         </td>
                     </tr>
                 }
@@ -84,7 +83,7 @@
     }
     else
     {
-        <MudText>No Payments</MudText>
+        <MudText Class="pa-3">No Payments</MudText>
     }
     
 </MudPaper>
