@@ -10,9 +10,6 @@ namespace PaymentJournal.Web.Pages.Components;
 /// </summary>
 public partial class Payments : ComponentBase
 {
-    /// <summary>
-    ///
-    /// </summary>
     public Payments()
     {
     }
@@ -31,6 +28,8 @@ public partial class Payments : ComponentBase
 
     [Inject]
     private CacheRepo CacheRepo { get; set; }
+
+    [Inject] private ILogger<Payments> Logger { get; set; }
 
     [Inject]
     private NavigationManager navigationManager { get; set; }
@@ -81,11 +80,6 @@ public partial class Payments : ComponentBase
         navigationManager.NavigateTo($"/payment/insert/{BudgetId}");
     }
 
-    protected override void OnInitialized()
-    {
-        var x = 1;
-    }
-
     /// <summary>
     ///
     /// </summary>
@@ -118,5 +112,16 @@ public partial class Payments : ComponentBase
                 PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), DateTime.Now.Month, DateTime.Now.Year);
             }
         }
+    }
+
+    /// <summary>
+    /// Search
+    /// </summary>
+    /// <param name="model"></param>
+    private void Search(MonthYear model)
+    {
+        Logger.LogInformation($"Class ({nameof(Payments)}) Method ({nameof(Search)}) started.");
+
+        PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), model.Month, model.Year);
     }
 }

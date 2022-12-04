@@ -22,8 +22,6 @@ public partial class InsertEditPayment : ComponentBase
     [Inject]
     public BudgetRepo BudgetRepo { get; set; }
 
-    public int Counter { get; set; } = 0;
-
     public bool HasPayees => PaymentItem.Payees.Count > 0;
 
     [Inject]
