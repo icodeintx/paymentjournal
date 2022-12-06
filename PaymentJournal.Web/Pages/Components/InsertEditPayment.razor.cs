@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
+using System.Reflection;
 
 namespace PaymentJournal.Web.Pages.Components;
 
@@ -94,9 +96,30 @@ public partial class InsertEditPayment : ComponentBase
     ///
     /// </summary>
     /// <param name="item"></param>
-    public void RemovePayee(Payee item)
+    public async Task RemovePayee(Payee item)
     {
-        PaymentItem.Payees.Remove(item);
+
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Delete item {item.Name}? This process cannot be undone after clicking SAVE.");
+        parameters.Add("ButtonText", "Delete");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
+        {
+            return;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
+        {
+            PaymentItem.Payees.Remove(item);
+        }
+
+        //PaymentItem.Payees.Remove(item);
     }
 
     /// <summary>
