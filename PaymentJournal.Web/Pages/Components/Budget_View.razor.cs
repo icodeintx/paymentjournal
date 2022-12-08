@@ -27,8 +27,6 @@ public partial class Budget_View : ComponentBase
         }
     }
 
-    //[Inject] IDialogService DialogService { get; set; }
-
     public string Message { get; set; } = string.Empty;
 
     [Inject]
@@ -89,7 +87,7 @@ public partial class Budget_View : ComponentBase
 
     public void ToggleEnabled()
     {
-        Disabled = Disabled == true ? false : true;
+        Disabled = Disabled != true;
     }
 
     /// <summary>
