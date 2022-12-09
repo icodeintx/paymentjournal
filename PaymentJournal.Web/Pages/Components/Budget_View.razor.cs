@@ -310,6 +310,10 @@ public partial class Budget_View : ComponentBase
                 Message = "No Budget Found.  Creating New Budget.";
                 Budget = new();
             }
+            else
+            {
+                Message = string.Empty;
+            }
         }
         else
         {
@@ -330,6 +334,10 @@ public partial class Budget_View : ComponentBase
                     Message = "No Budget Found.  Creating New Budget.";
                     Budget = new();
                 }
+                else
+                {
+                    Message = string.Empty;
+                }
             }
             catch (Exception ex)
             {
@@ -340,7 +348,12 @@ public partial class Budget_View : ComponentBase
         }
     }
 
-    protected void Payments(Guid budgetId)
+    protected void NavigateToBudgets()
+    {
+        NavigationManager.NavigateTo($"/budgets");
+    }
+
+    protected void NavigateToPayments(Guid budgetId)
     {
         NavigationManager.NavigateTo($"payments/{budgetId}");
     }

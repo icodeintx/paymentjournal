@@ -1,15 +1,15 @@
-﻿@page "/"
-@page "/budget/view"
+﻿@page "/budget/view"
 @page "/budget/view/{BudgetId}"
 
 
 <EditForm Model="Budget" OnValidSubmit="HandleSubmit">
 
     <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+        <MudText Typo="Typo.h4" Color="Color.Error">@Message</MudText>
         <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
             <tr>
                 <td><MudText Typo="Typo.h5" Class="textsilver">Monthly Budget</MudText></td>
-                <td class="float-end"><MudButton Variant="Variant.Filled" OnClick="() => Payments(Budget.BudgetId)" StartIcon="@Icons.Filled.Payment" Color="Color.Success">Payments</MudButton></td>
+                <td class="float-end"><MudButton Variant="Variant.Filled" OnClick="() => NavigateToPayments(Budget.BudgetId)" StartIcon="@Icons.Filled.Payment" Color="Color.Success">Payments</MudButton></td>
             </tr>
         </MudSimpleTable>
         <MudSwitch @bind-Checked="@EditMode" Label="Edit Mode" Color="Color.Success" />
