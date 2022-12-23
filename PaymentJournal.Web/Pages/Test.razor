@@ -1,0 +1,46 @@
+﻿@page "/test"
+
+
+<MudPaper Width="400px" Square="false" Class="pa-3">
+    <Code Language="csharp">
+    Console.WriteLine("this is my test");
+    </Code>
+</MudPaper>
+
+<Code Language="csharp">
+    @myhtml;
+</Code>
+
+
+<h3>test</h3>
+
+@code {
+    string myhtml = @"protected async Task<bool> DeleteBankAccount(BankAccount model)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add('ContentText', $'Delete Bank Account {model.Bank}? This process cannot be undone after clicking SAVE.');
+        parameters.Add('ButtonText', 'Delete');
+        parameters.Add('Color', Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<SimpleDialog>('Delete', parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Cancelled)
+        {
+            return false;
+        }
+        else
+        if (result.Data != null && (bool)result.Data == true)
+        {
+            return Budget.BankAccounts.Remove(model);
+        }
+        else
+        {
+            return false;
+        }
+    }
+";
+
+}

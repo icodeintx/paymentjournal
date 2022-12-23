@@ -1,4 +1,5 @@
 using MudBlazor.Services;
+using PaymentJournal.Web;
 using PaymentJournal.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ string connectionString = builder.Configuration.GetConnectionString("LiteDb");
 builder.Services.AddTransient<PaymentRepo>(s => new PaymentRepo(connectionString));
 builder.Services.AddTransient<BudgetRepo>(s => new BudgetRepo(connectionString));
 builder.Services.AddTransient<CacheRepo>(s => new CacheRepo(connectionString));
+
+builder.Services.AddScoped<IHighlightJS, HighlightJS>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
