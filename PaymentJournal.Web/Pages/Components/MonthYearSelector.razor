@@ -1,8 +1,8 @@
 ﻿@using System.Globalization
 
-<MudPaper Width="50%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+<div class="pa-5 ma-2 infobox" style="max-width: 500px">
       <MudStack Row="true">
-        <MudSelect sel Style="width: 300px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" SelectedValuesChanged="@MonthClosed" @bind-Value="AppState.MonthYear.Month">
+        <MudSelect T="int" Style="width: 200px" Label="Month" AnchorOrigin="Origin.BottomCenter" SelectedValuesChanged="@MonthClosed" @bind-Value="AppState.MonthYear.Month">
             <MudSelectItem Value="1">January</MudSelectItem>
             <MudSelectItem Value="2">February</MudSelectItem>
             <MudSelectItem Value="3">March</MudSelectItem>
@@ -24,5 +24,5 @@
         </MudSelect>
         <MudButton Variant="Variant.Text" OnClick="SetToday" Color="Color.Primary">Today</MudButton>
     </MudStack>
-</MudPaper>
+</div>
 

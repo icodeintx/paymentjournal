@@ -33,6 +33,10 @@ html, body {
 
 .infobox {
     background-color: var(--box-bg-color);
+    border-color: #404040;
+    border-width: thin;
+    border-radius: 10px;
+    width: 100%;
 }
 
 .mouse-pointer {

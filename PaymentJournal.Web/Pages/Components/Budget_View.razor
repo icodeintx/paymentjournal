@@ -4,7 +4,7 @@
 
 <EditForm Model="Budget" OnValidSubmit="HandleSubmit">
 
-    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <div class="pa-5 ma-2 infobox">
         <MudText Typo="Typo.h4" Color="Color.Error">@Message</MudText>
         <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
             <tr>
@@ -13,10 +13,10 @@
             </tr>
         </MudSimpleTable>
         <MudSwitch @bind-Checked="@EditMode" Label="Edit Mode" Color="Color.Success" />
-    </MudPaper>
+    </div>
 
 
-    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <div class="pa-5 ma-2 infobox">
         <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
             <tr>
                 <td><MudTextField Disabled="Disabled" @bind-Value="Budget.Name" Label="Budget Name" Variant="Variant.Text" /></td>
@@ -25,7 +25,7 @@
                 <td class="float-end"><MudButton StartIcon="@Icons.Material.Filled.Delete" Disabled="Disabled" OnClick="() => DeleteBudget(Budget.BudgetId)" Variant="Variant.Text" Color="Color.Error">Delete Budget</MudButton></td>
             </tr>
         </MudSimpleTable>
-    </MudPaper>
+    </div>
 
     <MudGrid Spacing="1" Justify="Justify.Center">
         <MudItem>
@@ -128,7 +128,7 @@
     </MudGrid>
 
 
-    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <div class="pa-5 ma-2 infobox">
         <MudField Variant="Variant.Text">Monthy Expenses</MudField>
         <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
                 <thead>
@@ -159,10 +159,10 @@
             </tbody>
         </MudSimpleTable>
         <MudButton Variant="Variant.Text" OnClick="() => AddExpense()" Disabled="Disabled" Color="Color.Primary">Add Expense</MudButton>
-    </MudPaper>
+    </div>
 
 
-    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <div class="pa-5 ma-2 infobox">
         <MudField Variant="Variant.Text">Monthy Income</MudField>
         <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
             <thead>
@@ -188,10 +188,10 @@
             </tbody>
         </MudSimpleTable>
         <MudButton Variant="Variant.Text" OnClick="() => AddIncome()" Disabled="Disabled" Color="Color.Primary">Add Income</MudButton>
-    </MudPaper>
+    </div>
     
 
-    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <div class="pa-5 ma-2 infobox">
         <MudField Variant="Variant.Text">Bank Accounts</MudField>
         <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
             <thead>
@@ -219,10 +219,10 @@
             </tbody>
         </MudSimpleTable>
         <MudButton Variant="Variant.Text" OnClick="() => AddBankAccount()" Disabled="Disabled" Color="Color.Primary">Add Bank Account</MudButton>
-    </MudPaper>
+    </div>
 
 
-    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <div class="pa-5 ma-2 infobox">
         <MudField Variant="Variant.Text">Cards</MudField>
         <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
             <thead>
@@ -253,9 +253,9 @@
             </tbody>
         </MudSimpleTable>
         <MudButton Variant="Variant.Text" OnClick="() => AddCreditCard()" Disabled="Disabled" Color="Color.Primary">Add Card</MudButton>
-    </MudPaper>
+    </div>
 
-    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <div class="pa-5 ma-2 infobox">
         <MudField Variant="Variant.Text">Online Services</MudField>
         <MudSimpleTable Class="bg-trans" Dense="true" Outlined="false" Elevation="0">
             <thead>
@@ -277,7 +277,7 @@
                 </tbody>
         </MudSimpleTable>
         <MudButton Variant="Variant.Text" OnClick="() => AddOnlineService()" Disabled="Disabled" Color="Color.Primary">Add Online Service</MudButton>
-    </MudPaper>
+    </div>
 
     
     <MudButton Disabled="Disabled" Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit" FullWidth="true">Save Changes</MudButton>

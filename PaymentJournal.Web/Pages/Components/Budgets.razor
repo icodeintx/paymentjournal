@@ -1,16 +1,16 @@
 ﻿@page "/"
 @page "/budgets"
 
-<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+<div class="pa-5 ma-2 infobox">
     <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
         <tr>
             <td><MudText Typo="Typo.h5" Class="textsilver">Budgets</MudText></td>
             <td class="float-end"><MudButton Variant="Variant.Text" OnClick="() => CreateNewBudget()" StartIcon="@Icons.Filled.Payment" Color="Color.Primary">Create New Budget</MudButton></td>
         </tr>
     </MudSimpleTable>
-</MudPaper>
+</div>
 
-<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+<div class="pa-5 ma-2 infobox">
     <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
         <thead>
             <tr>
@@ -48,4 +48,5 @@
             }
         </tbody>
     </MudSimpleTable>
-</MudPaper>
+</div>
+

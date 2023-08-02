@@ -5,7 +5,7 @@
 <MonthYearSelector ReturnURL="@GetReturnURL" OnSearch="@Search" />
 
 
-<MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true" Elevation="1">
+<div class="pa-5 ma-2 infobox">
 <MudButton StartIcon="@Icons.Filled.PostAdd" OnClick="() => NavToPayments()" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Insert Payment</MudButton>
 <hr />
     @if (PaymentItems.Count > 0)
@@ -85,7 +85,6 @@
     {
         <MudText Class="pa-3">No Payments</MudText>
     }
-    
-</MudPaper>
+</div>
 
 <AccountLists AccountsList="@Budget.AccountLists" /> 

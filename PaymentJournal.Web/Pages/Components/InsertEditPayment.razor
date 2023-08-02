@@ -4,7 +4,7 @@
 
 
 <MudStack Row="false">
-    <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+    <div class="pa-5 ma-2 infobox">
         @if (IsValidPaymentItemId())
         {
             <MudText Typo="Typo.h3">Edit Payment</MudText>
@@ -15,10 +15,10 @@
             <MudText Typo="Typo.h3">Insert Payment</MudText>
             <MudText Typo="Typo.body1">BudgetId: @BudgetId</MudText>
         }
-    </MudPaper>
+    </div>
 
     <EditForm Model="PaymentItem" OnValidSubmit="HandleSubmit">
-        <MudPaper Width="100%" Square="false" Class="pa-5 ma-2 infobox" Outlined="true">
+        <div class="pa-5 ma-2 infobox">
             <MudStack Row="false">
                 <MudPaper Class="pa-3 infobox" Elevation="0">
                     <MudTextField Label="Note" Placeholder="Enter Note..." @bind-Value="PaymentItem.Note" Variant="Variant.Text" />
@@ -65,7 +65,7 @@
                     <MudButton Color="Color.Info" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save</MudButton>
                 </MudButtonGroup>
             </MudStack>
-        </MudPaper>
+        </div>
     </EditForm>
 
     <AccountLists AccountsList="@Budget.AccountLists" />
