@@ -1,0 +1,64 @@
+﻿@page "/budget/print/{BudgetId}"
+@layout NoLayout
+
+<div class="blank-page">
+<h1>Income</h1>
+@foreach (var item in Budget.Incomes)
+{
+    <div>Employer: @item.Employer</div>
+    <div>Amount: @item.Amount</div>
+    <br />
+}
+
+<hr />
+
+<h1>Expenses</h1>
+@foreach (var item in Budget.Expenses)
+{
+    <div>BillName: @item.BillName</div>
+    <div>Amount: @item.Amount</div>
+    <div>PaidTo: @item.PaidTo</div>
+    <div>PaidBy: @item.PaidBy</div>
+    <div>Est Due Day: @item.EstimatedDueDay</div>
+    <div>Note: @item.Note</div>
+    <br />
+}
+
+<hr />
+
+<h1>Bank Accounts</h1>
+@foreach (var item in Budget.BankAccounts)
+{
+    <div>Bank: @item.Bank</div>
+    <div>Type: @item.Type</div>
+    <div>Acct: @item.AccountNumber</div>
+    <div>Description: @item.Description</div>
+    <br />
+}
+
+<hr />
+
+<h1>Cards</h1>
+@foreach (var item in Budget.CreditCards)
+{
+    <div>Holder: @item.Holder</div>
+    <div>Acct: @item.AccountNumber</div>
+    <div>Bank: @item.Bank</div>
+    <div>Acct-Attached: @item.AttachedTo</div>
+    <div>Description: @item.Description</div>
+    <div>IsDebt: @item.IsDebt</div>
+    <br />
+}
+
+<hr />
+
+<h1>Online Services</h1>
+@foreach (var item in Budget.OnlineServices)
+{
+    <div>Service: @item.Service</div>
+    <div>PayTo: @item.PaidTo</div>
+    <br />
+}
+
+    <hr />
+</div>
