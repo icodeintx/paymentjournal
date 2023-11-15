@@ -15,6 +15,12 @@ html, body {
     background-color: var(--primary-bg-color);
 }
 
+.blank-page{
+    padding: 30px 10px 10px 40px;
+    background-color: white;
+    color: black;
+}
+
 .bg-trans {
     background-color: transparent;
 }
