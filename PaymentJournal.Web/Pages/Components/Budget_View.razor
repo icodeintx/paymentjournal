@@ -9,7 +9,10 @@
         <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
             <tr>
                 <td><MudText Typo="Typo.h5" Class="textsilver">Monthly Budget</MudText></td>
-                <td class="float-end"><MudButton Variant="Variant.Filled" OnClick="() => NavigateToPayments(Budget.BudgetId)" StartIcon="@Icons.Filled.Payment" Color="Color.Success">Payments</MudButton></td>
+                <td class="float-end">
+                    <MudButton Variant="Variant.Filled" OnClick="() => NavigateToPayments(Budget.BudgetId)" StartIcon="@Icons.Filled.Payment" Color="Color.Success">Payments</MudButton>
+                    <MudButton Variant="Variant.Filled" OnClick="() => NavigateToBudgets()" StartIcon="@Icons.Filled.Folder" Color="Color.Primary">Budgets</MudButton>
+                </td>
             </tr>
         </MudSimpleTable>
         <MudSwitch @bind-Checked="@EditMode" Label="Edit Mode" Color="Color.Success" />
