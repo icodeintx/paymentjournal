@@ -10,8 +10,13 @@ builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
 //pull connection string from config file
-//string connectionString = builder.Configuration.GetConnectionString("LiteDb");
-var connectionString = Environment.GetEnvironmentVariable("PaymentJournalDbPath") + "\\liteDb.db";
+string connectionString = "";
+
+#if DEBUG
+connectionString = builder.Configuration.GetConnectionString("LiteDb");
+#else
+connectionString = Environment.GetEnvironmentVariable("PaymentJournalDbPath") + "\\liteDb.db";
+#endif
 
 builder.Services.AddTransient<PaymentRepo>(s => new PaymentRepo(connectionString));
 builder.Services.AddTransient<BudgetRepo>(s => new BudgetRepo(connectionString));
