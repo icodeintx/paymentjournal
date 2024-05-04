@@ -32,7 +32,7 @@ public partial class Payments : ComponentBase
     [Inject] private ILogger<Payments> Logger { get; set; }
 
     [Inject]
-    private NavigationManager navigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; }
 
     [Inject]
     private PaymentRepo repo { get; set; }
@@ -72,12 +72,17 @@ public partial class Payments : ComponentBase
     /// <returns></returns>
     protected async Task EditDocument(PaymentItem model)
     {
-        navigationManager.NavigateTo($"/payment/edit/{model.PaymentItemId.ToString()}");
+        NavigationManager.NavigateTo($"/payment/edit/{model.PaymentItemId.ToString()}");
+    }
+
+    protected void NavigateToBudget()
+    {
+        NavigationManager.NavigateTo($"/budget/view/{this.BudgetId}");
     }
 
     protected void NavToPayments()
     {
-        navigationManager.NavigateTo($"/payment/insert/{BudgetId}");
+        NavigationManager.NavigateTo($"/payment/insert/{BudgetId}");
     }
 
     /// <summary>
