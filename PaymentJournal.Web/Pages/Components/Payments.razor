@@ -2,9 +2,19 @@
 
 <PageTitle>@Budget.Name - Payments</PageTitle>
 
-<MudButton Variant="Variant.Filled" OnClick="() => NavigateToBudget()" StartIcon="@Icons.Filled.Folder" Color="Color.Primary">Return to Budget</MudButton>
+<div class="pa-5 ma-2 infobox">
+    <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
+        <tr>
+            <td><MonthYearSelector ReturnURL="@GetReturnURL" OnSearch="@Search" /></td>
+            <td class="float-end">
+                <MudButton Variant="Variant.Filled" Class="float_end" OnClick="() => NavigateToBudget()" StartIcon="@Icons.Filled.Folder" Color="Color.Warning">Return to Budget</MudButton>
+            </td>
+        </tr>
+    </MudSimpleTable>
+</div>
 
-<MonthYearSelector ReturnURL="@GetReturnURL" OnSearch="@Search" />
+
+
 
 <div class="pa-5 ma-2 infobox">
 <MudButton StartIcon="@Icons.Filled.PostAdd" OnClick="() => NavToPayments()" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Insert Payment</MudButton>
