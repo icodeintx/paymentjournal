@@ -4,7 +4,7 @@ public class AppState
 {
     public AppState()
     {
-        test = 9;
+        //test = 9;
 
         if (MonthYear == null)
         {
@@ -16,5 +16,5 @@ public class AppState
 
     public MonthYear MonthYear { get; set; }
 
-    public int test { get; set; }
+    //public int test { get; set; }
 }

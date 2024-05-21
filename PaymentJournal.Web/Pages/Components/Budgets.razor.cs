@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using MudBlazor;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
@@ -16,6 +15,9 @@ public partial class Budgets : ComponentBase
     public bool Disabled { get; set; } = true;
 
     public string Message { get; set; } = string.Empty;
+
+    [Inject]
+    private CacheRepo CacheRepo { get; set; }
 
     [Inject]
     private IJSRuntime JSRuntime { get; set; }
@@ -65,6 +67,8 @@ public partial class Budgets : ComponentBase
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
+
+        this.CacheRepo.ResetAppState();
 
         BudgetList = Repo.GetAllBudgets();
 
