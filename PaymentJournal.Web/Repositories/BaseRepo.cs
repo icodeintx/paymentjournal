@@ -4,13 +4,13 @@ using PaymentJournal.Web.Models;
 namespace PaymentJournal.Web.Repositories;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class BaseRepo<T>
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="connectionString"></param>
     protected BaseRepo(string connectionString)
@@ -19,6 +19,7 @@ public class BaseRepo<T>
     }
 
     protected LiteDatabase Database { get; set; }
+
     protected string DatabaseName { get; set; } = String.Empty;
 
     /// <summary>
@@ -225,13 +226,13 @@ public class BaseRepo<T>
                 // Get a collection (or create, if doesn't exist)
                 var col = Database.GetCollection<T>(collectionName);
 
-                // Insert new PaymentItem document (Id will be auto-incremented)
-                col.Upsert(document);
+                // TODO there is a bug here.  Upsert always returns false
+                var result = col.Upsert(document);
 
                 return new DbResult()
                 {
-                    Success = true,
-                    Error = ""
+                    Success = result,
+                    Error = result == false ? $"Class:{nameof(BaseRepo<T>)} Method:{nameof(UpsertDocument)} - Upsert Failed" : ""
                 };
             }
         }

@@ -107,7 +107,7 @@ public partial class Payments : ComponentBase
         {
             try
             {
-                appState.test = 11;
+                //appState.test = 11;
                 //Monty and Year were passed, try to parse them and use them.
                 PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), appState.MonthYear.Month, appState.MonthYear.Year);
             }

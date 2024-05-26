@@ -12,7 +12,6 @@ public class CacheRepo : BaseRepo<AppState>
 
     public AppState GetAppState()
     {
-        //var result = base.GetDocumentById(budgetId, DBCollection);
         var dbResult = base.GetCollectionList(DBCollection)
             .Take(1).FirstOrDefault();
 
@@ -24,6 +23,21 @@ public class CacheRepo : BaseRepo<AppState>
         {
             return new AppState();
         }
+    }
+
+    public bool ResetAppState()
+    {
+        //var appState = new AppState();
+        var appState = this.GetAppState();
+
+        if (appState == null)
+        {
+            appState = new AppState();
+        }
+
+        appState.MonthYear = new MonthYear();
+
+        return SaveAppState(appState);
     }
 
     public bool SaveAppState(AppState appState)
