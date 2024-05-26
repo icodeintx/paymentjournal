@@ -13,9 +13,16 @@ builder.Logging.AddDebug();
 string connectionString = "";
 
 #if DEBUG
-connectionString = builder.Configuration.GetConnectionString("LiteDb");
+connectionString = ".\\Data\\paymentjournallitedb.db";
 #else
-connectionString = Environment.GetEnvironmentVariable("PaymentJournalDbPath") + "\\liteDb.db";
+    if (builder.Configuration["IsDocker"]?.ToLower() == "true")
+    {
+        connectionString = builder.Configuration.GetConnectionString("LiteDb");
+    }
+    else
+    {
+        connectionString = Environment.GetEnvironmentVariable("PaymentJournalDbPath") + "\\liteDb.db";
+    }
 #endif
 
 builder.Services.AddTransient<PaymentRepo>(s => new PaymentRepo(connectionString));

@@ -3,6 +3,7 @@ using Microsoft.JSInterop;
 using MudBlazor;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
+using System.Globalization;
 
 namespace PaymentJournal.Web.Pages.Components;
 
@@ -290,6 +291,16 @@ public partial class Budget_View : ComponentBase
         }
     }
 
+    protected void NavigateToBudgets()
+    {
+        NavigationManager.NavigateTo($"/budgets");
+    }
+
+    protected void NavigateToPayments(Guid budgetId)
+    {
+        NavigationManager.NavigateTo($"payments/{budgetId}");
+    }
+
     /// <summary>
     ///
     /// </summary>
@@ -348,16 +359,6 @@ public partial class Budget_View : ComponentBase
         }
     }
 
-    protected void NavigateToBudgets()
-    {
-        NavigationManager.NavigateTo($"/budgets");
-    }
-
-    protected void NavigateToPayments(Guid budgetId)
-    {
-        NavigationManager.NavigateTo($"payments/{budgetId}");
-    }
-
     /// <summary>
     ///
     /// </summary>
@@ -365,7 +366,7 @@ public partial class Budget_View : ComponentBase
     /// <returns></returns>
     private string FormatMoney(decimal value)
     {
-        return value.ToString("C");
+        return value.ToString("C", new CultureInfo("en-US"));
     }
 
     /// <summary>

@@ -41,11 +41,11 @@
                             <table>
                                 <tr>
                                     <td class="p-1 text-end">Total Expense:</td>
-                                    <td class="red_text">@Budget.TotalMonthlyExpenses.ToString("C")</td>
+                                    <td class="red_text">@FormatMoney(Budget.TotalMonthlyExpenses)</td>
                                 </tr>
                                 <tr>
                                     <td class="p-1 text-end">Total Income:</td>
-                                    <td class="green_text">@Budget.TotalMonthlyIncomes.ToString("C")</td>
+                                    <td class="green_text">@FormatMoney(Budget.TotalMonthlyIncomes)</td>
                                 </tr>
                                 <tr>
                                     <td class="p-1 text-end">Difference:</td>
@@ -60,11 +60,11 @@
                             <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0" Dense="true" Hover="true" Bordered="true">
                                 <tr>
                                     <td class="p-1 text-end">Total Expense:</td>
-                                    <td class="red_text">@Budget.TotalYearlyExpenses.ToString("C")</td>
+                                    <td class="red_text">@FormatMoney(Budget.TotalYearlyExpenses)</td>
                                 </tr>
                                 <tr>
                                     <td class="p-1 text-end">Total Income:</td>
-                                    <td class="green_text">@Budget.TotalYearlyIncomes.ToString("C")</td>
+                                    <td class="green_text">@FormatMoney(Budget.TotalYearlyIncomes)</td>
                                 </tr>
                                 <tr>
                                     <td class="p-1 text-end">Difference:</td>
@@ -96,7 +96,7 @@
                                     {
                                         <tr>
                                             <td>@item.Account</td>
-                                            <td class="red_text">@item.Sum.ToString("C")</td>
+                                            <td class="red_text">@FormatMoney(item.Sum)</td>
                                         </tr>
                                     }
 
@@ -122,7 +122,7 @@
                         </tr>
                         <tr>
                             <td class="p-1 text-end">Yearly Witholdings:</td>
-                            <td title="Annual Salary - Yearly Income [AnualSalary - Sum(Incomes)*12]" class="blue_text">@(Budget.YearlyWitholdings.ToString("C"))</td>
+                            <td title="Annual Salary - Yearly Income [AnualSalary - Sum(Incomes)*12]" class="blue_text">@(FormatMoney(Budget.YearlyWitholdings.ToString("C")))</td>
                         </tr>
                     </MudSimpleTable>
                 </MudPaper>
