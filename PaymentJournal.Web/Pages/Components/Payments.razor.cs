@@ -97,25 +97,15 @@ public partial class Payments : ComponentBase
 
         var appState = CacheRepo.GetAppState();
 
-        //check if we have Month and Year
-        if (appState.MonthYear == null || appState.MonthYear.Month == 0 || appState.MonthYear.Year == 0)
+        var useAppStateDate = UseAppStateDate(appState);
+
+        if (useAppStateDate)
         {
-            //one or both of the parameters above are blank so use this month and year
-            PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), DateTime.Now.Month, DateTime.Now.Year);
+            PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), appState.MonthYear.Month, appState.MonthYear.Year);
         }
         else
         {
-            try
-            {
-                //appState.test = 11;
-                //Monty and Year were passed, try to parse them and use them.
-                PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), appState.MonthYear.Month, appState.MonthYear.Year);
-            }
-            catch
-            {
-                //the parsing failed above so use this month/year
-                PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), DateTime.Now.Month, DateTime.Now.Year);
-            }
+            PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), DateTime.Now.Month, DateTime.Now.Year);
         }
     }
 
@@ -128,5 +118,31 @@ public partial class Payments : ComponentBase
         Logger.LogInformation($"Class ({nameof(Payments)}) Method ({nameof(Search)}) started.");
 
         PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), model.Month, model.Year);
+    }
+
+    private bool UseAppStateDate(AppState appState)
+    {
+        try
+        {
+            if (appState.MonthYear == null || appState.MonthYear.Month == 0 || appState.MonthYear.Year == 0)
+            {
+                return false;
+            }
+            else
+            {
+                if (appState.MonthYear.LastSetDate != DateOnly.FromDateTime(DateTime.Now))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }

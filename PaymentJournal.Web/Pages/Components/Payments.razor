@@ -75,7 +75,7 @@
                                             {
                                                 <tr>
                                                     <td colspan="2"></td>
-                                                    <td><b>@item.Payees.Sum(x => x.Amount).ToString("C")</b></td>
+                                                    <td><b>@Static.FormatMoney(@item.Payees.Sum(x => x.Amount))</b></td>
                                                 </tr>
                                             }
                                         </tbody>
