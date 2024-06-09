@@ -4,8 +4,6 @@ public class AppState
 {
     public AppState()
     {
-        //test = 9;
-
         if (MonthYear == null)
         {
             MonthYear = new MonthYear();
@@ -15,6 +13,4 @@ public class AppState
     public Guid AppStateId { get; set; }
 
     public MonthYear MonthYear { get; set; }
-
-    //public int test { get; set; }
 }

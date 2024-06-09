@@ -27,6 +27,7 @@ public partial class MonthYearSelector : ComponentBase
 
     public async Task MonthClosed()
     {
+        AppState.MonthYear.LastSetDate = DateOnly.FromDateTime(DateTime.Now);
         CacheRepo.SaveAppState(AppState);
         await OnSearch.InvokeAsync(AppState.MonthYear);
     }
@@ -35,6 +36,7 @@ public partial class MonthYearSelector : ComponentBase
     {
         AppState.MonthYear.Month = DateTime.Now.Month;
         AppState.MonthYear.Year = DateTime.Now.Year;
+        AppState.MonthYear.LastSetDate = DateOnly.FromDateTime(DateTime.Now);
         await MonthClosed();
     }
 

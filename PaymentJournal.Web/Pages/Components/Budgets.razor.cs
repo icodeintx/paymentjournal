@@ -68,7 +68,7 @@ public partial class Budgets : ComponentBase
     {
         base.OnParametersSet();
 
-        this.CacheRepo.ResetAppState();
+        //this.CacheRepo.ResetAppState();
 
         BudgetList = Repo.GetAllBudgets();
 

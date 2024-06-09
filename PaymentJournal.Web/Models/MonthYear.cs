@@ -15,6 +15,8 @@
             }
         }
 
+        public DateOnly LastSetDate { get; set; }
+
         //[BindProperty]
         public int Month { get; set; }
 

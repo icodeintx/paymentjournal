@@ -16,7 +16,7 @@
             <MudSelectItem Value="11">November</MudSelectItem>
             <MudSelectItem Value="12">December</MudSelectItem>
         </MudSelect>
-        <MudSelect Style="width: 100px;" T="int" Label="Month" AnchorOrigin="Origin.BottomCenter" @bind-Value="AppState.MonthYear.Year">
+        <MudSelect Style="width: 100px;" T="int" Label="Year" AnchorOrigin="Origin.BottomCenter" @bind-Value="AppState.MonthYear.Year" SelectedValuesChanged="@MonthClosed">
             @foreach (var year in Years)
             {
                 <MudSelectItem Value="@year">@year</MudSelectItem>
