@@ -1,64 +1,141 @@
 ﻿@page "/budget/print/{BudgetId}"
 @layout NoLayout
 
+
 <div class="blank-page">
-<h1>Income</h1>
-@foreach (var item in Budget.Incomes)
-{
-    <div>Employer: @item.Employer</div>
-    <div>Amount: @item.Amount</div>
-    <br />
-}
+    
+    <div style="margin-bottom: 30px;">
+        <h1>Financial Summary</h1>
+        <table>
+            <tr>
+                <td>Annual Salary (before Taxes)</td>
+                <td>@FormatMoney(Budget.AnnualSalary)</td>
+            </tr>
+            <tr>
+                <td>Total Yearly Income (after Taxes)</td>
+                <td>@FormatMoney(Budget.TotalYearlyIncomes)</td>
+            </tr>
+            <tr>
+                <td>Total Yearly Expenses</td>
+                <td>@FormatMoney(Budget.TotalYearlyExpenses)</td>
+            </tr>
+            <tr>
+                <td>Total Yearly Difference</td>
+                <td>@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
+            </tr>
+            <tr>
+                <td>Total Monthly Income</td>
+                <td>@FormatMoney(Budget.TotalMonthlyIncomes)</td>
+            </tr>
+            <tr>
+                <td>Total Monthly Expenses</td>
+                <td>@FormatMoney(Budget.TotalMonthlyExpenses)</td>
+            </tr>
+            <tr>
+                <td>Total Monthly Difference</td>
+                <td>@FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses)</td>
+            </tr>
+            <tr>
+                <td>Half Month Expenses</td>
+                <td>@FormatMoney(Budget.HalfMonthlyExpenses)</td>
+            </tr>
+            <tr>
+                <td>Debt to Income Ratio</td>
+                <td>@Budget.Debt_Income_Ratio.ToString("P2")</td>
+            </tr>
 
-<hr />
+        </table>
+    </div>
 
-<h1>Expenses</h1>
-@foreach (var item in Budget.Expenses)
-{
-    <div>BillName: @item.BillName</div>
-    <div>Amount: @item.Amount</div>
-    <div>PaidTo: @item.PaidTo</div>
-    <div>PaidBy: @item.PaidBy</div>
-    <div>Est Due Day: @item.EstimatedDueDay</div>
-    <div>Note: @item.Note</div>
-    <br />
-}
 
-<hr />
+    
 
-<h1>Bank Accounts</h1>
-@foreach (var item in Budget.BankAccounts)
-{
-    <div>Bank: @item.Bank</div>
-    <div>Type: @item.Type</div>
-    <div>Acct: @item.AccountNumber</div>
-    <div>Description: @item.Description</div>
-    <br />
-}
+    <div style="margin-bottom: 30px;">
+        <h1>Income</h1>
+        <MudTable Items="@Budget.Incomes" Class="table table-striped" Hover="true" Striped="true">
+            <HeaderContent>
+                <th>Employer</th>
+                <th>Amount</th>
+            </HeaderContent>
+            <RowTemplate>
+                <td>@context.Employer</td>
+                <td>@context.Amount</td>
+            </RowTemplate>
+        </MudTable>
+    </div>
 
-<hr />
+    <div style="margin-bottom: 30px;">
+        <h1>Expenses</h1>
+        <MudTable Items="@Budget.Expenses" Class="table table-striped" Hover="true" Striped="true">
+            <HeaderContent>
+                <th>Bill</th>
+                <th>Amount</th>
+                <th>PaidTo</th>
+                <th>PaidBy</th>
+                <th>Est.Due Date</th>
+                <th>Note</th>
+            </HeaderContent>
+            <RowTemplate>
+                <td>@context.BillName</td>
+                <td>@context.Amount</td>
+                <td>@context.PaidTo</td>
+                <td>@context.PaidBy</td>
+                <td>@context.EstimatedDueDay</td>
+                <td>@context.Note</td>
+            </RowTemplate>
+        </MudTable>
+    </div>
 
-<h1>Cards</h1>
-@foreach (var item in Budget.CreditCards)
-{
-    <div>Holder: @item.Holder</div>
-    <div>Acct: @item.AccountNumber</div>
-    <div>Bank: @item.Bank</div>
-    <div>Acct-Attached: @item.AttachedTo</div>
-    <div>Description: @item.Description</div>
-    <div>IsDebt: @item.IsDebt</div>
-    <br />
-}
+    <div style="margin-bottom: 30px;">
+        <h1>Bank Accounts</h1>
+        <MudTable Items="@Budget.BankAccounts" Class="table table-striped" Hover="true">
+            <HeaderContent>
+                <th>Bank</th>
+                <th>Type</th>
+                <th>Account</th>
+                <th>Description</th>
+            </HeaderContent>
+            <RowTemplate>
+                <td>@context.Bank</td>
+                <td>@context.Type</td>
+                <td>@context.AccountNumber</td>
+                <td>@context.Description</td>
+            </RowTemplate>
+        </MudTable>
+    </div>
 
-<hr />
+    <div style="margin-bottom: 30px;">
+        <h1>Cards</h1>
+        <MudTable Items="Budget.CreditCards" Class="table table-striped" Hover="true">
+            <HeaderContent>
+                <th>Holder</th>
+                <th>Account</th>
+                <th>Bank</th>
+                <th>Acct-Attached</th>
+                <th>Description</th>
+                <th>IsDebt</th>
+            </HeaderContent>
+            <RowTemplate>
+                <td>@context.Holder</td>
+                <td>@context.AccountNumber</td>
+                <td>@context.Bank</td>
+                <td>@context.AttachedTo</td>
+                <td>@context.Description</td>
+                <td>@context.IsDebt</td>
+            </RowTemplate>
+        </MudTable>
+    </div>
 
-<h1>Online Services</h1>
-@foreach (var item in Budget.OnlineServices)
-{
-    <div>Service: @item.Service</div>
-    <div>PayTo: @item.PaidTo</div>
-    <br />
-}
+    <h1>Online Services</h1>
+    <MudTable Items="@Budget.OnlineServices" Class="table table-striped" Hover="true">
+        <HeaderContent>
+            <th>Service</th>
+            <th>PaidTo</th>
+        </HeaderContent>
+        <RowTemplate>
+            <td>@context.Service</td>
+            <td>@context.PaidTo</td>
+        </RowTemplate>
+    </MudTable>
 
-    <hr />
 </div>

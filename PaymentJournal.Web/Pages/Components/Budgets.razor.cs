@@ -44,7 +44,7 @@ public partial class Budgets : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Cancelled)
+        if (result.Canceled)
         {
             return;
         }

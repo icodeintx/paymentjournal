@@ -11,11 +11,19 @@
     <None Remove="Data\litedb.db" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shared\NoLayout.razor" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="FontAwesome" Version="4.7.0" />
     <PackageReference Include="LiteDB" Version="5.0.19" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.9.0" />
-    <PackageReference Include="MudBlazor" Version="6.19.1" />
+    <PackageReference Include="MudBlazor" Version="7.15.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Data\paymentjournallitedb.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
