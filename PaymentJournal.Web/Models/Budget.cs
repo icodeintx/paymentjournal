@@ -19,8 +19,8 @@ public class Budget
     public decimal TotalMonthlyIncomes => Incomes.Select(x => x.Amount).Sum();
     public decimal TotalYearlyExpenses => Expenses.Select(y => y.Amount).Sum() * 12;
     public decimal TotalYearlyIncomes => Incomes.Select(x => x.Amount).Sum() * 12;
-
     public decimal YearlyWitholdings => AnnualSalary - TotalYearlyIncomes;
+    public decimal HalfMonthlyExpenses => TotalMonthlyExpenses / 2;
 
     /// <summary>
     ///
@@ -93,7 +93,8 @@ public class Budget
         if (AnnualSalary > 0 && TotalMonthlyExpenses > 0)
         {
             //Monthy Expenses / (Annual Income / 12) * 100
-            return (TotalMonthlyExpenses / (AnnualSalary / 12)) * 100;
+            //return (TotalMonthlyExpenses / (AnnualSalary / 12)) * 100;
+            return (TotalMonthlyExpenses / (AnnualSalary / 12)) ;
         }
         else
         {

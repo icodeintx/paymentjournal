@@ -7,7 +7,7 @@
         <tr>
             <td><MonthYearSelector ReturnURL="@GetReturnURL" OnSearch="@Search" /></td>
             <td class="float-end">
-                <MudButton Variant="Variant.Filled" Class="float_end" OnClick="() => NavigateToBudget()" StartIcon="@Icons.Filled.Folder" Color="Color.Warning">Return to Budget</MudButton>
+                <MudButton Variant="Variant.Filled" Class="float_end" OnClick="() => NavigateToBudget()" StartIcon="@Icons.Material.Filled.Folder" Color="Color.Warning">Return to Budget</MudButton>
             </td>
         </tr>
     </MudSimpleTable>
@@ -17,7 +17,7 @@
 
 
 <div class="pa-5 ma-2 infobox">
-<MudButton StartIcon="@Icons.Filled.PostAdd" OnClick="() => NavToPayments()" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Insert Payment</MudButton>
+<MudButton StartIcon="@Icons.Material.Filled.PostAdd" OnClick="() => NavToPayments()" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary">Insert Payment</MudButton>
 <hr />
     @if (PaymentItems.Count > 0)
     {
@@ -39,7 +39,7 @@
                         <td>
                             <MudButtonGroup Color="Color.Primary" Variant="Variant.Text" OverrideStyles="false">
                                 <MudIconButton OnClick="() => DeleteDocument(item)" Title="Delete Payment" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small" />
-                                <MudIconButton OnClick="() => EditDocument(item)" Title="Edit Payment" Icon="@Icons.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
+                                <MudIconButton OnClick="() => EditDocument(item)" Title="Edit Payment" Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" />
                             </MudButtonGroup>
                         </td>
                         <td hidden>@item.PaymentItemId</td>

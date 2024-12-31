@@ -5,7 +5,7 @@
     <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0">
         <tr>
             <td><MudText Typo="Typo.h5" Class="textsilver">Budgets</MudText></td>
-            <td class="float-end"><MudButton Variant="Variant.Text" OnClick="() => CreateNewBudget()" StartIcon="@Icons.Filled.Payment" Color="Color.Primary">Create New Budget</MudButton></td>
+            <td class="float-end"><MudButton Variant="Variant.Text" OnClick="() => CreateNewBudget()" StartIcon="@Icons.Material.Filled.Payment" Color="Color.Primary">Create New Budget</MudButton></td>
         </tr>
     </MudSimpleTable>
 </div>
@@ -33,9 +33,9 @@
             @foreach (var item in BudgetList)
             {
                 <tr>
-                    <td><MudIconButton Icon="@Icons.Filled.RemoveRedEye" aria-label="delete" Color="Color.Success" OnClick="() => ViewBudget(item.BudgetId)"></MudIconButton></td>
+                    <td><MudIconButton Icon="@Icons.Material.Filled.RemoveRedEye" aria-label="delete" Color="Color.Success" OnClick="() => ViewBudget(item.BudgetId)"></MudIconButton></td>
                     <td>@item.Name</td>
-                    <td>@(FormatPercent(item.Debt_Income_Ratio))%</td>
+                    <td>@item.Debt_Income_Ratio.ToString("P2")</td>
                     <td>@(FormatMoney(item.TotalMonthlyExpenses))</td>
                     <td>@(FormatMoney(item.TotalMonthlyIncomes))</td>
                     <td>@item.Expenses.Count</td>

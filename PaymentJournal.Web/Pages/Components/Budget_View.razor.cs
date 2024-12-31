@@ -55,7 +55,7 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Cancelled)
+        if (result.Canceled)
         {
             return;
         }
@@ -148,7 +148,7 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Cancelled)
+        if (result.Canceled)
         {
             return false;
         }
@@ -180,7 +180,7 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Cancelled)
+        if (result.Canceled)
         {
             return false;
         }
@@ -212,7 +212,12 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Cancelled)
+        if (result == null)
+        {
+            return false;
+        }
+
+        if (result.Canceled)
         {
             return false;
         }
@@ -244,7 +249,7 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Cancelled)
+        if (result.Canceled)
         {
             return false;
         }
@@ -276,7 +281,7 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Cancelled)
+        if (result.Canceled)
         {
             return false;
         }
@@ -295,6 +300,12 @@ public partial class Budget_View : ComponentBase
     {
         NavigationManager.NavigateTo($"/budgets");
     }
+
+    protected void NavigateToPrint(Guid budgetId)
+    {
+        NavigationManager.NavigateTo($"budget/print/{budgetId}");
+    }
+
 
     protected void NavigateToPayments(Guid budgetId)
     {

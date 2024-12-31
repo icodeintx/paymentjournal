@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
+using System.Globalization;
 
 namespace PaymentJournal.Web.Pages.Components;
 
@@ -68,5 +69,10 @@ public partial class Budget_Printable : ComponentBase
                 Budget = new Budget();
             }
         }
+    }
+
+    private string FormatMoney(decimal value)
+    {
+        return value.ToString("C", new CultureInfo("en-US"));
     }
 }

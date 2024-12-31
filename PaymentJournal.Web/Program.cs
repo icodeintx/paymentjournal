@@ -9,21 +9,22 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
-//pull connection string from config file
 string connectionString = "";
 
+
 #if DEBUG
-connectionString = ".\\Data\\paymentjournallitedb.db";
-#else
+    connectionString = ".\\Data\\paymentjournallitedb.db";
+#else 
     if (builder.Configuration["IsDocker"]?.ToLower() == "true")
     {
-        connectionString = builder.Configuration.GetConnectionString("LiteDb");
+       connectionString = builder.Configuration.GetConnectionString("LiteDb") ?? "";
     }
     else
     {
         connectionString = Environment.GetEnvironmentVariable("PaymentJournalDbPath") + "\\liteDb.db";
     }
 #endif
+
 
 builder.Services.AddTransient<PaymentRepo>(s => new PaymentRepo(connectionString));
 builder.Services.AddTransient<BudgetRepo>(s => new BudgetRepo(connectionString));

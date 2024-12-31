@@ -12,6 +12,7 @@
                 <td class="float-end">
                     <MudButton Variant="Variant.Filled" OnClick="() => NavigateToPayments(Budget.BudgetId)" StartIcon="@Icons.Material.Filled.Payment" Color="Color.Success">Payments</MudButton>
                     <MudButton Variant="Variant.Filled" OnClick="() => NavigateToBudgets()" StartIcon="@Icons.Material.Filled.Folder" Color="Color.Primary">Budgets</MudButton>
+                    <MudButton Variant="Variant.Filled" OnClick="() => NavigateToPrint(Budget.BudgetId)" StartIcon="@Icons.Material.Filled.Folder" Color="Color.Primary">Print</MudButton>
                 </td>
             </tr>
         </MudSimpleTable>
@@ -114,11 +115,11 @@
                     <MudSimpleTable Class="bg-trans" Outlined="false" Elevation="0" Dense="true" Hover="true" Bordered="true">
                         <tr>
                             <td class="p-1 text-end">Half Monthly Expenses:</td>
-                            <td title="Sum(Expenses) / 2" class="blue_text">@(FormatMoney(Budget.TotalMonthlyExpenses / 2))</td>
+                            <td title="Sum(Expenses) / 2" class="blue_text">@(FormatMoney(Budget.HalfMonthlyExpenses))</td>
                         </tr>
                         <tr>
                             <td class="p-1 text-end">Debt-To-Income Ratio:</td>
-                            <td title="Monthy Expenses / (Annual Income / 12) * 100" class="blue_text">@(FormatPercent(Budget.Debt_Income_Ratio))%</td>
+                            <td title="Monthy Expenses / (Annual Income / 12) * 100" class="blue_text">@Budget.Debt_Income_Ratio.ToString("P2")</td>
                         </tr>
                         <tr>
                             <td class="p-1 text-end">Yearly Witholdings:</td>
