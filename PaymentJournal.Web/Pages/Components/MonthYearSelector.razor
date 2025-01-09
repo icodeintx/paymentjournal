@@ -1,8 +1,9 @@
 ﻿@using System.Globalization
 
-<div class="pa-5 ma-2 infobox" style="max-width: 500px">
+<div class="pa-5 ma-2 infobox" style="max-width: 600px">
       <MudStack Row="true">
-        <MudSelect T="int" Style="width: 200px" Label="Month" AnchorOrigin="Origin.BottomCenter" SelectedValuesChanged="@MonthClosed" @bind-Value="AppState.MonthYear.Month">
+        <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowLeft" OnClick="Decrement" Color="Color.Primary" />
+        <MudSelect T="int" Style="width: 200px" Label="Month" AnchorOrigin="Origin.BottomCenter" SelectedValuesChanged="@Persist" @bind-Value="AppState.MonthYear.Month">
             <MudSelectItem Value="1">January</MudSelectItem>
             <MudSelectItem Value="2">February</MudSelectItem>
             <MudSelectItem Value="3">March</MudSelectItem>
@@ -16,13 +17,14 @@
             <MudSelectItem Value="11">November</MudSelectItem>
             <MudSelectItem Value="12">December</MudSelectItem>
         </MudSelect>
-        <MudSelect Style="width: 100px;" T="int" Label="Year" AnchorOrigin="Origin.BottomCenter" @bind-Value="AppState.MonthYear.Year" SelectedValuesChanged="@MonthClosed">
+        <MudSelect Style="width: 100px;" T="int" Label="Year" AnchorOrigin="Origin.BottomCenter" @bind-Value="AppState.MonthYear.Year" SelectedValuesChanged="@Persist">
             @foreach (var year in Years)
             {
                 <MudSelectItem Value="@year">@year</MudSelectItem>
             }
         </MudSelect>
         <MudButton Variant="Variant.Text" OnClick="SetToday" Color="Color.Primary">Today</MudButton>
+        <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowRight" OnClick="Increment" Color="Color.Primary" />
     </MudStack>
 </div>
 

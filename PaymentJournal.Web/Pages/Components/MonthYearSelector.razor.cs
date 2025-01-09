@@ -25,7 +25,7 @@ public partial class MonthYearSelector : ComponentBase
     [Inject]
     private PaymentRepo repo { get; set; }
 
-    public async Task MonthClosed()
+    public async Task Persist()
     {
         AppState.MonthYear.LastSetDate = DateOnly.FromDateTime(DateTime.Now);
         CacheRepo.SaveAppState(AppState);
@@ -37,7 +37,7 @@ public partial class MonthYearSelector : ComponentBase
         AppState.MonthYear.Month = DateTime.Now.Month;
         AppState.MonthYear.Year = DateTime.Now.Year;
         AppState.MonthYear.LastSetDate = DateOnly.FromDateTime(DateTime.Now);
-        await MonthClosed();
+        await Persist();
     }
 
     protected override void OnParametersSet()
@@ -48,5 +48,33 @@ public partial class MonthYearSelector : ComponentBase
         {
             Years = repo.GetDistintYears();
         }
+    }
+
+    public async Task Increment()
+    {
+        if (AppState.MonthYear.Month == 12)
+        {
+            AppState.MonthYear.Month = 1;
+            AppState.MonthYear.Year++;
+        }
+        else
+        {
+            AppState.MonthYear.Month++;
+        }
+        await Persist();
+    }
+
+    public async Task Decrement()
+    {
+        if (AppState.MonthYear.Month == 1)
+        {
+            AppState.MonthYear.Month = 12;
+            AppState.MonthYear.Year--;
+        }
+        else
+        {
+            AppState.MonthYear.Month--;
+        }
+        await Persist();
     }
 }
