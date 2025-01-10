@@ -5,9 +5,6 @@ namespace PaymentJournal.Web.Pages.Components;
 
 public partial class AccountLists : ComponentBase
 {
-    /// <summary>
-    ///
-    /// </summary>
     public AccountLists()
     {
     }
