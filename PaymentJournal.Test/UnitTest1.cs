@@ -5,7 +5,7 @@ namespace Test
     [TestClass]
     public class UnitTest1
     {
-        private const string DBFile = "C:\\src\\PaymentJournal\\Web\\Data\\litedb_test.db";
+        private const string DBFile = "C:\\src\\PaymentJournal\\PaymentJournal.Web\\Data\\litedb_test.db";
         private Guid BudgetId = Guid.Parse("b08d1aa4-7524-4999-a610-47b84b756108");
         private Guid PaymentItmeId = Guid.Parse("00c24b9e-048c-4648-a7ee-3befc33989a1");
 
