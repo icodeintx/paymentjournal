@@ -3,16 +3,8 @@ using PaymentJournal.Web.Models;
 
 namespace PaymentJournal.Web.Repositories;
 
-/// <summary>
-///
-/// </summary>
-/// <typeparam name="T"></typeparam>
 public class BaseRepo<T>
 {
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="connectionString"></param>
     protected BaseRepo(string connectionString)
     {
         DatabaseName = connectionString;
@@ -22,13 +14,6 @@ public class BaseRepo<T>
 
     protected string DatabaseName { get; set; } = String.Empty;
 
-    /// <summary>
-    /// Delete single document
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="documentId"></param>
-    /// <param name="collectionName"></param>
-    /// <returns></returns>
     protected DbResult DeleteDocument(Guid documentId, string collectionName)
     {
         try
@@ -58,12 +43,6 @@ public class BaseRepo<T>
         }
     }
 
-    /// <summary>
-    /// Currently NOT USED - connection closes after using statement
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="collectionName"></param>
-    /// <returns></returns>
     protected ILiteQueryableResult<T> GetCollection(string collectionName)
     {
         try
@@ -83,12 +62,6 @@ public class BaseRepo<T>
         }
     }
 
-    /// <summary>
-    /// Gets all documents in a Collection or Creates a new collection if not exists
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="collectionName"></param>
-    /// <returns></returns>
     protected List<T> GetCollectionList(string collectionName)
     {
         try
@@ -110,13 +83,6 @@ public class BaseRepo<T>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="documentId"></param>
-    /// <param name="collectionName"></param>
-    /// <returns></returns>
     protected T GetDocumentById(Guid documentId, string collectionName)
     {
         try
@@ -138,13 +104,6 @@ public class BaseRepo<T>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="document"></param>
-    /// <param name="collectionName"></param>
-    /// <returns></returns>
     protected DbResult InsertDocument(T document, string collectionName)
     {
         try
@@ -174,13 +133,6 @@ public class BaseRepo<T>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="document"></param>
-    /// <param name="collectionName"></param>
-    /// <returns></returns>
     protected DbResult UpdateDocument(T document, string collectionName)
     {
         try
@@ -210,13 +162,6 @@ public class BaseRepo<T>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="document"></param>
-    /// <param name="collectionName"></param>
-    /// <returns></returns>
     protected DbResult UpsertDocument(T document, string collectionName)
     {
         try

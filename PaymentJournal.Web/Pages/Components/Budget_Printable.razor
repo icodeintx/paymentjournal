@@ -1,140 +1,107 @@
 ﻿@page "/budget/print/{BudgetId}"
 @layout NoLayout
 
-
-<div class="blank-page">
-    
+<div class="edge-padding">
+    <MudLink OnClick="NavigateToBudget">Back to Budget</MudLink>    
     <div style="margin-bottom: 30px;">
         <h1>Financial Summary</h1>
-        <table>
-            <tr>
-                <td>Annual Salary (before Taxes)</td>
-                <td>@FormatMoney(Budget.AnnualSalary)</td>
-            </tr>
-            <tr>
-                <td>Total Yearly Income (after Taxes)</td>
-                <td>@FormatMoney(Budget.TotalYearlyIncomes)</td>
-            </tr>
-            <tr>
-                <td>Total Yearly Expenses</td>
-                <td>@FormatMoney(Budget.TotalYearlyExpenses)</td>
-            </tr>
-            <tr>
-                <td>Total Yearly Difference</td>
-                <td>@FormatMoney((Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses))</td>
-            </tr>
-            <tr>
-                <td>Total Monthly Income</td>
-                <td>@FormatMoney(Budget.TotalMonthlyIncomes)</td>
-            </tr>
-            <tr>
-                <td>Total Monthly Expenses</td>
-                <td>@FormatMoney(Budget.TotalMonthlyExpenses)</td>
-            </tr>
-            <tr>
-                <td>Total Monthly Difference</td>
-                <td>@FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses)</td>
-            </tr>
-            <tr>
-                <td>Half Month Expenses</td>
-                <td>@FormatMoney(Budget.HalfMonthlyExpenses)</td>
-            </tr>
-            <tr>
-                <td>Debt to Income Ratio</td>
-                <td>@Budget.Debt_Income_Ratio.ToString("P2")</td>
-            </tr>
-
-        </table>
+        <MudTable Items="@SummaryItems" Dense="true" Hover="true" Bordered="false" Striped="true" Style="max-width: 400px;">
+            <HeaderContent>
+                <MudTh Class="Mud-Table-Header ">Item</MudTh>
+                <MudTh Class="Mud-Table-Header ">Amount</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.Title</MudTd>
+                <MudTd>@context.Value</MudTd>
+            </RowTemplate>
+        </MudTable>
     </div>
-
-
-    
 
     <div style="margin-bottom: 30px;">
         <h1>Income</h1>
-        <MudTable Items="@Budget.Incomes" Class="table table-striped" Hover="true" Striped="true">
+        <MudTable Items="@Budget.Incomes" Dense="true" Hover="true" Striped="true" Style="max-width: 400px;">
             <HeaderContent>
-                <th>Employer</th>
-                <th>Amount</th>
+                <MudTh Class="Mud-Table-Header ">Employer</MudTh>
+                <MudTh Class="Mud-Table-Header ">Amount</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <td>@context.Employer</td>
-                <td>@context.Amount</td>
+                <MudTd>@context.Employer</MudTd>
+                <MudTd>@context.Amount</MudTd>
             </RowTemplate>
         </MudTable>
     </div>
 
     <div style="margin-bottom: 30px;">
         <h1>Expenses</h1>
-        <MudTable Items="@Budget.Expenses" Class="table table-striped" Hover="true" Striped="true">
+        <MudTable Items="@Budget.Expenses" Dense="true" Hover="true" Striped="true" Style="max-width: 1200px;">
             <HeaderContent>
-                <th>Bill</th>
-                <th>Amount</th>
-                <th>PaidTo</th>
-                <th>PaidBy</th>
-                <th>Est.Due Date</th>
-                <th>Note</th>
+                <MudTh Class="Mud-Table-Header ">Bill</MudTh>
+                <MudTh Class="Mud-Table-Header ">Amount</MudTh>
+                <MudTh Class="Mud-Table-Header ">PaidTo</MudTh>
+                <MudTh Class="Mud-Table-Header ">PaidBy</MudTh>
+                <MudTh Class="Mud-Table-Header ">Est.Due Date</MudTh>
+                <MudTh Class="Mud-Table-Header ">Note</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <td>@context.BillName</td>
-                <td>@context.Amount</td>
-                <td>@context.PaidTo</td>
-                <td>@context.PaidBy</td>
-                <td>@context.EstimatedDueDay</td>
-                <td>@context.Note</td>
+                <MudTd>@context.BillName</MudTd>
+                <MudTd>@context.Amount</MudTd>
+                <MudTd>@context.PaidTo</MudTd>
+                <MudTd>@context.PaidBy</MudTd>
+                <MudTd>@context.EstimatedDueDay</MudTd>
+                <MudTd>@context.Note</MudTd>
             </RowTemplate>
         </MudTable>
     </div>
 
     <div style="margin-bottom: 30px;">
         <h1>Bank Accounts</h1>
-        <MudTable Items="@Budget.BankAccounts" Class="table table-striped" Hover="true">
+        <MudTable Items="@Budget.BankAccounts" Dense="true" Hover="true" Striped="true" Style="max-width: 600px;">
             <HeaderContent>
-                <th>Bank</th>
-                <th>Type</th>
-                <th>Account</th>
-                <th>Description</th>
+                <MudTh Class="Mud-Table-Header ">Bank</MudTh>
+                <MudTh Class="Mud-Table-Header ">Type</MudTh>
+                <MudTh Class="Mud-Table-Header ">Account</MudTh>
+                <MudTh Class="Mud-Table-Header ">Description</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <td>@context.Bank</td>
-                <td>@context.Type</td>
-                <td>@context.AccountNumber</td>
-                <td>@context.Description</td>
+                <MudTd>@context.Bank</MudTd>
+                <MudTd>@context.Type</MudTd>
+                <MudTd>@context.AccountNumber</MudTd>
+                <MudTd>@context.Description</MudTd>
             </RowTemplate>
         </MudTable>
     </div>
 
     <div style="margin-bottom: 30px;">
         <h1>Cards</h1>
-        <MudTable Items="Budget.CreditCards" Class="table table-striped" Hover="true">
+        <MudTable Items="Budget.CreditCards" Dense="true" Hover="true" triped="true" Style="max-width: 800px;">
             <HeaderContent>
-                <th>Holder</th>
-                <th>Account</th>
-                <th>Bank</th>
-                <th>Acct-Attached</th>
-                <th>Description</th>
-                <th>IsDebt</th>
+                <MudTh Class="Mud-Table-Header ">Holder</MudTh>
+                <MudTh Class="Mud-Table-Header ">Account</MudTh>
+                <MudTh Class="Mud-Table-Header ">Bank</MudTh>
+                <MudTh Class="Mud-Table-Header ">Acct-Attached</MudTh>
+                <MudTh Class="Mud-Table-Header ">Description</MudTh>
+                <MudTh Class="Mud-Table-Header ">IsDebt</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <td>@context.Holder</td>
-                <td>@context.AccountNumber</td>
-                <td>@context.Bank</td>
-                <td>@context.AttachedTo</td>
-                <td>@context.Description</td>
-                <td>@context.IsDebt</td>
+                <MudTd>@context.Holder</MudTd>
+                <MudTd>@context.AccountNumber</MudTd>
+                <MudTd>@context.Bank</MudTd>
+                <MudTd>@context.AttachedTo</MudTd>
+                <MudTd>@context.Description</MudTd>
+                <MudTd>@context.IsDebt</MudTd>
             </RowTemplate>
         </MudTable>
     </div>
 
     <h1>Online Services</h1>
-    <MudTable Items="@Budget.OnlineServices" Class="table table-striped" Hover="true">
+    <MudTable Items="@Budget.OnlineServices" Dense="true" Hover="true" Striped="true" Style="max-width: 400px;">
         <HeaderContent>
-            <th>Service</th>
-            <th>PaidTo</th>
+            <MudTh Class="Mud-Table-Header ">Service</MudTh>
+            <MudTh Class="Mud-Table-Header ">PaidTo</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <td>@context.Service</td>
-            <td>@context.PaidTo</td>
+            <MudTd>@context.Service</MudTd>
+            <MudTd>@context.PaidTo</MudTd>
         </RowTemplate>
     </MudTable>
 

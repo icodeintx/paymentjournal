@@ -11,6 +11,5 @@ public class AppState
     }
 
     public Guid AppStateId { get; set; }
-
     public MonthYear MonthYear { get; set; }
 }

@@ -35,7 +35,6 @@ builder.Services.AddScoped<IHighlightJS, HighlightJS>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-
 builder.Services.AddMudServices();
 
 var app = builder.Build();
@@ -49,11 +48,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

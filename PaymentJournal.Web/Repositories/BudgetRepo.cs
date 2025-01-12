@@ -3,27 +3,16 @@ using PaymentJournal.Web.Models;
 
 namespace PaymentJournal.Web.Repositories;
 
-/// <summary>
-///
-/// </summary>
 public class BudgetRepo : BaseRepo<Budget>
 {
     private string DBCollection = "Budget";
 
-    /// <summary>
-    ///
-    /// </summary>
     public BudgetRepo(string connectionString) : base(connectionString)
     {
     }
 
     public LiteDatabase Database { get; set; }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="document"></param>
-    /// <returns></returns>
     public DbResult DeleteBudget(Guid budgetId)
     {
         try
@@ -46,10 +35,6 @@ public class BudgetRepo : BaseRepo<Budget>
         }
     }
 
-    /// <summary>
-    /// Get all budges in descending order
-    /// </summary>
-    /// <returns></returns>
     public List<Budget> GetAllBudgets()
     {
         try
@@ -66,11 +51,6 @@ public class BudgetRepo : BaseRepo<Budget>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="paymentItemId"></param>
-    /// <returns></returns>
     public Budget GetBudget(Guid budgetId)
     {
         try
@@ -86,10 +66,6 @@ public class BudgetRepo : BaseRepo<Budget>
         }
     }
 
-    /// <summary>
-    /// Get last Budget Created
-    /// </summary>
-    /// <returns></returns>
     public Budget GetLatestBudget()
     {
         try
@@ -107,11 +83,6 @@ public class BudgetRepo : BaseRepo<Budget>
         }
     }
 
-    /// <summary>
-    /// This method does an UPSERT. If wanting to create a new budget, change the BudgetId
-    /// </summary>
-    /// <param name="document"></param>
-    /// <returns></returns>
     public DbResult SaveBudget(Budget document)
     {
         try
