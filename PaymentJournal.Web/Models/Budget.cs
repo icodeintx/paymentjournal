@@ -3,7 +3,6 @@
 public class Budget
 {
     public decimal AnnualSalary { get; set; }
-
     public List<AccountList> AccountLists => GetAccountLists();
     public List<BankAccount> BankAccounts { get; set; } = new();
     public Guid BudgetId { get; set; } = Guid.NewGuid();
@@ -22,10 +21,6 @@ public class Budget
     public decimal YearlyWitholdings => AnnualSalary - TotalYearlyIncomes;
     public decimal HalfMonthlyExpenses => TotalMonthlyExpenses / 2;
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <returns></returns>
     public List<AccountList> GetAccountLists()
     {
         var list = new List<AccountList>();
@@ -67,10 +62,6 @@ public class Budget
         return list;
     }
 
-    /// <summary>
-    /// Returns expenses summed by PayTo acct
-    /// </summary>
-    /// <returns></returns>
     public IList<ExpensePayGroup> GetExpensePayGroups()
     {
         var result = (from expense in Expenses
@@ -84,10 +75,6 @@ public class Budget
         return result;
     }
 
-    /// <summary>
-    /// Debt_To_Income_Ratio
-    /// </summary>
-    /// <returns></returns>
     private decimal CalculateDTI()
     {
         if (AnnualSalary > 0 && TotalMonthlyExpenses > 0)

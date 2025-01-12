@@ -3,6 +3,7 @@ using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
 using System.Globalization;
 
+
 namespace PaymentJournal.Web.Pages.Components;
 
 public partial class Budget_Printable : ComponentBase
@@ -16,6 +17,12 @@ public partial class Budget_Printable : ComponentBase
 
     [Inject]
     private BudgetRepo Repo { get; set; }
+    
+    public List<SummaryItem> SummaryItems { get; set; } = new();
+    
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+    
 
     protected override void OnParametersSet()
     {
@@ -69,10 +76,37 @@ public partial class Budget_Printable : ComponentBase
                 Budget = new Budget();
             }
         }
+        PopulateSummaryItems();
+    }
+
+    private void PopulateSummaryItems()
+    {
+        this.SummaryItems = new List<SummaryItem>();
+
+        this.SummaryItems.Add(new SummaryItem("Annual Salary (before Taxes)", FormatMoney(Budget.AnnualSalary)));
+        this.SummaryItems.Add(new SummaryItem("Total Yearly Income (after Taxes)",
+            FormatMoney(Budget.TotalYearlyIncomes)));
+        this.SummaryItems.Add(new SummaryItem("Total Yearly Expenses", FormatMoney(Budget.TotalYearlyExpenses)));
+        this.SummaryItems.Add(new SummaryItem("Total Yearly Difference",
+            FormatMoney(Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses)));
+        this.SummaryItems.Add(new SummaryItem("Total Monthly Income", FormatMoney(Budget.TotalMonthlyIncomes)));
+        this.SummaryItems.Add(new SummaryItem("Total Monthly Expenses", FormatMoney(Budget.TotalMonthlyExpenses)));
+        this.SummaryItems.Add(new SummaryItem("Total Monthly Difference",
+            FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses)));
+        this.SummaryItems.Add(new SummaryItem("Half Month Expense", FormatMoney(Budget.HalfMonthlyExpenses)));
+        this.SummaryItems.Add(new SummaryItem("Debt to Income Ratio", Budget.Debt_Income_Ratio.ToString("P2")));
     }
 
     private string FormatMoney(decimal value)
     {
         return value.ToString("C", new CultureInfo("en-US"));
     }
+
+    private void NavigateToBudget()
+    {
+        NavigationManager.NavigateTo($"budget/view/{BudgetId}");
+    }
+    
 }
+
+public record SummaryItem(string Title, string Value);

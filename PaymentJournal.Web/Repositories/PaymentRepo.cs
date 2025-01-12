@@ -7,18 +7,10 @@ public class PaymentRepo : BaseRepo<PaymentItem>
 {
     private string DBCollection = "PaymentItems";
 
-    /// <summary>
-    ///
-    /// </summary>
     public PaymentRepo(string connectionString) : base(connectionString)
     {
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="document"></param>
-    /// <returns></returns>
     public DbResult DeleteDocument(Guid paymentId)
     {
         try
@@ -41,10 +33,6 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <returns></returns>
     public List<PaymentItem> GetAllItems(Guid budgetId)
     {
         try
@@ -62,10 +50,6 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         }
     }
 
-    /// <summary>
-    /// Return all the Years in the DB
-    /// </summary>
-    /// <returns></returns>
     public IEnumerable<int> GetDistintYears()
     {
         try
@@ -84,11 +68,6 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="date"></param>
-    /// <returns></returns>
     public List<PaymentItem> GetItemsByDate(Guid budgetId, DateTime date)
     {
         try
@@ -107,11 +86,6 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="paymentItemId"></param>
-    /// <returns></returns>
     public PaymentItem GetItemsById(Guid paymentItemId)
     {
         try
@@ -129,12 +103,6 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="month"></param>
-    /// <param name="year"></param>
-    /// <returns></returns>
     public List<PaymentItem> GetItemsByMonthYear(Guid budgetId, int month, int year)
     {
         try
@@ -153,11 +121,6 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="document"></param>
-    /// <returns></returns>
     public DbResult InsertDocument(PaymentItem document)
     {
         try
@@ -193,11 +156,6 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="document"></param>
-    /// <returns></returns>
     public DbResult UpdateDocument(PaymentItem document)
     {
         try
@@ -228,10 +186,6 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="model"></param>
     private void FixDollarValues(PaymentItem model)
     {
         foreach (var payee in model.Payees)
