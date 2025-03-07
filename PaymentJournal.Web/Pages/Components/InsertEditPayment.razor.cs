@@ -8,38 +8,28 @@ namespace PaymentJournal.Web.Pages.Components;
 
 public partial class InsertEditPayment : ComponentBase
 {
-    /// <summary>
-    ///
-    /// </summary>
     public InsertEditPayment()
     {
         PaymentItem = new PaymentItem();
     }
 
-    public Budget Budget { get; set; }
+    public Budget Budget { get; set; } = null !;
 
-    [Parameter]
-    public string BudgetId { get; set; }
+    [Parameter] public string BudgetId { get; set; } = null !;
 
-    [Inject]
-    public BudgetRepo BudgetRepo { get; set; }
+    [Inject] public BudgetRepo BudgetRepo { get; set; } = null !;
 
     public bool HasPayees => PaymentItem.Payees.Count > 0;
 
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    [Inject] public NavigationManager NavigationManager { get; set; } = null !;
 
     public PaymentItem PaymentItem { get; set; }
 
-    [Parameter]
-    public string PaymentItemId { get; set; } = string.Empty;
+    [Parameter] public string PaymentItemId { get; set; } = string.Empty;
 
-    [Inject]
-    public PaymentRepo PaymentRepo { get; set; }
+    [Inject] public PaymentRepo PaymentRepo { get; set; } = null !;
 
-    /// <summary>
-    ///
-    /// </summary>
+
     public void AddNewPayee()
     {
         PaymentItem.Payees.Add(
@@ -50,9 +40,7 @@ public partial class InsertEditPayment : ComponentBase
             });
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+
     public void HandleSubmit()
     {
         DbResult result;
@@ -75,10 +63,7 @@ public partial class InsertEditPayment : ComponentBase
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <returns></returns>
+
     public bool IsValidPaymentItemId()
     {
         try
@@ -92,13 +77,9 @@ public partial class InsertEditPayment : ComponentBase
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="item"></param>
+
     public async Task RemovePayee(Payee item)
     {
-
         var parameters = new DialogParameters();
         parameters.Add("ContentText", $"Delete item {item.Name}? This process cannot be undone after clicking SAVE.");
         parameters.Add("ButtonText", "Delete");
@@ -109,12 +90,11 @@ public partial class InsertEditPayment : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Canceled)
+        if (result is {Canceled:true})
         {
             return;
         }
-        else
-        if (result.Data != null && (bool)result.Data == true)
+        else if (result?.Data is true)
         {
             PaymentItem.Payees.Remove(item);
         }
@@ -122,17 +102,13 @@ public partial class InsertEditPayment : ComponentBase
         //PaymentItem.Payees.Remove(item);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+
     protected void NavToPayments()
     {
         NavigationManager.NavigateTo($"/payments/{BudgetId}", true);
     }
-
-    /// <summary>
-    ///
-    /// </summary>
+    
+    
     protected override void OnParametersSet()
     {
         base.OnParametersSet();

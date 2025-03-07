@@ -10,20 +10,20 @@ public partial class MonthYearSelector : ComponentBase
     public EventCallback<MonthYear> OnSearch { get; set; }
 
     [Parameter]
-    public string ReturnURL { get; set; } = "";
+    public string ReturnURL { get; set; }  = null !;
 
-    public IEnumerable<int> Years { get; set; }
+    public IEnumerable<int> Years { get; set; } = null !;
 
-    private AppState AppState { get; set; }
-
-    [Inject]
-    private CacheRepo CacheRepo { get; set; }
+    private AppState AppState { get; set; } = null !;
 
     [Inject]
-    private NavigationManager Nav { get; set; }
+    private CacheRepo CacheRepo { get; set; } = null !;
 
     [Inject]
-    private PaymentRepo repo { get; set; }
+    private NavigationManager Nav { get; set; } = null !;
+
+    [Inject]
+    private PaymentRepo repo { get; set; } = null !;
 
     public async Task Persist()
     {
