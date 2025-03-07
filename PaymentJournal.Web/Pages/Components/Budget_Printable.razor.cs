@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Components;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
 using System.Globalization;
@@ -15,13 +16,13 @@ public partial class Budget_Printable : ComponentBase
 
     public string Message { get; set; } = string.Empty;
 
-    [Inject]
-    private BudgetRepo Repo { get; set; }
+    [Inject] private BudgetRepo Repo { get; set; } = null!;
     
     public List<SummaryItem> SummaryItems { get; set; } = new();
     
+    
     [Inject]
-    private NavigationManager NavigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; } = null !;
     
 
     protected override void OnParametersSet()
@@ -79,23 +80,23 @@ public partial class Budget_Printable : ComponentBase
         PopulateSummaryItems();
     }
 
+    
     private void PopulateSummaryItems()
     {
-        this.SummaryItems = new List<SummaryItem>();
-
-        this.SummaryItems.Add(new SummaryItem("Annual Salary (before Taxes)", FormatMoney(Budget.AnnualSalary)));
-        this.SummaryItems.Add(new SummaryItem("Total Yearly Income (after Taxes)",
-            FormatMoney(Budget.TotalYearlyIncomes)));
-        this.SummaryItems.Add(new SummaryItem("Total Yearly Expenses", FormatMoney(Budget.TotalYearlyExpenses)));
-        this.SummaryItems.Add(new SummaryItem("Total Yearly Difference",
-            FormatMoney(Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses)));
-        this.SummaryItems.Add(new SummaryItem("Total Monthly Income", FormatMoney(Budget.TotalMonthlyIncomes)));
-        this.SummaryItems.Add(new SummaryItem("Total Monthly Expenses", FormatMoney(Budget.TotalMonthlyExpenses)));
-        this.SummaryItems.Add(new SummaryItem("Total Monthly Difference",
-            FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses)));
-        this.SummaryItems.Add(new SummaryItem("Half Month Expense", FormatMoney(Budget.HalfMonthlyExpenses)));
-        this.SummaryItems.Add(new SummaryItem("Debt to Income Ratio", Budget.Debt_Income_Ratio.ToString("P2")));
+        SummaryItems = new List<SummaryItem>
+        {
+            new SummaryItem("Annual Salary (before Taxes)", FormatMoney(Budget.AnnualSalary)),
+            new SummaryItem("Total Yearly Income (after Taxes)", FormatMoney(Budget.TotalYearlyIncomes)),
+            new SummaryItem("Total Yearly Expenses", FormatMoney(Budget.TotalYearlyExpenses)),
+            new SummaryItem("Total Yearly Difference", FormatMoney(Budget.TotalYearlyIncomes - Budget.TotalYearlyExpenses)),
+            new SummaryItem("Total Monthly Income", FormatMoney(Budget.TotalMonthlyIncomes)),
+            new SummaryItem("Total Monthly Expenses", FormatMoney(Budget.TotalMonthlyExpenses)),
+            new SummaryItem("Total Monthly Difference", FormatMoney(Budget.TotalMonthlyIncomes - Budget.TotalMonthlyExpenses)),
+            new SummaryItem("Half Month Expense", FormatMoney(Budget.HalfMonthlyExpenses)),
+            new SummaryItem("Debt to Income Ratio", Budget.Debt_Income_Ratio.ToString("P2"))
+        };
     }
+    
 
     private string FormatMoney(decimal value)
     {

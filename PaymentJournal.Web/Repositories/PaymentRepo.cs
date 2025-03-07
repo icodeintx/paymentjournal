@@ -86,7 +86,7 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         }
     }
 
-    public PaymentItem GetItemsById(Guid paymentItemId)
+    public PaymentItem? GetItemsById(Guid paymentItemId)
     {
         try
         {
@@ -108,7 +108,8 @@ public class PaymentRepo : BaseRepo<PaymentItem>
         try
         {
             var results = base.GetCollectionList(DBCollection)
-                .Where(x => x.CreateDate.Value.Month == month && x.CreateDate.Value.Year == year && x.BudgetId == budgetId)
+                .Where(x => x.CreateDate.Value.Month == month && x.CreateDate.Value.Year == year &&
+                            x.BudgetId == budgetId)
                 .OrderByDescending(x => x.CreateDate)
                 .ToList();
 

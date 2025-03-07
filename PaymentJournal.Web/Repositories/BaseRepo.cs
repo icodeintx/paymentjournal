@@ -10,7 +10,7 @@ public class BaseRepo<T>
         DatabaseName = connectionString;
     }
 
-    protected LiteDatabase Database { get; set; }
+    protected LiteDatabase Database { get; set; } = null !;
 
     protected string DatabaseName { get; set; } = String.Empty;
 

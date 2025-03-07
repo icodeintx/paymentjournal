@@ -7,9 +7,6 @@ using System.Globalization;
 
 namespace PaymentJournal.Web.Pages.Components;
 
-/// <summary>
-///
-/// </summary>
 public partial class Budget_View : ComponentBase
 {
     public Budget Budget { get; set; } = new();
@@ -31,19 +28,15 @@ public partial class Budget_View : ComponentBase
     public string Message { get; set; } = string.Empty;
 
     [Inject]
-    private IJSRuntime JSRuntime { get; set; }
+    private IJSRuntime JSRuntime { get; set; } = null !;
 
     [Inject]
-    private NavigationManager NavigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; } = null !;
 
     [Inject]
-    private BudgetRepo Repo { get; set; }
+    private BudgetRepo Repo { get; set; } = null !;
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="budgetId"></param>
-    public async void DeleteBudget(Guid budgetId)
+   public async void DeleteBudget(Guid budgetId)
     {
         var parameters = new DialogParameters();
         parameters.Add("ContentText", $"Delete Budget {this.Budget.Name}? This process cannot be undone.");
@@ -55,33 +48,25 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Canceled)
+        if (result is {Canceled:true})
         {
             return;
         }
         else
-        if (result.Data != null && (bool)result.Data == true)
+        if (result?.Data is true)
         {
             DbResult deleteResult = Repo.DeleteBudget(budgetId);
             NavigationManager.NavigateTo("/budgets", true);
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     public void HandleSubmit()
     {
         DbResult result = Repo.SaveBudget(Budget);
         NavigationManager.NavigateTo($"/budget/view/{Budget.BudgetId}", true);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    public string IsTrueToYesNo(bool item)
+  public string IsTrueToYesNo(bool item)
     {
         return item == true ? "Yes" : "No";
     }
@@ -91,51 +76,31 @@ public partial class Budget_View : ComponentBase
         Disabled = Disabled != true;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     protected void AddBankAccount()
     {
         Budget.BankAccounts.Add(new BankAccount());
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     protected void AddCreditCard()
     {
         Budget.CreditCards.Add(new CreditCard());
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     protected void AddExpense()
     {
         Budget.Expenses.Add(new Expense());
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     protected void AddIncome()
     {
         Budget.Incomes.Add(new Income());
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     protected void AddOnlineService()
     {
         Budget.OnlineServices.Add(new OnlineService());
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     protected async Task<bool> DeleteBankAccount(BankAccount model)
     {
         var parameters = new DialogParameters();
@@ -148,12 +113,12 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Canceled)
+        if (result is {Canceled:true})
         {
             return false;
         }
         else
-        if (result.Data != null && (bool)result.Data == true)
+        if (result?.Data is true)
         {
             return Budget.BankAccounts.Remove(model);
         }
@@ -163,11 +128,6 @@ public partial class Budget_View : ComponentBase
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     protected async Task<bool> DeleteCreditCard(CreditCard model)
     {
         var parameters = new DialogParameters();
@@ -180,12 +140,12 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Canceled)
+        if (result is {Canceled:true})
         {
             return false;
         }
         else
-        if (result.Data != null && (bool)result.Data == true)
+        if (result?.Data is true)
         {
             return Budget.CreditCards.Remove(model);
         }
@@ -195,11 +155,6 @@ public partial class Budget_View : ComponentBase
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     protected async Task<bool> DeleteExpense(Expense model)
     {
         var parameters = new DialogParameters();
@@ -232,11 +187,6 @@ public partial class Budget_View : ComponentBase
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     protected async Task<bool> DeleteIncome(Income model)
     {
         var parameters = new DialogParameters();
@@ -249,12 +199,12 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Canceled)
+        if (result is {Canceled:true})
         {
             return false;
         }
         else
-        if (result.Data != null && (bool)result.Data == true)
+        if (result?.Data is true)
         {
             return Budget.Incomes.Remove(model);
         }
@@ -264,11 +214,6 @@ public partial class Budget_View : ComponentBase
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     protected async Task<bool> DeleteOnlineService(OnlineService model)
     {
         var parameters = new DialogParameters();
@@ -281,7 +226,7 @@ public partial class Budget_View : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Canceled)
+        if (result is {Canceled:true})
         {
             return false;
         }
@@ -312,9 +257,6 @@ public partial class Budget_View : ComponentBase
         NavigationManager.NavigateTo($"payments/{budgetId}");
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
@@ -370,21 +312,11 @@ public partial class Budget_View : ComponentBase
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    private string FormatMoney(decimal value)
+   private string FormatMoney(decimal value)
     {
         return value.ToString("C", new CultureInfo("en-US"));
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
     private string FormatPercent(decimal value)
     {
         return value.ToString("0.0");

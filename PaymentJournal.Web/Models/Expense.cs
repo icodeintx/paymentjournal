@@ -8,6 +8,6 @@ public class Expense
     public int EstimatedDueDay { get; set; } = 1;
     public string Note { get; set; } = string.Empty;
     //group by this property to determin how much is paid by seperate accounts.
-    public string PaidBy { get; set; }
+    public string PaidBy { get; set; }  = null !;
     public string PaidTo { get; set; } = string.Empty;
 }

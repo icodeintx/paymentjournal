@@ -11,7 +11,7 @@ public class BudgetRepo : BaseRepo<Budget>
     {
     }
 
-    public LiteDatabase Database { get; set; }
+    public LiteDatabase Database { get; set; } = null !;
 
     public DbResult DeleteBudget(Guid budgetId)
     {
@@ -66,7 +66,7 @@ public class BudgetRepo : BaseRepo<Budget>
         }
     }
 
-    public Budget GetLatestBudget()
+    public Budget? GetLatestBudget()
     {
         try
         {
@@ -75,7 +75,7 @@ public class BudgetRepo : BaseRepo<Budget>
 
             return result;
         }
-        catch (Exception ex)
+        catch 
         {
             return new Budget();
             //for now just throw the error

@@ -5,42 +5,31 @@ using PaymentJournal.Web.Repositories;
 
 namespace PaymentJournal.Web.Pages.Components;
 
-/// <summary>
-///
-/// </summary>
 public partial class Payments : ComponentBase
 {
     public Payments()
     {
     }
 
-    public Budget Budget { get; set; }
+    public Budget Budget { get; set; } = null !;
 
-    [Parameter]
-    public string BudgetId { get; set; }
+    [Parameter] public string BudgetId { get; set; } = null !;
 
-    public List<PaymentItem> PaymentItems { get; set; }
+    public List<PaymentItem> PaymentItems { get; set; } = null !;
 
     protected string GetReturnURL => $"/payments/{BudgetId}";
 
-    [Inject]
-    private BudgetRepo budgetRepo { get; set; }
+    [Inject] private BudgetRepo budgetRepo { get; set; } = null !;
 
-    [Inject]
-    private CacheRepo CacheRepo { get; set; }
+    [Inject] private CacheRepo CacheRepo { get; set; } = null !;
 
-    [Inject] private ILogger<Payments> Logger { get; set; }
+    [Inject] private ILogger<Payments> Logger { get; set; } = null !;
 
-    [Inject]
-    private NavigationManager NavigationManager { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; } = null !;
 
-    [Inject]
-    private PaymentRepo repo { get; set; }
+    [Inject] private PaymentRepo repo { get; set; } = null !;
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="model"></param>
+
     protected async Task DeleteDocument(PaymentItem model)
     {
         var parameters = new DialogParameters();
@@ -53,24 +42,18 @@ public partial class Payments : ComponentBase
         var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Canceled)
+        if (result is {Canceled:true})
         {
             return;
         }
-        else
-        if (result.Data != null && (bool)result.Data == true)
+        else if (result?.Data is true)
         {
             PaymentItems.Remove(model);
             repo.DeleteDocument(model.PaymentItemId);
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
-    protected async Task EditDocument(PaymentItem model)
+    protected void EditDocument(PaymentItem model)
     {
         NavigationManager.NavigateTo($"/payment/edit/{model.PaymentItemId.ToString()}");
     }
@@ -85,9 +68,7 @@ public partial class Payments : ComponentBase
         NavigationManager.NavigateTo($"/payment/insert/{BudgetId}");
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+
     protected override void OnParametersSet()
     {
         if (!string.IsNullOrWhiteSpace(BudgetId))
@@ -101,7 +82,8 @@ public partial class Payments : ComponentBase
 
         if (useAppStateDate)
         {
-            PaymentItems = repo.GetItemsByMonthYear(Guid.Parse(BudgetId), appState.MonthYear.Month, appState.MonthYear.Year);
+            PaymentItems =
+                repo.GetItemsByMonthYear(Guid.Parse(BudgetId), appState.MonthYear.Month, appState.MonthYear.Year);
         }
         else
         {
@@ -109,10 +91,7 @@ public partial class Payments : ComponentBase
         }
     }
 
-    /// <summary>
-    /// Search
-    /// </summary>
-    /// <param name="model"></param>
+
     private void Search(MonthYear model)
     {
         Logger.LogInformation($"Class ({nameof(Payments)}) Method ({nameof(Search)}) started.");
