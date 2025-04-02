@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PaymentJournal.Web.Models;
 using PaymentJournal.Web.Repositories;
@@ -23,6 +24,7 @@ public partial class Budgets : ComponentBase
 
     [Inject] private BudgetRepo Repo { get; set; } = null !;
 
+
     public async void DeleteBudget(Guid budgetId)
     {
         var parameters = new DialogParameters();
@@ -30,20 +32,21 @@ public partial class Budgets : ComponentBase
         parameters.Add("ButtonText", "Delete");
         parameters.Add("Color", Color.Error);
 
-        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Small };
 
-        var dialog = DialogService.Show<SimpleDialog>("Delete", parameters, options);
+        var dialog = await DialogService.ShowAsync<SimpleDialog>("Delete", parameters, options);
         var result = await dialog.Result;
-
-        if (result != null && result.Canceled)
+        
+        if (result is { Canceled: true })
         {
             return;
         }
-        else if (result != null && result.Data != null && (bool)result.Data == true)
+        else
         {
             DbResult dbresult = Repo.DeleteBudget(budgetId);
             NavigationManager.NavigateTo("/budgets", true);
         }
+       
     }
 
     public void ToggleDisabled()
