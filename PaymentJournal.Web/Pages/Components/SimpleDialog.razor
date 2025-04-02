@@ -11,7 +11,7 @@
         <MudButton Color="Color.Secondary" OnClick="Cancel">Cancel</MudButton>
     </DialogActions>
 </MudDialog>
-<p>@(MudDialogInstance is null ? "DialogReference is null" : "DialogReference is alive!")</p>
+@* <p>@(MudDialogInstance is null ? "DialogReference is null" : "DialogReference is alive!")</p> *@
 
 @code {
     [CascadingParameter] public IMudDialogInstance  MudDialogInstance  { get; set; }
