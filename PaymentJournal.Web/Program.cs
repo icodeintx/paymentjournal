@@ -48,7 +48,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        Console.WriteLine($"Serving static file: {ctx.File.Name}");
+    }
+});
+
 app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");

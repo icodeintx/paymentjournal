@@ -1,0 +1,13 @@
+/* _content/PaymentJournal.Web/Pages/Components/Budgets.razor.rz.scp.css */
+:global(body)[b-iny81vj8l8] {
+    background-color: green;
+}
+/* _content/PaymentJournal.Web/Pages/Components/Budget_Printable.razor.rz.scp.css */
+
+.edge-padding[b-qmwwyxeztx]{
+    /*padding: 30px;*/
+    padding:20px 100px 20px 100px;
+    background-color: white;
+    color: black;
+}
+

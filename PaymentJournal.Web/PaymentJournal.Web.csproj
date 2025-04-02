@@ -4,7 +4,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <!--<SatelliteResourceLanguages>en</SatelliteResourceLanguages>-->
-    <EnableCssIsolation>true</EnableCssIsolation>
+    <EnableCssIsolation>true</EnableCssIsolation> 
+     <StaticWebAssetsEnabled>true</StaticWebAssetsEnabled>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Data\LiteDb" />
